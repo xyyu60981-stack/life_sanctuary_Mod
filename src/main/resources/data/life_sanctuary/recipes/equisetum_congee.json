@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:bowl",
+    "life_sanctuary:equisetum_arvense_spore_stem",
+    "minecraft:wheat",
+    "minecraft:egg"
+  ],
+  "result": {
+    "id": "life_sanctuary:equisetum_congee",
+    "count": 1
+  }
+}

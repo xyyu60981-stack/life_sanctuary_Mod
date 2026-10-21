@@ -1,7 +1,5 @@
 {
   "itemGroup.life_sanctuary": "Life Sanctuary",
-  "block.life_sanctuary.example_block": "Example Block",
-  "item.life_sanctuary.example_item": "Example Item",
   "block.life_sanctuary.peat": "Peat",
   "item.life_sanctuary.peat": "Peat",
   "life_sanctuary.configuration.title": "Life Sanctuary Configs",
@@ -20,6 +18,12 @@
   "block.life_sanctuary.equisetum_arvense_spore_stem": "问荆孢子茎",
   "item.life_sanctuary.equisetum_arvense_spore_stem": "问荆孢子茎",
   "item.life_sanctuary.equisetum_congee": "问荆粥",
+  "item.life_sanctuary.empty_spore_bag": "空孢子袋",
+  "item.life_sanctuary.spore_bag": "孢子袋",
+  "item.life_sanctuary.empty_pollen_bag": "空花粉袋",
+  "item.life_sanctuary.pollen_bag": "花粉袋",
+  "item.life_sanctuary.portable_collector": "便携式采集箱",
+  "item.life_sanctuary.portable_collector_plus": "便携式采集箱 Plus",
   "block.life_sanctuary.dead_equisetales": "枯死木贼",
   "item.life_sanctuary.dead_equisetales": "枯死木贼"
 }

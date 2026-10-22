@@ -5,5 +5,6 @@ public enum PlantOrigin {
     NATURAL,
     ONE_TIME_CULTIVATION,
     PLAYER_CULTIVATED,
-    AUTOMATIC_SPREAD
+    AUTOMATIC_SPREAD,
+    UNKNOWN
 }

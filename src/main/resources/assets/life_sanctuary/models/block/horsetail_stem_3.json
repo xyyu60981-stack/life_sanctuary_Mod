@@ -1,0 +1,40 @@
+{
+  "textures": {
+    "all": "life_sanctuary:block/equisetum_arvense_spore_stem",
+    "particle": "life_sanctuary:block/equisetum_arvense_spore_stem"
+  },
+  "elements": [
+    {
+      "from": [
+        11,
+        0,
+        11
+      ],
+      "to": [
+        13,
+        12,
+        13
+      ],
+      "faces": {
+        "up": {
+          "texture": "#all"
+        },
+        "down": {
+          "texture": "#all"
+        },
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        }
+      }
+    }
+  ]
+}

@@ -24,16 +24,23 @@ import net.minecraft.world.level.saveddata.SavedData;
  */
 public final class HorsetailPopulations extends SavedData {
     private static final String DATA_NAME = "life_sanctuary_horsetail_populations";
-    private static final String SPECIES = "equisetum_arvense";
-    private static final int REGION_SIZE = 16;
-    private static final int POPULATION_LIMIT = 15;
+    private static final String SPECIES = PlantSpeciesRegistry.legacyId(PlantSpeciesRegistry.HORSETAIL);
+    private static final int REGION_SIZE = PlantSpeciesRegistry.HORSETAIL.population().orElseThrow().horizontalSize();
+    private static final int POPULATION_LIMIT = PlantSpeciesRegistry.HORSETAIL.population().orElseThrow().maximumIndividuals();
     private static final Factory<HorsetailPopulations> FACTORY = new Factory<>(HorsetailPopulations::new, HorsetailPopulations::load);
 
     private final Map<BlockPos, Member> members = new HashMap<>();
     private final Map<PlantPopulationTag, Integer> memberCounts = new HashMap<>();
     private final Map<BlockPos, PlantStage> stages = new HashMap<>();
+    private final Set<BlockPos> pruned = new HashSet<>();
+    /** Capability flag; most species never enter the pruning workflow. */
+    private final Set<BlockPos> prunable = new HashSet<>();
+    private final Map<BlockPos, Long> maturityTicks = new HashMap<>();
+    private final Map<BlockPos, PlantEnvironmentState> environmentStates = new HashMap<>();
+    private final Map<BlockPos, PlantClimate> climates = new HashMap<>();
     /** Remaining harvest count for each reproductive structure. */
     private final Map<BlockPos, Integer> remainingSporeHarvests = new HashMap<>();
+    private final Set<BlockPos> peatHarvestBonus = new HashSet<>();
     private final Map<BlockPos, Integer> remainingSpread = new HashMap<>();
     private final Map<BlockPos, Integer> failedSpreadAttempts = new HashMap<>();
     private final Set<PlantPopulationTag> playerPopulations = new HashSet<>();
@@ -46,6 +53,16 @@ public final class HorsetailPopulations extends SavedData {
 
     public Member member(BlockPos pos) { return members.get(pos); }
 
+    /** Read-only O(1) inspection. Does not initialize climate, schedule ticks or dirty SavedData. */
+    public HorsetailStatus statusAt(BlockPos pos) {
+        Member member = members.get(pos);
+        PlantSource source = member == null ? PlantSource.STATIC : member.source();
+        return new HorsetailStatus(java.util.Optional.ofNullable(stages.get(pos)), source,
+                java.util.Optional.ofNullable(member == null ? null : member.population()),
+                canBePruned(pos), isPruned(pos), remainingSporeHarvests.getOrDefault(pos, 0),
+                maturityTicks(pos), java.util.Optional.ofNullable(source.isStatic() ? null : climates.get(pos)));
+    }
+
     /** Returns the saved lifecycle stage, or {@code null} for legacy records. */
     public PlantStage stageOf(BlockPos pos) { return stages.get(pos); }
 
@@ -55,6 +72,79 @@ public final class HorsetailPopulations extends SavedData {
         setDirty();
     }
 
+    public boolean isPruned(BlockPos pos) { return pruned.contains(pos); }
+
+    public boolean canBePruned(BlockPos pos) { return prunable.contains(pos); }
+
+    public void setCanBePruned(BlockPos pos, boolean value) {
+        BlockPos key = pos.immutable();
+        if (value) prunable.add(key); else {
+            prunable.remove(key);
+            pruned.remove(key);
+        }
+        setDirty();
+    }
+
+    public void setPruned(BlockPos pos, boolean value) {
+        BlockPos key = pos.immutable();
+        if (value) pruned.add(key); else pruned.remove(key);
+        setDirty();
+    }
+
+    public long maturityTicks(BlockPos pos) { return maturityTicks.getOrDefault(pos, 0L); }
+
+    public void setMaturityTicks(BlockPos pos, long ticks) {
+        if (ticks < 0) throw new IllegalArgumentException("maturity ticks cannot be negative");
+        maturityTicks.put(pos.immutable(), ticks);
+        setDirty();
+    }
+
+    public PlantEnvironmentState environmentState(BlockPos pos) {
+        return environmentStates.getOrDefault(pos, PlantEnvironmentState.UNKNOWN);
+    }
+
+    public void setEnvironmentState(BlockPos pos, PlantEnvironmentState state) {
+        environmentStates.put(pos.immutable(), state == null ? PlantEnvironmentState.UNKNOWN : state);
+        setDirty();
+    }
+
+    /** Resolves UNKNOWN from the loaded biome and stores the result for later decisions. */
+    public PlantEnvironmentState refreshEnvironmentState(ServerLevel level, BlockPos pos) {
+        if (sourceOf(pos).isStatic()) return PlantEnvironmentState.UNKNOWN;
+        PlantClimate climate = climateOf(level, pos);
+        PlantEnvironmentState resolved;
+        if (climate.dry()) resolved = PlantEnvironmentState.DRY;
+        else if (climate.cold()) resolved = PlantEnvironmentState.COLD;
+        else if (climate.hot()) resolved = PlantEnvironmentState.HOT;
+        else resolved = PlantEnvironmentState.SUITABLE;
+        if (environmentState(pos) != resolved) setEnvironmentState(pos, resolved);
+        return resolved;
+    }
+
+    /** Null for static scenery. Legacy single-value caches are re-evaluated once. */
+    public PlantClimate climateOf(ServerLevel level, BlockPos pos) {
+        if (sourceOf(pos).isStatic()) return null;
+        PlantClimate cached = climates.get(pos);
+        if (cached != null) return cached;
+        PlantClimate climate = new PlantClimate(PlantEnvironment.isDry(level, pos),
+                PlantEnvironment.isCold(level, pos), PlantEnvironment.isHot(level, pos));
+        climates.put(pos.immutable(), climate);
+        setDirty();
+        return climate;
+    }
+
+    public boolean canGrowInClimate(ServerLevel level, BlockPos pos) {
+        PlantClimate climate = climateOf(level, pos);
+        return climate != null && !climate.cold();
+    }
+
+    /** Same plant, new stage: preserve per-individual data rather than deleting it in onRemove. */
+    public static boolean isLivingHorsetail(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
+                || state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get())
+                || state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_GAMETOPHYTE.get());
+    }
+
     /** Sets the remaining harvest count when a reproductive structure matures. */
     public void setSporeHarvestCount(BlockPos pos, int count) {
         if (count < 0) throw new IllegalArgumentException("spore harvest count cannot be negative");
@@ -62,16 +152,29 @@ public final class HorsetailPopulations extends SavedData {
         setDirty();
     }
 
+    /** Initializes one newly placed reproductive structure without touching other positions. */
+    public void initializeSporeStem(ServerLevel level, BlockPos pos) {
+        BlockPos key = pos.immutable();
+        if (!remainingSporeHarvests.containsKey(key)) {
+            var bonus = PeatPlantInteraction.capture(level, pos, level.getBlockState(pos));
+            remainingSporeHarvests.put(key, PeatPlantInteraction.initialHarvests(1, bonus));
+            if (bonus == PeatPlantInteraction.Bonus.SPORE_HARVEST) peatHarvestBonus.add(key);
+            setDirty();
+        }
+    }
+
+    public boolean hasPeatHarvestBonus(BlockPos pos) { return peatHarvestBonus.contains(pos); }
+
     /**
-     * Atomically consumes the reproductive opportunity at a position.
+     * Atomically consumes the reproductive opportunity at this single position.
      *
-     * @return {@code true} only for the first successful harvest
+     * @return {@code true} while this position still has a harvest remaining
      */
     public boolean tryHarvestSporeStem(BlockPos pos) {
         int remaining = remainingSporeHarvests.getOrDefault(pos, 0);
         if (remaining <= 0) return false;
-        if (remaining == 1) remainingSporeHarvests.remove(pos);
-        else remainingSporeHarvests.put(pos.immutable(), remaining - 1);
+        // Keep zero as an initialized/exhausted marker so peat cannot refill a spent structure.
+        remainingSporeHarvests.put(pos.immutable(), remaining - 1);
         setDirty();
         return true;
     }
@@ -82,11 +185,9 @@ public final class HorsetailPopulations extends SavedData {
      * succeeds, so an invalid or exhausted harvest never consumes a bag.
      */
     public boolean tryHarvestSporeStem(BlockPos pos, SporeHarvestAccess access) {
-        if (!access.hasEmptySporeBag() || !mayGenerateSporeStem(pos)) return false;
-        if (!tryHarvestSporeStem(pos)) return false;
-        access.consumeEmptySporeBag();
-        access.giveSporeBag("equisetum_arvense", pos);
-        return true;
+        if (!mayGenerateSporeStem(pos)) return false;
+        if (!access.exchangeSporeBag("equisetum_arvense", pos)) return false;
+        return tryHarvestSporeStem(pos);
     }
 
     /** Reproductive structures must not be regenerated after a successful harvest. */
@@ -114,18 +215,27 @@ public final class HorsetailPopulations extends SavedData {
         if (source.canExpand()) playerPopulations.add(tag);
         putMember(pos, new Member(source, tag));
         setDirty();
+        pruned.remove(pos);
+        prunable.remove(pos);
+        maturityTicks.put(pos.immutable(), 0L);
+        environmentStates.put(pos.immutable(), PlantEnvironmentState.UNKNOWN);
+        climates.remove(pos);
         var state = level.getBlockState(pos);
         if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_GAMETOPHYTE.get())) {
             stages.put(pos.immutable(), PlantStage.GAMETOPHYTE);
-            level.scheduleTick(pos, state.getBlock(), 24000 + level.random.nextInt(48001));
+            level.scheduleTick(pos, state.getBlock(), HorsetailSpreadRules.GAMETOPHYTE_TO_SPROUTS_MIN_TICKS
+                    + level.random.nextInt(HorsetailSpreadRules.GAMETOPHYTE_TO_SPROUTS_MAX_TICKS
+                    - HorsetailSpreadRules.GAMETOPHYTE_TO_SPROUTS_MIN_TICKS + 1));
         } else if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get())) {
             stages.put(pos.immutable(), PlantStage.SPROUTS);
-            level.scheduleTick(pos, state.getBlock(), 24000);
+            level.scheduleTick(pos, state.getBlock(), HorsetailSpreadRules.SPROUTS_TO_ADULT_TICKS);
         } else if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())) {
             stages.put(pos.immutable(), PlantStage.ADULT);
-            // Horsetail has exactly one spore harvest; other species may use a larger quota.
-            remainingSporeHarvests.put(pos.immutable(), 1);
+            // Capture only once the adult actually carries a reproductive structure.
+            if (state.getValue(EquisetumArvenseBlock.SPORE_STEM)) initializeSporeStem(level, pos);
         }
+        refreshEnvironmentState(level, pos);
+        PlantWaterMonitoring.get(level).register(level, pos, source, tag);
         setDirty();
         return tag;
     }
@@ -149,7 +259,13 @@ public final class HorsetailPopulations extends SavedData {
         boolean changed = removed != null;
         if (removed != null) memberCounts.computeIfPresent(removed.population(), (tag, count) -> count <= 1 ? null : count - 1);
         changed |= stages.remove(pos) != null;
+        changed |= pruned.remove(pos);
+        changed |= prunable.remove(pos);
+        changed |= maturityTicks.remove(pos) != null;
+        changed |= environmentStates.remove(pos) != null;
+        changed |= climates.remove(pos) != null;
         changed |= remainingSporeHarvests.remove(pos) != null;
+        changed |= peatHarvestBonus.remove(pos);
         changed |= remainingSpread.remove(pos) != null;
         changed |= failedSpreadAttempts.remove(pos) != null;
         if (changed) setDirty();
@@ -169,6 +285,7 @@ public final class HorsetailPopulations extends SavedData {
     public boolean trySpreadOnce(ServerLevel level, BlockPos parentBase) {
         Member parent = members.get(parentBase);
         if (parent == null || !parent.source().canExpand() || !canAutoExpand(parent.population())) return false;
+        if (!canGrowInClimate(level, parentBase)) return false;
         if (remainingSpread.getOrDefault(parentBase, 0) <= 0) return false;
         if (!level.getChunkSource().hasChunk(parentBase.getX() >> 4, parentBase.getZ() >> 4)) return false;
         // The planner performs a bounded 5x3x5 search; never scan the whole population.
@@ -179,7 +296,7 @@ public final class HorsetailPopulations extends SavedData {
         level.setBlock(targetPos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get().defaultBlockState(), net.minecraft.world.level.block.Block.UPDATE_ALL);
         putMember(targetPos, new Member(PlantSource.PLAYER, parent.population()));
         remainingSpread.computeIfPresent(parentBase, (key, value) -> value <= 1 ? null : value - 1);
-        level.scheduleTick(targetPos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get(), 24000);
+        level.scheduleTick(targetPos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get(), HorsetailSpreadRules.SPROUTS_TO_ADULT_TICKS);
         setDirty();
         return true;
     }
@@ -217,6 +334,16 @@ public final class HorsetailPopulations extends SavedData {
                 BlockPos position = BlockPos.of(entry.getLong("Position"));
                 data.putMember(position, new Member(PlantSource.valueOf(entry.getString("Source")), population));
                 if (entry.contains("Stage")) data.stages.put(position, PlantStage.valueOf(entry.getString("Stage")));
+                if (entry.getBoolean("Pruned")) data.pruned.add(position);
+                if (entry.getBoolean("CanBePruned")) data.prunable.add(position);
+                if (entry.contains("MaturityTicks")) data.maturityTicks.put(position, entry.getLong("MaturityTicks"));
+                if (entry.contains("Environment")) data.environmentStates.put(position,
+                        PlantEnvironmentState.valueOf(entry.getString("Environment")));
+                if (entry.contains("Climate")) {
+                    CompoundTag climate = entry.getCompound("Climate");
+                    data.climates.put(position, new PlantClimate(climate.getBoolean("Dry"),
+                            climate.getBoolean("Cold"), climate.getBoolean("Hot")));
+                }
             } catch (IllegalArgumentException ignored) {
                 // Unknown source labels cannot grant growth or expansion.
             }
@@ -230,6 +357,7 @@ public final class HorsetailPopulations extends SavedData {
         for (int i = 0; i < harvested.size(); i++) {
             var entry = harvested.getCompound(i);
             data.remainingSporeHarvests.put(BlockPos.of(entry.getLong("Position")), entry.getInt("Remaining"));
+            if (entry.getBoolean("PeatBonus")) data.peatHarvestBonus.add(BlockPos.of(entry.getLong("Position")));
         }
         // Older development saves only recorded whether the one-shot harvest had happened.
         ListTag legacyHarvested = tag.getList("HarvestedSporeStems", Tag.TAG_LONG);
@@ -263,6 +391,20 @@ public final class HorsetailPopulations extends SavedData {
             entry.putInt("PopulationZ", plant.getValue().population().minimumZ());
             PlantStage stage = stages.get(plant.getKey());
             if (stage != null) entry.putString("Stage", stage.name());
+            if (pruned.contains(plant.getKey())) entry.putBoolean("Pruned", true);
+            if (prunable.contains(plant.getKey())) entry.putBoolean("CanBePruned", true);
+            Long maturity = maturityTicks.get(plant.getKey());
+            if (maturity != null) entry.putLong("MaturityTicks", maturity);
+            PlantEnvironmentState environment = environmentStates.get(plant.getKey());
+            if (environment != null) entry.putString("Environment", environment.name());
+            PlantClimate climate = climates.get(plant.getKey());
+            if (climate != null) {
+                CompoundTag saved = new CompoundTag();
+                saved.putBoolean("Dry", climate.dry());
+                saved.putBoolean("Cold", climate.cold());
+                saved.putBoolean("Hot", climate.hot());
+                entry.put("Climate", saved);
+            }
             plants.add(entry);
         }
         tag.put("Members", plants);
@@ -279,6 +421,7 @@ public final class HorsetailPopulations extends SavedData {
             var saved = new CompoundTag();
             saved.putLong("Position", entry.getKey().asLong());
             saved.putInt("Remaining", entry.getValue());
+            saved.putBoolean("PeatBonus", peatHarvestBonus.contains(entry.getKey()));
             harvested.add(saved);
         }
         tag.put("SporeHarvests", harvested);

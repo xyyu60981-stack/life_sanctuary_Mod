@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 /** A placed gametophyte advances only while its chunk is loaded. */
-public class EquisetumArvenseGametophyteBlock extends Block implements EnvironmentSensitivePlant {
+public class EquisetumArvenseGametophyteBlock extends SupportedHorsetailBlock implements EnvironmentSensitivePlant {
     public static final BooleanProperty WITHERING = BooleanProperty.create("withering");
 
     public EquisetumArvenseGametophyteBlock(Properties properties) {
@@ -27,7 +27,7 @@ public class EquisetumArvenseGametophyteBlock extends Block implements Environme
 
     @Override
     public boolean isEnvironmentSuitable(net.minecraft.world.level.LevelReader level, BlockPos pos, BlockState state) {
-        return !PlantEnvironment.isDry(level, pos);
+        return !PlantEnvironment.isCold(level, pos);
     }
 
     @Override
@@ -38,18 +38,23 @@ public class EquisetumArvenseGametophyteBlock extends Block implements Environme
     @Override
     protected void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, RandomSource random) {
         var data = HorsetailPopulations.get(level);
+        if (!data.canGrowInClimate(level, pos)) return;
         var member = data.member(pos);
         if (level.getBlockState(pos).is(this) && member != null && member.source().canFinishCurrentCycle()) {
             level.setBlock(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get().defaultBlockState(), Block.UPDATE_ALL);
             data.transition(pos, member);
             data.setStage(pos, PlantStage.SPROUTS);
-            level.scheduleTick(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get(), 24000);
+            level.scheduleTick(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get(), HorsetailSpreadRules.SPROUTS_TO_ADULT_TICKS);
         }
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!level.isClientSide && !state.is(newState.getBlock()) && level instanceof net.minecraft.server.level.ServerLevel server) HorsetailPopulations.get(server).remove(pos);
+        if (!level.isClientSide && !state.is(newState.getBlock())
+                && !HorsetailPopulations.isLivingHorsetail(newState) && level instanceof net.minecraft.server.level.ServerLevel server) {
+            HorsetailPopulations.get(server).remove(pos);
+            PlantWaterMonitoring.get(server).remove(pos);
+        }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GLG", "PIP", "SSS"],
+  "key": {
+    "G": {"item": "minecraft:glass_pane"},
+    "L": {"item": "minecraft:leather"},
+    "P": {"tag": "minecraft:planks"},
+    "I": {"item": "minecraft:iron_ingot"},
+    "S": {"tag": "minecraft:wooden_slabs"}
+  },
+  "result": {"id": "life_sanctuary:portable_collector", "count": 1}
+}

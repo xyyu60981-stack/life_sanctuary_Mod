@@ -9,14 +9,24 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * Contract for plants whose survival depends on their environment.
  *
- * The current project has not yet defined biome/climate tags or death timers,
- * so this interface intentionally has no active behavior. Plant blocks can
- * implement it once those rules are settled without changing the lifecycle API.
+ * Species expose their current response, including pending death, so growth,
+ * bonemeal and future tooltip providers can share the same decision.
  */
 public interface EnvironmentSensitivePlant {
     /** Returns whether the current position is suitable for this plant. */
     default boolean isEnvironmentSuitable(LevelReader level, BlockPos pos, BlockState state) {
         return true;
+    }
+
+    /** Override for species with climate-triggered withering/disappearance timers. */
+    default PlantClimateResponse climateResponse(LevelReader level, BlockPos pos, BlockState state) {
+        return isEnvironmentSuitable(level, pos, state)
+                ? PlantClimateResponse.GROWING : PlantClimateResponse.PAUSED;
+    }
+
+    /** Must be checked in isValidBonemealTarget, before vanilla consumes the item. */
+    default boolean allowsBonemealInClimate(LevelReader level, BlockPos pos, BlockState state) {
+        return climateResponse(level, pos, state).allowsBonemeal();
     }
 
     /** Returns the dead-state replacement when the plant should wither. */

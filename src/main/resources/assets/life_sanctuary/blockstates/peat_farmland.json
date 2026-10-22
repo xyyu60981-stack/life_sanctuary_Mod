@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=1": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=2": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=3": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=4": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=5": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=6": {
+      "model": "life_sanctuary:block/peat_farmland"
+    },
+    "moisture=7": {
+      "model": "life_sanctuary:block/peat_farmland_moist"
+    }
+  }
+}

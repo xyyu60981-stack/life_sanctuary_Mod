@@ -10,6 +10,13 @@ import net.minecraft.core.BlockPos;
  * inventory checks without changing plant lifecycle code.</p>
  */
 public interface SporeHarvestAccess {
+    /** Override for containers that must atomically exchange an input and output. */
+    default boolean exchangeSporeBag(String speciesId, BlockPos source) {
+        if (!hasEmptySporeBag()) return false;
+        consumeEmptySporeBag();
+        giveSporeBag(speciesId, source);
+        return true;
+    }
     /** Whether an empty spore bag is available in the permitted collection source. */
     boolean hasEmptySporeBag();
 

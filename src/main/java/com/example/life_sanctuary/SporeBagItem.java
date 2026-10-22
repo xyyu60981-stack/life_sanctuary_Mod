@@ -2,6 +2,9 @@ package com.example.life_sanctuary;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
 
 /** One item type for empty and species-filled spore bags. */
 public final class SporeBagItem extends Item {
@@ -24,5 +27,20 @@ public final class SporeBagItem extends Item {
     /** Spore bags consume one item only when the species effect accepts the target. */
     public static boolean consumesOnAcceptedUse() {
         return true;
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        ItemStack stack = context.getItemInHand();
+        String speciesId = species(stack);
+        if (speciesId == null) return InteractionResult.PASS;
+        SporeBagEffect effect = ReproductiveBagEffects.spore(speciesId);
+        if (effect == null) return InteractionResult.PASS;
+        if (!(context.getLevel() instanceof ServerLevel level)) {
+            return InteractionResult.sidedSuccess(true);
+        }
+        ReproductiveBagUseResult result = ReproductiveBagUseHandler.useSporeBag(
+                level, context.getClickedPos(), stack, effect);
+        return result.success() ? InteractionResult.sidedSuccess(false) : InteractionResult.PASS;
     }
 }

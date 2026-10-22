@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {"id": "life_sanctuary:portable_collector"},
+    "title": {"translate": "advancement.life_sanctuary.plant_hunter.title"},
+    "description": {"translate": "advancement.life_sanctuary.plant_hunter.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "equipped_collector": {"trigger": "minecraft:impossible"}
+  },
+  "requirements": [["equipped_collector"]]
+}

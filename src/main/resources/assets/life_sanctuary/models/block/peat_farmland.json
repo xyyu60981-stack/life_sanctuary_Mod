@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "life_sanctuary:block/peat",
+    "top": "minecraft:block/farmland"
+  }
+}

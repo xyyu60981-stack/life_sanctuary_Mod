@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "life_sanctuary:empty_spore_bag",
+    "life_sanctuary:spore_bag",
+    "life_sanctuary:empty_pollen_bag",
+    "life_sanctuary:pollen_bag",
+    "minecraft:wheat_seeds",
+    "minecraft:beetroot_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:torchflower_seeds",
+    "minecraft:pitcher_pod",
+    "minecraft:carrot",
+    "minecraft:potato"
+  ]
+}

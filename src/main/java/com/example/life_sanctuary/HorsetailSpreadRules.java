@@ -3,9 +3,12 @@ package com.example.life_sanctuary;
 /** Timing and limits for player-grown horsetail spread. */
 public final class HorsetailSpreadRules {
     /** One in-game day is 24,000 ticks; these are the provisional first-pass growth windows. */
-    public static final int GAMETOPHYTE_TO_SPROUTS_MIN_TICKS = 24_000;
-    public static final int GAMETOPHYTE_TO_SPROUTS_MAX_TICKS = 72_000;
-    public static final int SPROUTS_TO_ADULT_TICKS = 24_000;
+    public static final int GAMETOPHYTE_TO_SPROUTS_MIN_TICKS =
+            PlantSpeciesRegistry.HORSETAIL.requireTransition("GAMETOPHYTE").minimumTicks();
+    public static final int GAMETOPHYTE_TO_SPROUTS_MAX_TICKS =
+            PlantSpeciesRegistry.HORSETAIL.requireTransition("GAMETOPHYTE").maximumTicks();
+    public static final int SPROUTS_TO_ADULT_TICKS =
+            PlantSpeciesRegistry.HORSETAIL.requireTransition("SPROUTS").minimumTicks();
     /** A harvested spore structure is a one-shot resource and must never be regenerated. */
     public static final boolean HARVESTED_SPORE_STEM_REGENERATES = false;
     public static final int IMMEDIATE_MIN_OFFSPRING = 2;

@@ -34,6 +34,15 @@ public class Config {
             .comment("A list of items to log on common setup.")
             .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
 
+    public static final ModConfigSpec.BooleanValue COLLECTOR_AUTO_PICKUP = BUILDER
+            .comment("Automatically put allowed propagules into the equipped collector. Empty bags are excluded.")
+            .define("collectorAutoPickup", true);
+
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> COLLECTOR_PICKUP_BLACKLIST = BUILDER
+            .comment("Item IDs excluded from automatic collector pickup; manual storage remains allowed.")
+            .defineListAllowEmpty("collectorPickupBlacklist", List.<String>of(), () -> "minecraft:wheat_seeds",
+                    value -> value instanceof String id && ResourceLocation.tryParse(id) != null);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     private static boolean validateItemName(final Object obj) {

@@ -1,0 +1,75 @@
+package com.example.life_sanctuary;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+
+/** No ticker: vanilla menus and automation operate on this single inventory. */
+public final class CollectorBlockEntity extends BaseContainerBlockEntity {
+    private NonNullList<ItemStack> items;
+    public final InvWrapper itemHandler = new InvWrapper(this);
+
+    public CollectorBlockEntity(BlockPos pos, BlockState state) {
+        super(LifeSanctuaryMod.COLLECTOR_BLOCK_ENTITY.get(), pos, state);
+        items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+    }
+
+    @Override public int getContainerSize() {
+        return getBlockState().is(LifeSanctuaryMod.COLLECTOR_PLUS_BLOCK.get()) ? 54 : 27;
+    }
+    @Override protected NonNullList<ItemStack> getItems() { return items; }
+    @Override protected void setItems(NonNullList<ItemStack> items) { this.items = items; }
+    @Override public boolean canPlaceItem(int slot, ItemStack stack) { return CollectorInventory.accepts(stack); }
+    @Override public void clearContent() {
+        if (isEmpty()) return;
+        super.clearContent();
+        // The base clearContent does not mark dirty. Persist bulk clears and notify comparators.
+        setChanged();
+    }
+    @Override public void startOpen(Player player) {
+        if (level != null && !level.isClientSide && !player.isSpectator())
+            level.playSound(null, worldPosition, SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 0.5F, 1.0F);
+    }
+    @Override protected Component getDefaultName() {
+        return Component.translatable(getBlockState().getBlock().asItem().getDescriptionId());
+    }
+    @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        ContainerHelper.saveAllItems(tag, items, registries);
+    }
+    @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(tag, items, registries);
+    }
+    @Override protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        int rows = getContainerSize() / 9;
+        // Reuse vanilla layout/screen. Server slots enforce the whitelist for all click modes.
+        ChestMenu menu = new ChestMenu(rows == 6 ? MenuType.GENERIC_9x6 : MenuType.GENERIC_9x3,
+                id, inventory, this, rows);
+        for (int i = 0; i < getContainerSize(); i++) {
+            Slot original = menu.slots.get(i);
+            Slot filtered = new Slot(this, i, original.x, original.y) {
+                @Override public boolean mayPlace(ItemStack stack) { return CollectorInventory.accepts(stack); }
+            };
+            filtered.index = i;
+            menu.slots.set(i, filtered);
+        }
+        return menu;
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.example.life_sanctuary.compat.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CreateFilterAccess",
+    "CreateListFilterAccess",
+    "CreateDeployerBagFilterMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

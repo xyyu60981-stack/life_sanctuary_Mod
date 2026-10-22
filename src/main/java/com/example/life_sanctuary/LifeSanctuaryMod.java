@@ -21,6 +21,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.SoundType;
@@ -32,6 +38,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -56,15 +64,26 @@ public class LifeSanctuaryMod {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     // Registry for Life Sanctuary items.
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MODID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MODID);
+    public static final DeferredHolder<MenuType<?>, MenuType<CollectorItemMenu>> COLLECTOR_HOVER_MENU =
+            MENUS.register("collector_hover", () -> IMenuTypeExtension.create((id, inventory, buffer) ->
+                    new CollectorItemMenu(id, inventory, buffer.readVarInt(), buffer.readVarInt())));
+    public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<CollectorUpgradeRecipe>> COLLECTOR_UPGRADE =
+            RECIPE_SERIALIZERS.register("collector_upgrade", () -> new SimpleCraftingRecipeSerializer<>(CollectorUpgradeRecipe::new));
     // Registry for Life Sanctuary creative tabs.
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // First Life Sanctuary material: a simple peat block used as the foundation for later plant systems.
-    public static final DeferredBlock<Block> PEAT = BLOCKS.registerSimpleBlock("peat", BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> PEAT = BLOCKS.registerBlock("peat", properties -> new PeatBlock(properties
             .mapColor(MapColor.COLOR_BROWN)
             .strength(0.5F)
-            .sound(SoundType.GRAVEL));
+            .sound(SoundType.GRAVEL)));
     public static final DeferredItem<BlockItem> PEAT_ITEM = ITEMS.registerSimpleBlockItem("peat", PEAT);
+    public static final DeferredBlock<PeatFarmlandBlock> PEAT_FARMLAND = BLOCKS.registerBlock("peat_farmland",
+            properties -> new PeatFarmlandBlock(properties.strength(0.6F).sound(SoundType.GRAVEL).randomTicks()));
+    public static final DeferredItem<BlockItem> PEAT_FARMLAND_ITEM = ITEMS.registerSimpleBlockItem("peat_farmland", PEAT_FARMLAND);
 
     // First plant registration. Growth and harvesting rules will be added after the basic asset loop is verified.
     public static final DeferredBlock<Block> EQUISETUM_ARVENSE = BLOCKS.registerBlock("equisetum_arvense", properties -> new EquisetumArvenseBlock(properties
@@ -72,15 +91,18 @@ public class LifeSanctuaryMod {
             .noOcclusion()
             .instabreak()
             .sound(SoundType.GRASS)));
-    public static final DeferredItem<HorsetailPlantItem> EQUISETUM_ARVENSE_ITEM = ITEMS.register("equisetum_arvense", () -> new HorsetailPlantItem(EQUISETUM_ARVENSE.get(), new Item.Properties()));
+    public static final DeferredBlock<Block> PLACED_EQUISETUM_ARVENSE = BLOCKS.registerBlock("placed_equisetum_arvense",
+            properties -> new PlacedHorsetailBlock(properties.mapColor(MapColor.PLANT).noOcclusion().instabreak().sound(SoundType.GRASS)));
+    public static final DeferredItem<CutHorsetailItem> EQUISETUM_ARVENSE_ITEM = ITEMS.register("equisetum_arvense",
+            () -> new CutHorsetailItem(PLACED_EQUISETUM_ARVENSE.get(), new Item.Properties(), false));
     public static final DeferredBlock<Block> DEAD_EQUISETALES = BLOCKS.registerBlock("dead_equisetales", properties -> new DeadEquisetalesBlock(properties.mapColor(MapColor.COLOR_BROWN).noOcclusion().instabreak().sound(SoundType.GRASS)));
     public static final DeferredItem<BlockItem> DEAD_EQUISETALES_ITEM = ITEMS.registerSimpleBlockItem("dead_equisetales", DEAD_EQUISETALES);
     public static final DeferredBlock<Block> EQUISETUM_ARVENSE_GAMETOPHYTE = BLOCKS.registerBlock("equisetum_arvense_gametophyte", properties -> new EquisetumArvenseGametophyteBlock(properties.mapColor(MapColor.PLANT).noOcclusion().instabreak().sound(SoundType.GRASS)));
     public static final DeferredItem<HorsetailPlantItem> EQUISETUM_ARVENSE_GAMETOPHYTE_ITEM = ITEMS.register("equisetum_arvense_gametophyte", () -> new HorsetailPlantItem(EQUISETUM_ARVENSE_GAMETOPHYTE.get(), new Item.Properties()));
     public static final DeferredBlock<Block> EQUISETUM_ARVENSE_SPROUTS = BLOCKS.registerBlock("equisetum_arvense_sprouts", properties -> new EquisetumArvenseSproutsBlock(properties.mapColor(MapColor.PLANT).noOcclusion().instabreak().sound(SoundType.GRASS)));
     public static final DeferredItem<HorsetailPlantItem> EQUISETUM_ARVENSE_SPROUTS_ITEM = ITEMS.register("equisetum_arvense_sprouts", () -> new HorsetailPlantItem(EQUISETUM_ARVENSE_SPROUTS.get(), new Item.Properties()));
-    public static final DeferredBlock<Block> EQUISETUM_ARVENSE_SPORE_STEM = BLOCKS.registerSimpleBlock("equisetum_arvense_spore_stem", BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).noOcclusion().instabreak().sound(SoundType.GRASS));
-    public static final DeferredItem<Item> EQUISETUM_ARVENSE_SPORE_STEM_ITEM = ITEMS.register("equisetum_arvense_spore_stem", () -> new BlockItem(EQUISETUM_ARVENSE_SPORE_STEM.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.0F).build())));
+    public static final DeferredBlock<Block> EQUISETUM_ARVENSE_SPORE_STEM = BLOCKS.registerBlock("equisetum_arvense_spore_stem", properties -> new EquisetumArvenseSporeStemBlock(properties.mapColor(MapColor.COLOR_BROWN).noOcclusion().instabreak().sound(SoundType.GRASS)));
+    public static final DeferredItem<Item> EQUISETUM_ARVENSE_SPORE_STEM_ITEM = ITEMS.register("equisetum_arvense_spore_stem", () -> new CutHorsetailItem(EQUISETUM_ARVENSE_SPORE_STEM.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.0F).build()), true));
     public static final DeferredItem<Item> EQUISETUM_CONGEE = ITEMS.register("equisetum_congee", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
             .nutrition(3).saturationModifier(5.0F / 6.0F)
             .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 30 * 20, 0), 1.0F).build())));
@@ -90,8 +112,17 @@ public class LifeSanctuaryMod {
     public static final DeferredItem<SporeBagItem> SPORE_BAG = ITEMS.register("spore_bag", () -> new SporeBagItem(new Item.Properties()));
     public static final DeferredItem<Item> EMPTY_POLLEN_BAG = ITEMS.registerSimpleItem("empty_pollen_bag");
     public static final DeferredItem<PollenBagItem> POLLEN_BAG = ITEMS.register("pollen_bag", () -> new PollenBagItem(new Item.Properties()));
-    public static final DeferredItem<Item> PORTABLE_COLLECTOR = ITEMS.registerSimpleItem("portable_collector");
-    public static final DeferredItem<Item> PORTABLE_COLLECTOR_PLUS = ITEMS.registerSimpleItem("portable_collector_plus");
+    public static final DeferredBlock<CollectorBlock> COLLECTOR_BLOCK = BLOCKS.registerBlock("portable_collector",
+            properties -> new CollectorBlock(properties.strength(2.5F).sound(SoundType.WOOD)));
+    public static final DeferredBlock<CollectorBlock> COLLECTOR_PLUS_BLOCK = BLOCKS.registerBlock("portable_collector_plus",
+            properties -> new CollectorBlock(properties.strength(2.5F).sound(SoundType.WOOD)));
+    public static final DeferredItem<BlockItem> PORTABLE_COLLECTOR = ITEMS.register("portable_collector",
+            () -> new CollectorBlockItem(COLLECTOR_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> PORTABLE_COLLECTOR_PLUS = ITEMS.register("portable_collector_plus",
+            () -> new CollectorBlockItem(COLLECTOR_PLUS_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CollectorBlockEntity>> COLLECTOR_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("portable_collector", () -> BlockEntityType.Builder.of(CollectorBlockEntity::new,
+                    COLLECTOR_BLOCK.get(), COLLECTOR_PLUS_BLOCK.get()).build(null));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> LIFE_SANCTUARY_TAB = CREATIVE_MODE_TABS.register("life_sanctuary", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.life_sanctuary")) //The language key for the title of your CreativeModeTab
@@ -99,6 +130,7 @@ public class LifeSanctuaryMod {
             .icon(() -> PEAT_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
             output.accept(PEAT_ITEM);
+            output.accept(PEAT_FARMLAND_ITEM);
             output.accept(EQUISETUM_ARVENSE_ITEM);
             output.accept(DEAD_EQUISETALES_ITEM);
             output.accept(EQUISETUM_ARVENSE_GAMETOPHYTE_ITEM);
@@ -118,11 +150,16 @@ public class LifeSanctuaryMod {
     public LifeSanctuaryMod(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(this::registerCollectorNetworking);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
+        BLOCK_ENTITIES.register(modEventBus);
+        RECIPE_SERIALIZERS.register(modEventBus);
+        MENUS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -131,12 +168,31 @@ public class LifeSanctuaryMod {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(new NaturalPopulationGenerationHandler());
+        NeoForge.EVENT_BUS.register(new PlantWaterTickHandler());
+        NeoForge.EVENT_BUS.register(new PlantGrowthTickHandler());
+        NeoForge.EVENT_BUS.register(new PeatCropHarvestHandler());
+        NeoForge.EVENT_BUS.register(new CollectorPickupHandler());
+        NeoForge.EVENT_BUS.register(new CollectorAdvancementHandler());
+        NeoForge.EVENT_BUS.register(new HorsetailStemInteraction());
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, COLLECTOR_BLOCK_ENTITY.get(),
+                (collector, side) -> collector.itemHandler);
+        event.registerItem(Capabilities.ItemHandler.ITEM,
+                (stack, context) -> new CollectorItemHandler(stack),
+                PORTABLE_COLLECTOR.get(), PORTABLE_COLLECTOR_PLUS.get());
+    }
+
+    private void registerCollectorNetworking(RegisterPayloadHandlersEvent event) {
+        event.registrar("1").playToServer(OpenCollectorPayload.TYPE, OpenCollectorPayload.STREAM_CODEC,
+                OpenCollectorPayload::handle);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -149,6 +205,7 @@ public class LifeSanctuaryMod {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(PEAT_ITEM);
+            event.accept(PEAT_FARMLAND_ITEM);
             event.accept(EQUISETUM_ARVENSE_ITEM);
             event.accept(DEAD_EQUISETALES_ITEM);
             event.accept(EQUISETUM_ARVENSE_GAMETOPHYTE_ITEM);

@@ -1,6 +1,7 @@
 {
   "itemGroup.life_sanctuary": "Life Sanctuary",
   "block.life_sanctuary.peat": "Peat",
+  "block.life_sanctuary.peat_farmland": "Peat Farmland",
   "item.life_sanctuary.peat": "Peat",
   "life_sanctuary.configuration.title": "Life Sanctuary Configs",
   "life_sanctuary.configuration.section.life_sanctuary.common.toml": "Life Sanctuary Configs",
@@ -10,6 +11,7 @@
   "life_sanctuary.configuration.magicNumberIntroduction": "Magic Number Text",
   "life_sanctuary.configuration.magicNumber": "Magic Number",
   "block.life_sanctuary.equisetum_arvense": "问荆",
+  "block.life_sanctuary.placed_equisetum_arvense": "问荆（摆放）",
   "item.life_sanctuary.equisetum_arvense": "问荆",
   "block.life_sanctuary.equisetum_arvense_gametophyte": "问荆配子体",
   "item.life_sanctuary.equisetum_arvense_gametophyte": "问荆配子体",
@@ -25,5 +27,16 @@
   "item.life_sanctuary.portable_collector": "便携式采集箱",
   "item.life_sanctuary.portable_collector_plus": "便携式采集箱 Plus",
   "block.life_sanctuary.dead_equisetales": "枯死木贼",
-  "item.life_sanctuary.dead_equisetales": "枯死木贼"
+  "item.life_sanctuary.dead_equisetales": "枯死木贼",
+  "block.life_sanctuary.portable_collector": "便携式采集箱",
+  "block.life_sanctuary.portable_collector_plus": "便携式采集箱 Plus",
+  "tooltip.life_sanctuary.collector.slots": "已占用格数：%s / %s",
+  "tooltip.life_sanctuary.collector.empty_bags": "空孢子袋：%s　空花粉袋：%s",
+  "tooltip.life_sanctuary.collector.controls": "右键打开；潜行右键方块放置；潜行对空右键装备",
+  "tooltip.life_sanctuary.collector.hover": "背包中悬停片刻，可打开交互窗口",
+  "key.life_sanctuary.open_collector": "打开采集箱",
+  "key.categories.life_sanctuary": "生命庇护所",
+  "message.life_sanctuary.no_collector": "装备栏和背包中没有可打开的采集箱",
+  "advancement.life_sanctuary.plant_hunter.title": "植物猎人",
+  "advancement.life_sanctuary.plant_hunter.description": "装备便携式采集箱或便携式采集箱 Plus"
 }

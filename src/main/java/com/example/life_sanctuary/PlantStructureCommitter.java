@@ -30,6 +30,57 @@ public final class PlantStructureCommitter {
         return apply(level, store, plan, next, debit, false);
     }
 
+    /** 专用阶段入口：只允许为新结构追加首次额度，不能覆盖旧结构的耗尽记录。 */
+    static Result applyStageGrowth(ServerLevel level, PlantIndividuals store, PlantStructurePlan plan,
+            PlantIndividualState next, PlantStageResources resources) {
+        return applyStageGrowth(level, store, plan, next, resources, null, level.random);
+    }
+
+    static Result applyStageGrowth(ServerLevel level, PlantIndividuals store, PlantStructurePlan plan,
+            PlantIndividualState next, PlantStageResources resources, PlantInitialCrown crown,
+            net.minecraft.util.RandomSource random) {
+        var before = plan.expectedIndividual();
+        if (before.stage().equals(next.stage()) || !before.harvests().equals(next.harvests())
+                || !before.reproduction().equals(next.reproduction()))
+            throw new IllegalArgumentException("Stage initialization cannot reset existing resources");
+        var initialized = resources.initialize(next, plan, store.partsOf(before.id()));
+        var leaves = store.leavesOf(before.id());
+        if (crown != null) {
+            boolean replaceCrown = leaves.isPresent();
+            if (replaceCrown && (!PlantGrowingCrownChange.eligible(before, leaves.get())
+                    || !PlantGrowingCrownChange.permitsTarget(next.species(), next.stage(), crown.leaves())))
+                return new Result(Status.REJECTED, Optional.empty());
+            var originalParts = store.partsOf(before.id());
+            if (!PlantHarvestEligibility.permitsInitialLeaves(crown.leaves(), next.species(), next.stage())
+                    || !crown.valid(initialized, replaceCrown ? PlantGrowingCrownChange.nonLeafParts(leaves.get(), originalParts) : originalParts, plan))
+                return new Result(Status.REJECTED, Optional.empty());
+            var expectedLeafData = replaceCrown ? PlantGrowingCrownChange.merge(leaves.get(), crown.leaves()) : crown.leaves();
+            var expectedParts = new java.util.HashMap<>(store.partsOf(before.id()));
+            plan.changes().forEach((pos, change) -> {
+                if (change.role().isEmpty()) expectedParts.remove(pos); else expectedParts.put(pos, change.role());
+            });
+            expectedLeafData.validateOwner(initialized, expectedParts);
+            if (replaceCrown && !PlantGrowingCrownChange.coversOldLeafShapes(leaves.get(), crown.leaves(), expectedParts))
+                return new Result(Status.REJECTED, Optional.empty());
+            PlantLeafStructureChange leafChange = replaceCrown
+                    ? new PlantGrowingCrownChange(leaves.get(), initialized, crown.leaves(), random)
+                    : new PlantStageLeafChange(initialized, crown.leaves(), random);
+            var result = apply(level, store, plan, initialized, null, false, true, leafChange);
+            if (result.status() == Status.COMMITTED
+                    && (!store.find(initialized.id()).filter(initialized::equals).isPresent()
+                        || !store.partsOf(initialized.id()).equals(expectedParts)
+                        || !store.leavesOf(initialized.id()).filter(data ->
+                            PlantLeafInitialization.matchesInitial(data, expectedLeafData, initialized)).isPresent())) {
+                pauseForRecovery(store, initialized.id());
+                return new Result(Status.RECOVERY_REQUIRED, Optional.empty());
+            }
+            return result;
+        }
+        if (leaves.isPresent() && !PlantLeafStageGuard.preserves(leaves.get(), store.partsOf(before.id()), plan, initialized))
+            return new Result(Status.REJECTED, Optional.empty());
+        return apply(level, store, plan, initialized, null, false, true);
+    }
+
     /**
      * One live runner adds exactly one segment. The adapter supplies the complete old runner read set
      * and any connection-shape changes; species-specific substrate and direction rules remain external.
@@ -38,7 +89,25 @@ public final class PlantStructureCommitter {
     public static Result applyRunnerGrowth(ServerLevel level, PlantStructurePlan plan,
             PlantRunnerNetwork network, BlockPos attachment, BlockPos candidate,
             RunnerGrowthAdmission.Action action, String runnerRole) {
+        return applyRunnerGrowth(level, plan, network, attachment, candidate, action, runnerRole, false);
+    }
+
+    /**
+     * 物种适配器仅为允许泥炭奖励的类型启用此参数（不含苔原变体）。
+     * 基底必须是只读依赖，保证奖励与实际落地时的泥炭状态一起校验。
+     */
+    public static Result applyRunnerGrowth(ServerLevel level, PlantStructurePlan plan,
+            PlantRunnerNetwork network, BlockPos attachment, BlockPos candidate,
+            RunnerGrowthAdmission.Action action, String runnerRole, boolean allowPeatRewards) {
         if (runnerRole == null || runnerRole.isBlank()) throw new IllegalArgumentException("Missing runner role");
+        boolean eligiblePeat = false;
+        if (allowPeatRewards) {
+            BlockPos substrate = candidate.below();
+            var expectedSubstrate = plan.dependencies().get(substrate);
+            if (expectedSubstrate == null || plan.changes().containsKey(substrate))
+                throw new IllegalArgumentException("Peat rewards require an unchanged substrate dependency");
+            eligiblePeat = expectedSubstrate.is(PeatPlantInteraction.PEAT);
+        }
         var store = PlantIndividuals.get(level);
         var before = plan.expectedIndividual();
         if (store.isReadOnly() || before.runnerBudget().isEmpty()
@@ -49,7 +118,7 @@ public final class PlantStructureCommitter {
         owned.forEach((pos, role) -> { if (runnerRole.equals(role)) runnerPositions.add(pos); });
         if (!runnerPositions.equals(network.positions())) return new Result(Status.REJECTED, Optional.empty());
         var growth = RunnerGrowthAdmission.plan(before, network, before.runnerBudget().get(),
-                attachment, candidate, action);
+                attachment, candidate, action, eligiblePeat);
         if (!growth.ready()) return new Result(Status.REJECTED, Optional.empty());
         var added = plan.changes().get(candidate);
         if (added == null || !runnerRole.equals(added.role()) || owned.containsKey(candidate)
@@ -84,30 +153,92 @@ public final class PlantStructureCommitter {
 
     private static Result apply(ServerLevel level, PlantIndividuals store, PlantStructurePlan plan,
             PlantIndividualState next, PlantReproductionDebit debit, boolean runnerGrowth) {
+        return apply(level, store, plan, next, debit, runnerGrowth, false);
+    }
+
+    private static Result apply(ServerLevel level, PlantIndividuals store, PlantStructurePlan plan,
+            PlantIndividualState next, PlantReproductionDebit debit, boolean runnerGrowth, boolean initializedResources) {
+        return apply(level, store, plan, next, debit, runnerGrowth, initializedResources, null);
+    }
+
+    static Result applyLeafInitialization(ServerLevel level, PlantStructurePlan plan, PlantLeafInitializationChange initial) {
+        return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, initial);
+    }
+
+    static Result applyLeafShedding(ServerLevel level, PlantStructurePlan plan, PlantLeafSheddingChange shedding) {
+        return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, shedding);
+    }
+
+    static Result applyLeafRegrowth(ServerLevel level, PlantStructurePlan plan, PlantLeafRegrowthChange regrowth) {
+        return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, regrowth);
+    }
+
+    static Result applyLeafCut(ServerLevel level, PlantStructurePlan plan, PlantLeafCutChange cut) {
+        return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, cut);
+    }
+
+    static Result applyBudLoss(ServerLevel level, PlantStructurePlan plan, PlantBudLossChange loss) {
+        return apply(level, PlantIndividuals.get(level), plan, loss.nextOwner(plan.expectedIndividual()), null, false, false, loss);
+    }
+
+    private static Result apply(ServerLevel level, PlantIndividuals store, PlantStructurePlan plan,
+            PlantIndividualState next, PlantReproductionDebit debit, boolean runnerGrowth, boolean initializedResources,
+            PlantLeafStructureChange leafChange) {
         if (store != PlantIndividuals.get(level)) throw new IllegalArgumentException("Wrong dimension store");
+        if (leafChange != null && !store.leavesOf(next.id()).equals(leafChange.expected()))
+            return new Result(Status.REJECTED, Optional.empty());
         if (debit != null && (debit.expected().id().equals(next.id())
                 || !store.find(debit.expected().id()).filter(debit.expected()::equals).isPresent()))
             return new Result(Status.REJECTED, Optional.empty());
         var before = plan.expectedIndividual();
+        if (leafChange != null && !leafChange.nextOwner(before).equals(next))
+            throw new IllegalArgumentException("Leaf transaction cannot change unrelated plant state");
         // World construction is not a way to refresh resources, change source or move an individual.
         if (!before.id().equals(next.id()) || !before.species().equals(next.species())
                 || !before.base().equals(next.base()) || before.source() != next.source()
                 || before.origin() != next.origin()
-                || !before.population().equals(next.population()) || !before.harvests().equals(next.harvests())
-                || !before.reproduction().equals(next.reproduction())
+                || !before.population().equals(next.population())
+                || (!initializedResources && (!before.harvests().equals(next.harvests())
+                    || !before.reproduction().equals(next.reproduction())))
                 || (!runnerGrowth && !before.runnerBudget().equals(next.runnerBudget()))
                 || before.canBePruned() != next.canBePruned() || before.pruned() != next.pruned()
-                || !before.environmentReasons().equals(next.environmentReasons()))
+                || (!before.environmentReasons().equals(next.environmentReasons()) && !(leafChange instanceof PlantBudLossChange)))
             throw new IllegalArgumentException("Structure commit cannot change identity or resource permissions");
         validateStage(before, next);
+        // 同样覆盖直接调用通用结构提交的阶段适配器，不能绕过阶段入口破坏叶账本。
+        if (!before.stage().equals(next.stage()) && !(leafChange instanceof PlantGrowingCrownChange)) {
+            var stageLeaves = store.leavesOf(before.id());
+            if (stageLeaves.isPresent() && !PlantLeafStageGuard.preserves(stageLeaves.get(), store.partsOf(before.id()), plan, next))
+                return new Result(Status.REJECTED, Optional.empty());
+        }
         var checked = PlantStructurePreflight.check(level, store, plan);
         if (!checked.ready()) return new Result(Status.REJECTED, Optional.of(checked));
+
+        var rhizomeStore = PlantRhizomeSystems.get(level);
+        var inheritedNodes = new HashSet<BlockPos>();
+        plan.changes().forEach((pos, change) -> { if (change.policy().requiresRhizomeOwnership()) inheritedNodes.add(pos); });
+        var inheritedSystem = inheritedNodes.isEmpty() ? null : rhizomeStore.forShoot(before.id())
+                .orElseGet(() -> rhizomeStore.find(before.id()).orElseThrow());
+        PlantRhizomeSystem convertedSystem = null;
+        if (inheritedSystem != null) {
+            var lateral = new HashSet<>(inheritedNodes);
+            lateral.retainAll(inheritedSystem.rhizomes());
+            var rising = new HashSet<>(inheritedNodes);
+            rising.retainAll(inheritedSystem.risingRhizomes());
+            convertedSystem = inheritedSystem.removeRhizomes(lateral).removeRisingRhizomes(rising);
+        }
 
         ArrayList<BlockPos> attempted = new ArrayList<>();
         boolean committed = false;
         boolean recovered = true;
-        store.beginStructure(before);
+        boolean lockedPlant = false, lockedRhizome = false;
         try {
+            if (inheritedSystem != null) {
+                rhizomeStore.beginShootStructure(inheritedSystem, convertedSystem);
+                lockedRhizome = true;
+            }
+            store.beginStructure(before);
+            lockedPlant = true;
             for (var entry : plan.changes().entrySet()) {
                 BlockPos pos = entry.getKey();
                 var change = entry.getValue();
@@ -128,7 +259,8 @@ public final class PlantStructureCommitter {
                         && !level.getBlockState(entry.getKey()).equals(entry.getValue()))
                     throw new IllegalStateException("Structure support changed during placement");
 
-            store.commitStructure(plan, next, debit);
+            store.commitStructure(plan, next, debit, leafChange);
+            if (inheritedSystem != null) rhizomeStore.commitShootStructure(inheritedSystem, convertedSystem);
             committed = true;
         } catch (RuntimeException exception) {
             org.slf4j.LoggerFactory.getLogger(PlantStructureCommitter.class)
@@ -152,7 +284,8 @@ public final class PlantStructureCommitter {
                 }
             }
         } finally {
-            store.endStructure();
+            if (lockedPlant) store.endStructure();
+            if (lockedRhizome) rhizomeStore.endShootStructure();
         }
         if (!committed) {
             // Also verify no callback changed an untouched target or dependency.
@@ -162,6 +295,7 @@ public final class PlantStructureCommitter {
                 recovered &= level.getBlockState(entry.getKey()).equals(entry.getValue());
             // Any callback failure pauses this individual; no repeated half-successful side effects.
             pauseForRecovery(store, before.id());
+            if (!recovered && inheritedSystem != null) rhizomeStore.requireRecovery(inheritedSystem.id());
             return new Result(recovered ? Status.ROLLED_BACK : Status.RECOVERY_REQUIRED, Optional.empty());
         }
 
@@ -179,6 +313,7 @@ public final class PlantStructureCommitter {
             for (var entry : plan.changes().entrySet()) {
                 if (!level.getBlockState(entry.getKey()).equals(entry.getValue().replacement())) {
                     pauseForRecovery(store, before.id());
+                    if (inheritedSystem != null) rhizomeStore.requireRecovery(inheritedSystem.id());
                     return new Result(Status.RECOVERY_REQUIRED, Optional.empty());
                 }
             }
@@ -186,11 +321,18 @@ public final class PlantStructureCommitter {
                 if (!plan.changes().containsKey(entry.getKey())
                         && !level.getBlockState(entry.getKey()).equals(entry.getValue())) {
                     pauseForRecovery(store, before.id());
+                    if (inheritedSystem != null) rhizomeStore.requireRecovery(inheritedSystem.id());
                     return new Result(Status.RECOVERY_REQUIRED, Optional.empty());
                 }
             }
+            if (inheritedSystem != null && !convertedSystem.equals(rhizomeStore.find(convertedSystem.id()).orElse(null))) {
+                pauseForRecovery(store, before.id());
+                rhizomeStore.requireRecovery(inheritedSystem.id());
+                return new Result(Status.RECOVERY_REQUIRED, Optional.empty());
+            }
         } catch (RuntimeException exception) {
             pauseForRecovery(store, before.id());
+            if (inheritedSystem != null) rhizomeStore.requireRecovery(inheritedSystem.id());
             org.slf4j.LoggerFactory.getLogger(PlantStructureCommitter.class)
                     .error("Post-placement neighbor update failed for " + before.id(), exception);
             return new Result(Status.RECOVERY_REQUIRED, Optional.empty());

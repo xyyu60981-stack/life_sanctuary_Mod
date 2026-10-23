@@ -8,7 +8,11 @@ import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-/** Immutable snapshot. Updates must go through PlantIndividuals so persistence is marked dirty. */
+/**
+ * Immutable growth/structure record. Updates go through PlantIndividuals for persistence.
+ * For clonal rhizomes, id is a plant record handle; RhizomeIndividualIdentity resolves the shared
+ * biological individual. Stage/population counts still count every above-ground plant separately.
+ */
 public record PlantIndividualState(UUID id, ResourceLocation species, BlockPos base, PlantSource source,
         String stage, String population, boolean canBePruned, boolean pruned,
         long targetTicks, long elapsedTicks, Set<String> environmentReasons,

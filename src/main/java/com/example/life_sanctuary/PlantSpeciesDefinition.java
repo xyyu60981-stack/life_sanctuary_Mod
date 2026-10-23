@@ -25,9 +25,12 @@ public record PlantSpeciesDefinition(ResourceLocation id, Map<String, StageDefin
     }
 
     /** Empty transition means no automatic stage change; reproduction can still run separately. */
-    public record StageDefinition(Optional<Transition> transition) {
+    public record StageDefinition(Optional<Transition> transition, boolean fullyAdult) {
+        /** 不从终止阶段推断成年：幼苗、装饰态等也可能没有后续自动阶段。 */
+        public StageDefinition(Optional<Transition> transition) { this(transition, false); }
         public StageDefinition { Objects.requireNonNull(transition, "transition"); }
         public static StageDefinition terminal() { return new StageDefinition(Optional.empty()); }
+        public static StageDefinition adult() { return new StageDefinition(Optional.empty(), true); }
         public static StageDefinition growing(String nextStage, int minimumTicks, int maximumTicks) {
             return new StageDefinition(Optional.of(new Transition(nextStage, minimumTicks, maximumTicks)));
         }

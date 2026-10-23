@@ -6,7 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * Derived per-dimension index. Rebuilt from saved individuals; never persisted as a second source of truth.
- * Counts individuals, not stems/leaves. Empty population IDs intentionally do not form a shared population.
+ * Counts registered plants, not stem/leaf blocks. Clonal rhizome plants share a biological identity
+ * but each visible plant still contributes to its stage count. Empty population IDs do not form a shared population.
  */
 final class PlantPopulationIndex {
     private record Key(ResourceLocation species, String population) {}

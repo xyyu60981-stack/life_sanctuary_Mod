@@ -15,7 +15,7 @@ public final class PlantSpeciesRegistry {
             Map.of(
                     "GAMETOPHYTE", PlantSpeciesDefinition.StageDefinition.growing("SPROUTS", 24_000, 72_000),
                     "SPROUTS", PlantSpeciesDefinition.StageDefinition.growing("ADULT", 24_000, 24_000),
-                    "ADULT", PlantSpeciesDefinition.StageDefinition.terminal()),
+                    "ADULT", PlantSpeciesDefinition.StageDefinition.adult()),
             Optional.of(new PlantSpeciesDefinition.PopulationRules(16, 15))));
 
     private PlantSpeciesRegistry() {}

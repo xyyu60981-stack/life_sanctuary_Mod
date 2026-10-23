@@ -7,6 +7,9 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 public final class PlantGrowthTickHandler {
     @SubscribeEvent
     public void tick(LevelTickEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel level) PlantIndividuals.get(level).tickGrowth(level);
+        if (event.getLevel() instanceof ServerLevel level) {
+            PlantIndividuals.get(level).tickGrowth(level);
+            PlantRhizomeSystems.get(level).tickShoots(level);
+        }
     }
 }

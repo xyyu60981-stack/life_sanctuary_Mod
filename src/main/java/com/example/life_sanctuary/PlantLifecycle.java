@@ -55,6 +55,8 @@ public final class PlantLifecycle {
      * Finish exactly the transition declared for the current stage.
      * Call only after the species adapter validates/applies the corresponding world structure.
      * A stale snapshot cannot draw a fresh timer or advance twice.
+     * New multi-block adapters should use PlantStageGrowth.advance instead, so structure and stage
+     * share one commit. Never call finishStage again after that commit.
      */
     public static Result finishStage(PlantIndividuals store, PlantIndividualState expected, RandomSource random) {
         if (store.isReadOnly() || !canRunTimer(expected) || expected.remainingTicks() != 0

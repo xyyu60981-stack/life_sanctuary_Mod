@@ -18,12 +18,19 @@ public record PlantStructurePlan(PlantIndividualState expectedIndividual, Map<Bl
     public enum Replacement {
         AIR_ONLY,
         REPLACEABLE_DRY,
+        DECORATION_ONLY,
+        MOSS_SUBSTRATE,
+        MOSS_SUBSTRATE_WATER,
+        OWNED_RHIZOME,
+        OWNED_WATER_RHIZOME,
         OWNED_PART,
         WATER_PRESERVING,
         OWNED_WATER_PART;
 
-        public boolean requiresOwnership() { return this == OWNED_PART || this == OWNED_WATER_PART; }
-        public boolean preservesWater() { return this == WATER_PRESERVING || this == OWNED_WATER_PART; }
+        public boolean requiresRhizomeOwnership() { return this == OWNED_RHIZOME || this == OWNED_WATER_RHIZOME; }
+        public boolean requiresOwnership() { return this == OWNED_PART || this == OWNED_WATER_PART || requiresRhizomeOwnership(); }
+        public boolean preservesWater() { return this == WATER_PRESERVING || this == OWNED_WATER_PART
+                || this == OWNED_WATER_RHIZOME || this == MOSS_SUBSTRATE_WATER; }
     }
 
     public record Change(BlockState expected, BlockState replacement, String role, Replacement policy) {

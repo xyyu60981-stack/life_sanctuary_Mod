@@ -158,7 +158,7 @@ public final class RunnerIndividualPlanner {
         var requiredIds = identities.stream().map(Identity::id).collect(java.util.stream.Collectors.toSet());
         if (resetBudget ? !splitBudgets.keySet().equals(requiredIds) : !splitBudgets.isEmpty())
             throw new IllegalArgumentException("Supply budgets only for every true split fragment");
-        if (splitBudgets.values().stream().anyMatch(budget -> budget.extraLength() != 0))
+        if (splitBudgets.values().stream().anyMatch(budget -> budget.extraLength() != 0 || budget.peatRewardsUsed() != 0))
             throw new IllegalArgumentException("Split cannot inherit extra length rewards");
 
         Map<BlockPos, Integer> components = new HashMap<>();
@@ -178,7 +178,9 @@ public final class RunnerIndividualPlanner {
                     expected.stage(), expected.population(), expected.canBePruned(), expected.pruned(),
                     part.timer().target(), part.timer().elapsed(), expected.environmentReasons(), part.harvests(),
                     expected.origin(), part.reproduction(), resetBudget
-                            ? Optional.of(splitBudgets.get(identity.id())) : expected.runnerBudget()));
+                            ? Optional.of(splitBudgets.get(identity.id()).withStarts(expected.runnerBudget().orElseThrow()
+                                    .survivingStarts(part.network().positions())))
+                            : expected.runnerBudget().map(value -> value.withStarts(value.survivingStarts(part.network().positions())))));
         }
         Set<BlockPos> removedParts = new HashSet<>();
         for (var entry : ownedParts.entrySet()) {

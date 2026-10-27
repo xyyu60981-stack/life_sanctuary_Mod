@@ -9,7 +9,7 @@ import net.minecraft.util.RandomSource;
 public final class PlantNaturalPollination {
     private PlantNaturalPollination() {}
 
-    public enum Outcome { REJECTED, WAITING_FOR_POLLEN, FAILED, FERTILIZED, STALE }
+    public enum Outcome { REJECTED, NOT_DUE, WAITING_FOR_POLLEN, RETRY, FAILED, FERTILIZED, STALE }
     public record Result(Outcome outcome, int donors, int successPercent, int reservedSeeds) {}
 
     /** 物种提供种子上下限；第一株雄株从最低产量起，每多一株提高随机上限 2 粒。 */
@@ -27,8 +27,8 @@ public final class PlantNaturalPollination {
 
     /**
      * 调用者须已为受粉株开启指定窗口，并确认本次到达物种规定的判定时刻。
-     * 无合格供粉株只是等待，不投概率也不登记失败。只有实际失败才关闭本轮受粉侧；
-     * 失败完全花继续供粉。成功保留一次抽定的种子数，进入受精状态等待独立成熟。
+     * 每2000活动tick一次，前两次失败等待下一次；第三次仍失败才退出本轮受粉。
+     * 无供粉者也消耗一次搜索，但不投概率；失败完全花继续供粉，花结构留到窗口结束。
      */
     public static Result attemptCycad(ServerLevel level, PlantIndividuals store, PlantIndividualState expected,
             String flowerKey, long roundId, Predicate<PlantIndividualState> eligibleDonor,
@@ -40,25 +40,26 @@ public final class PlantNaturalPollination {
         var round = store.flowerRound(expected.id()).orElse(null);
         if (round == null || round.id() != roundId || !round.allowsPollenReception()
                 || !PlantPollination.canReceivePollen(store, expected, flowerKey)) return result(Outcome.REJECTED, 0, 0, 0);
+        if (!round.cycadReady()) return result(Outcome.NOT_DUE, 0, 0, 0);
         var flower = store.flower(expected.id(), flowerKey).orElseThrow();
         if (!PlantPollination.available(level, expected.base()) || !PlantPollination.available(level, flower.position()))
             return result(Outcome.REJECTED, 0, 0, 0);
-        int donors = PlantPollination.nearbyCycadMales(level, store, expected, flowerKey, eligibleDonor).size();
+        int attempt = round.cycadAttempts() + 1;
+        int donors = PlantPollination.nearbyCycadMales(level, store, expected, flowerKey, attempt, eligibleDonor).size();
         if (!matches(store, expected, flowerKey, flower, round)) return result(Outcome.STALE, donors, 0, 0);
-        if (donors == 0) return result(Outcome.WAITING_FOR_POLLEN, 0, 0, 0);
-
-        int chance = PlantPollination.cycadSuccessPercent(donors);
+        int chance = PlantPollination.cycadSuccessPercent(donors, attempt);
         // 100% 时无需抽随机数；不因任务重试给失败个体重复投骰子。
-        boolean success = chance == 100 || random.nextInt(100) < chance;
+        boolean success = chance == 100 || chance > 0 && random.nextInt(100) < chance;
         if (!matches(store, expected, flowerKey, flower, round)) return result(Outcome.STALE, donors, chance, 0);
-        if (!success)
-            return result(store.failFlowerRound(expected, roundId, flowerKey) ? Outcome.FAILED : Outcome.STALE,
-                    donors, chance, 0);
+        if (!success) {
+            boolean changed = store.resolveCycadAttempt(expected, flowerKey, flower, round, false, 0);
+            var failure = attempt == 3 ? Outcome.FAILED : donors == 0 ? Outcome.WAITING_FOR_POLLEN : Outcome.RETRY;
+            return result(changed ? failure : Outcome.STALE, donors, chance, 0);
+        }
 
         int seeds = yield.sample(donors, random);
         if (!matches(store, expected, flowerKey, flower, round)) return result(Outcome.STALE, donors, chance, 0);
-        boolean changed = store.replaceFlower(expected, flowerKey, flower,
-                flower.withPhase(PlantFlowerState.Phase.FERTILIZED, seeds));
+        boolean changed = store.resolveCycadAttempt(expected, flowerKey, flower, round, true, seeds);
         return result(changed ? Outcome.FERTILIZED : Outcome.STALE, donors, chance, changed ? seeds : 0);
     }
 

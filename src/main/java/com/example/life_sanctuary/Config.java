@@ -38,10 +38,26 @@ public class Config {
             .comment("Automatically put allowed propagules into the equipped collector. Empty bags are excluded.")
             .define("collectorAutoPickup", true);
 
+    public static final ModConfigSpec.BooleanValue INDIRECT_CROWN_LEAF_DROPS = BUILDER
+            .comment("Allow grass-stalk drops from tree-fern/cup-seed-fern leaves lost in bud/stem support cascades.",
+                    "Direct leaf/skirt cuts keep their species drops. Automatic shedding never gains this option.")
+            .define("indirectCrownLeafDrops", false);
+
     public static final ModConfigSpec.ConfigValue<List<? extends String>> COLLECTOR_PICKUP_BLACKLIST = BUILDER
             .comment("Item IDs excluded from automatic collector pickup; manual storage remains allowed.")
             .defineListAllowEmpty("collectorPickupBlacklist", List.<String>of(), () -> "minecraft:wheat_seeds",
                     value -> value instanceof String id && ResourceLocation.tryParse(id) != null);
+
+    public static final ModConfigSpec.IntValue PLANT_MERCHANT_BAG_COST = BUILDER
+            .comment("Emerald cost for each plant merchant empty-bag offer. Applies to newly spawned merchants.")
+            .defineInRange("plantMerchantBagEmeraldCost", 1, 1, 64);
+    public static final ModConfigSpec.IntValue PLANT_MERCHANT_BAG_COUNT = BUILDER
+            .comment("Empty bags per plant merchant trade. Applies to newly spawned merchants.")
+            .defineInRange("plantMerchantBagsPerTrade", 8, 1, 64);
+
+    public static final ModConfigSpec.IntValue PLANT_MERCHANT_COMPASS_COST = BUILDER
+            .comment("Emerald cost of one unbound shelter compass; applies to newly spawned plant merchants.")
+            .defineInRange("plantMerchantCompassEmeraldCost", 8, 1, 64);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 

@@ -20,7 +20,7 @@ public final class CultivationSporeBagInput implements CultivationInventoryExcha
 
     /** 支持本 mod 既有无命名空间标签及完整物种 ID；外部命名空间不缩写、不按路径混同。 */
     public static boolean matchesSpecies(ItemStack stack, ResourceLocation species) {
-        if (!ReproductiveBagKind.SPORE.isFilledBag(stack)) return false;
+        if (!ReproductiveBagKind.SPORE.isFilledBag(stack) || !SporeBagContents.cultivatable(stack)) return false;
         String label = SporeBagItem.species(stack);
         return species.toString().equals(label)
                 || species.getNamespace().equals("life_sanctuary") && species.getPath().equals(label);

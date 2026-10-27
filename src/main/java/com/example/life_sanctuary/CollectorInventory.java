@@ -48,7 +48,7 @@ public final class CollectorInventory {
     /** Insert a copy, merge existing stacks first, and commit at most once. Returns accepted count. */
     public static int insert(ItemStack box, ItemStack incoming) {
         int size = capacity(box);
-        if (size == 0 || box.getCount() != 1 || incoming.isEmpty() || !accepts(incoming)) return 0;
+        if (size == 0 || box.getCount() != 1 || incoming.isEmpty() || !accepts(incoming) || !CollectorFilter.read(box).allows(incoming)) return 0;
         var contents = box.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
         if (contents.getSlots() > size) return 0;
         NonNullList<ItemStack> slots = NonNullList.withSize(size, ItemStack.EMPTY);
@@ -84,7 +84,7 @@ public final class CollectorInventory {
     public static boolean exchangeBag(ItemStack box, ReproductiveBagKind kind, ItemStack filled, boolean simulate) {
         if (filled.getCount() != 1 || !kind.isFilledBag(filled)) return false;
         int size = capacity(box);
-        if (size == 0 || box.getCount() != 1) return false;
+        if (size == 0 || box.getCount() != 1 || !CollectorFilter.read(box).allows(filled)) return false;
         var contents = box.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
         if (contents.getSlots() > size) return false; // Never truncate malformed/oversized contents.
         NonNullList<ItemStack> slots = NonNullList.withSize(size, ItemStack.EMPTY);
@@ -120,5 +120,15 @@ public final class CollectorInventory {
             }
         }
         return false; // Original component and empty bag remain unchanged if output cannot fit.
+    }
+
+    /** Species-neutral precheck; the actual species is validated by atomic exchangeBag before debit. */
+    public static boolean hasEmptyBag(ItemStack box, ReproductiveBagKind kind) {
+        int size = capacity(box);
+        if (size == 0 || box.getCount() != 1) return false;
+        var contents = box.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+        if (contents.getSlots() > size) return false;
+        for (int i = 0; i < contents.getSlots(); i++) if (kind.isEmptyBag(contents.getStackInSlot(i))) return true;
+        return false;
     }
 }

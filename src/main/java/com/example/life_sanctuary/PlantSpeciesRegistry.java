@@ -27,6 +27,13 @@ public final class PlantSpeciesRegistry {
         return definition;
     }
 
+    /** 扩大苏铁区域但不增减数量；物种原有阶段、ID和数量上限全部保留。 */
+    public static PlantSpeciesDefinition registerCycad(PlantSpeciesDefinition definition) {
+        var population = definition.population().orElseThrow();
+        return register(new PlantSpeciesDefinition(definition.id(), definition.stages(), Optional.of(
+                new PlantSpeciesDefinition.PopulationRules(32, population.maximumIndividuals()))));
+    }
+
     public static Optional<PlantSpeciesDefinition> find(ResourceLocation id) {
         return Optional.ofNullable(DEFINITIONS.get(id));
     }

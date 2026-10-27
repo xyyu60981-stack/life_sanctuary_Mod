@@ -1,0 +1,19 @@
+{
+  "result": {
+    "count": 1,
+    "id": "life_sanctuary:skylight_shelter_compass"
+  },
+  "ingredients": [
+    {
+      "item": "life_sanctuary:shelter_compass"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:emerald"
+    }
+  ],
+  "category": "misc",
+  "type": "minecraft:crafting_shapeless"
+}

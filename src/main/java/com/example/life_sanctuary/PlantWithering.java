@@ -82,10 +82,11 @@ public final class PlantWithering {
                 remaining.put(pos, owned.get(pos));
             }
         }
+        var matureBefore = store.matureSeedsForWithering(expected);
         var commit = PlantStructureCommitter.apply(level, store, new PlantStructurePlan(expected, changes, observed), expected);
         if (commit.status() != PlantStructureCommitter.Status.COMMITTED) return commit;
         // 死体结构已经完整落地及通知后，才释放活体身份、调度和种群名额。
-        return PlantStructureRemoval.retire(level, store, expected, remaining)
+        return PlantStructureRemoval.retire(level, store, expected, remaining, deadStates, matureBefore)
                 ? commit : result(PlantStructureCommitter.Status.RECOVERY_REQUIRED);
     }
 

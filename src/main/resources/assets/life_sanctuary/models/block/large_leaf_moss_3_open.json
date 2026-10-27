@@ -1,0 +1,208 @@
+{
+  "textures": {
+    "plant": "minecraft:block/fern",
+    "particle": "minecraft:block/fern"
+  },
+  "elements": [
+    {
+      "from": [
+        2.0,
+        0,
+        7
+      ],
+      "shade": false,
+      "to": [
+        6.0,
+        9,
+        7
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4.0,
+        0,
+        5
+      ],
+      "shade": false,
+      "to": [
+        4.0,
+        9,
+        9
+      ],
+      "faces": {
+        "west": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        6.0,
+        0,
+        11
+      ],
+      "shade": false,
+      "to": [
+        10.0,
+        9,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        8.0,
+        0,
+        9
+      ],
+      "shade": false,
+      "to": [
+        8.0,
+        9,
+        13
+      ],
+      "faces": {
+        "west": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        10.0,
+        0,
+        7
+      ],
+      "shade": false,
+      "to": [
+        14.0,
+        9,
+        7
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        12.0,
+        0,
+        5
+      ],
+      "shade": false,
+      "to": [
+        12.0,
+        9,
+        9
+      ],
+      "faces": {
+        "west": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#plant",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ],
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout"
+}

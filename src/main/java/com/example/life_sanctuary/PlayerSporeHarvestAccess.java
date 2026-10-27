@@ -34,10 +34,16 @@ public final class PlayerSporeHarvestAccess implements SporeHarvestAccess {
         ItemStack result = SporeBagItem.filled(speciesId);
         if (!player.getInventory().add(result)) player.drop(result, false);
     }
+    @Override public boolean exchangeSporeBag(String speciesId, SporeBagContents.Form form, BlockPos source) {
+        var result = SporeBagItem.filled(speciesId, form);
+        if (!hasEmptySporeBag()) return false;
+        consumeEmptySporeBag();
+        if (!player.getInventory().add(result)) player.drop(result, false);
+        return true;
+    }
 
     private static boolean isEmptySporeBag(ItemStack stack) {
-        return stack.is(LifeSanctuaryMod.EMPTY_SPORE_BAG.get())
-                || (stack.is(LifeSanctuaryMod.SPORE_BAG.get()) && SporeBagItem.species(stack) == null);
+        return ReproductiveBagKind.SPORE.isEmptyBag(stack);
     }
 
     private static boolean consumeFromHand(ItemStack stack) {

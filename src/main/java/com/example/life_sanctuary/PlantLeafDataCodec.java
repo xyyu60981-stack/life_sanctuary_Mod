@@ -50,8 +50,32 @@ final class PlantLeafDataCodec {
                 if (!allowedRoles.add(role.getString("Role"))) throw new IllegalArgumentException("Duplicate allowed leaf role");
             }
         } else if (saved.contains("AllowedRoles")) throw new IllegalArgumentException("Unexpected legacy allowed roles");
-        return new PlantLeafData(new PlantLeafSet(saved.getInt("LeafLimit"), saved.getInt("FertileLimit"), leaves, allowedRoles),
-                new PlantLeafTimers(regrowth, shedding));
+        var crowns = new HashMap<String, PlantLeafSet.Crown>();
+        var crownTimers = new HashMap<String, PlantLeafTimer>();
+        if (version >= 13) {
+            for (var value : compounds(saved, "Crowns")) {
+                var entry = (CompoundTag) value;
+                require(entry, "Key", Tag.TAG_STRING);
+                require(entry, "Center", Tag.TAG_LONG);
+                var roles = new java.util.HashSet<String>();
+                for (var roleTag : compounds(entry, "Roles")) {
+                    var role = (CompoundTag) roleTag;
+                    require(role, "Role", Tag.TAG_STRING);
+                    if (!roles.add(role.getString("Role"))) throw new IllegalArgumentException("Duplicate crown role");
+                }
+                if (crowns.putIfAbsent(entry.getString("Key"), new PlantLeafSet.Crown(BlockPos.of(entry.getLong("Center")), roles)) != null)
+                    throw new IllegalArgumentException("Duplicate crown key");
+            }
+            for (var value : compounds(saved, "CrownRegrowth")) {
+                var entry = (CompoundTag) value;
+                require(entry, "Key", Tag.TAG_STRING);
+                require(entry, "Timer", Tag.TAG_COMPOUND);
+                if (crownTimers.putIfAbsent(entry.getString("Key"), readTimer(entry.getCompound("Timer"), PlantLeafTimer.Kind.REGROWTH)) != null)
+                    throw new IllegalArgumentException("Duplicate crown timer");
+            }
+        } else if (saved.contains("Crowns") || saved.contains("CrownRegrowth")) throw new IllegalArgumentException("Unexpected legacy crown metadata");
+        return new PlantLeafData(new PlantLeafSet(saved.getInt("LeafLimit"), saved.getInt("FertileLimit"), leaves, allowedRoles, crowns),
+                new PlantLeafTimers(regrowth, shedding, crownTimers));
     }
 
     static CompoundTag write(PlantLeafData data) {
@@ -88,6 +112,24 @@ final class PlantLeafDataCodec {
             shedding.add(value);
         });
         saved.put("Shedding", shedding);
+        var crowns = new ListTag();
+        data.leaves().crowns().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            var value = new CompoundTag();
+            value.putString("Key", entry.getKey());
+            value.putLong("Center", entry.getValue().center().asLong());
+            var crownRoles = new ListTag();
+            entry.getValue().roles().stream().sorted().forEach(role -> {
+                var item = new CompoundTag(); item.putString("Role", role); crownRoles.add(item);
+            });
+            value.put("Roles", crownRoles); crowns.add(value);
+        });
+        saved.put("Crowns", crowns);
+        var crownTimers = new ListTag();
+        data.timers().crownRegrowth().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            var value = new CompoundTag(); value.putString("Key", entry.getKey());
+            value.put("Timer", writeTimer(entry.getValue())); crownTimers.add(value);
+        });
+        saved.put("CrownRegrowth", crownTimers);
         return saved;
     }
 

@@ -16,7 +16,7 @@ record PlantLeafSheddingChange(String key, PlantLeafData before, RandomSource ra
             throw new IllegalArgumentException("Shedding must remove exactly its own leaf");
         var timers = before.timers().finishShedding(before.leaves(), after, key).orElseThrow();
         // 已有整株等待继续原进度，不因第二片叶脱落重新计时。
-        timers = timers.startRegrowth(after, owner.source(), random).orElseThrow();
+        timers = timers.regrowthAfterLoss(after, old.role(), owner.source(), random, false).orElseThrow();
         var next = new PlantLeafData(after, timers);
         next.validateOwner(owner, parts);
         return next;

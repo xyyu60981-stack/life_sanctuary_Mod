@@ -24,6 +24,7 @@ final class PlantLeafScheduler {
         cancel(plant.id());
         if (data == null || !canRun(plant)) return;
         data.timers().regrowth().ifPresent(timer -> add(plant, timer, ""));
+        data.timers().crownRegrowth().forEach((key, timer) -> add(plant, timer, "crown/" + key));
         data.timers().shedding().forEach((key, timer) -> add(plant, timer, key));
     }
 
@@ -52,7 +53,9 @@ final class PlantLeafScheduler {
         Optional<PlantLeafTimer> regrowth = saved.timers().regrowth().map(timer -> current(plant, timer, ""));
         Map<String, PlantLeafTimer> shedding = new HashMap<>();
         saved.timers().shedding().forEach((key, timer) -> shedding.put(key, current(plant, timer, key)));
-        return new PlantLeafData(saved.leaves(), new PlantLeafTimers(regrowth, shedding));
+        Map<String, PlantLeafTimer> crowns = new HashMap<>();
+        saved.timers().crownRegrowth().forEach((key, timer) -> crowns.put(key, current(plant, timer, "crown/" + key)));
+        return new PlantLeafData(saved.leaves(), new PlantLeafTimers(regrowth, shedding, crowns));
     }
 
     private PlantLeafTimer current(UUID plant, PlantLeafTimer timer, String key) {
@@ -73,7 +76,8 @@ final class PlantLeafScheduler {
                 return;
             }
             var event = binding.event();
-            var timer = event.kind() == PlantLeafTimer.Kind.REGROWTH ? leaves.timers().regrowth().orElse(null)
+            var timer = event.kind() == PlantLeafTimer.Kind.REGROWTH ? event.crownKey().isPresent()
+                    ? leaves.timers().crownRegrowth().get(event.crownKey().get()) : leaves.timers().regrowth().orElse(null)
                     : leaves.timers().shedding().get(event.leafKey());
             if (timer == null || !timer.ready()) return;
             var handler = PlantLeafHandlers.find(plant.species());

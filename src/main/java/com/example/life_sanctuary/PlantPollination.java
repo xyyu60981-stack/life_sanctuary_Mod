@@ -28,11 +28,18 @@ public final class PlantPollination {
     }
 
     /**
-     * 以雌株基底为中心查询 XYZ 21×9×21 内同种供粉个体，按 UUID 去重，不加载区块。
+     * 前两次查本种群，第三次以雌株基底为中心查XYZ 21×5×21，按UUID去重，不加载区块。
      * eligibleMale 由物种限定活动母株/繁殖窗口等资格，必须只读；本层不替物种开启自然繁殖。
      */
     public static Set<UUID> nearbyCycadMales(ServerLevel level, PlantIndividuals store,
             PlantIndividualState expected, String flowerKey, Predicate<PlantIndividualState> eligibleMale) {
+        int attempt = store.flowerRound(expected.id()).map(round -> Math.min(3, round.cycadAttempts() + 1)).orElse(1);
+        return nearbyCycadMales(level, store, expected, flowerKey, attempt, eligibleMale);
+    }
+
+    public static Set<UUID> nearbyCycadMales(ServerLevel level, PlantIndividuals store,
+            PlantIndividualState expected, String flowerKey, int attempt, Predicate<PlantIndividualState> eligibleMale) {
+        if (attempt < 1 || attempt > 3) throw new IllegalArgumentException("Invalid cycad attempt");
         java.util.Objects.requireNonNull(eligibleMale);
         if (store != PlantIndividuals.get(level)) throw new IllegalArgumentException("Wrong dimension store");
         if (!canReceivePollen(store, expected, flowerKey)
@@ -41,7 +48,9 @@ public final class PlantPollination {
         if (female == null || !female.receivesPollen() || !attached(store, expected, female)
                 || !available(level, female.position())) return Set.of();
         Set<UUID> result = new HashSet<>();
-        for (UUID id : store.cycadPollenCandidates(expected.species(), expected.base())) {
+        var candidates = attempt < 3 ? store.cycadPopulationCandidates(expected.species(), expected.population())
+                : store.cycadPollenCandidates(expected.species(), expected.base());
+        for (UUID id : candidates) {
             if (id.equals(expected.id())) continue;
             var male = store.find(id).orElse(null);
             if (male != null && active(store, male) && available(level, male.base())
@@ -55,6 +64,12 @@ public final class PlantPollination {
         if (males < 0) throw new IllegalArgumentException("Negative male count");
         if (males == 0) return 0;
         return males >= 4 ? 100 : 40 + (males - 1) * 20;
+    }
+
+    public static int cycadSuccessPercent(int males, int attempt) {
+        if (attempt < 1 || attempt > 3) throw new IllegalArgumentException("Invalid cycad attempt");
+        int base = cycadSuccessPercent(males);
+        return males == 0 ? 0 : Math.min(100, base + (attempt == 3 ? 20 : 0));
     }
 
     static boolean available(ServerLevel level, BlockPos pos) {

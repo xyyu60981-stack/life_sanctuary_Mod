@@ -1,0 +1,1 @@
+{"variants":{"facing=north":{"model":"life_sanctuary:block/fossil_slicer"},"facing=east":{"model":"life_sanctuary:block/fossil_slicer","y":90},"facing=south":{"model":"life_sanctuary:block/fossil_slicer","y":180},"facing=west":{"model":"life_sanctuary:block/fossil_slicer","y":270}}}

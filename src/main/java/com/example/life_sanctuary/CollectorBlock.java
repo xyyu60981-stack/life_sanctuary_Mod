@@ -39,14 +39,14 @@ public final class CollectorBlock extends BaseEntityBlock {
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                         Player player, BlockHitResult hit) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof CollectorBlockEntity collector) {
-            player.openMenu(collector);
+            player.openMenu(collector, buffer -> { buffer.writeBlockPos(pos); buffer.writeVarInt(collector.getContainerSize() / 9); });
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
     // Contents travel in the loot item's CONTAINER component; never scatter them in onRemove.
     @Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && player.isCreative()
-                && level.getBlockEntity(pos) instanceof CollectorBlockEntity collector && !collector.isEmpty()) {
+                && level.getBlockEntity(pos) instanceof CollectorBlockEntity collector && (!collector.isEmpty() || collector.hasFilterConfiguration())) {
             ItemStack stack = new ItemStack(this);
             stack.applyComponents(collector.collectComponents());
             ItemEntity drop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);

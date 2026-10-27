@@ -4,7 +4,8 @@ import java.util.Set;
 import java.util.UUID;
 
 /** Species-selected counted stages. This governs automatic offspring, never manual placement. */
-public record PlantSpreadAdmission(Set<String> countedStages) {
+public record PlantSpreadAdmission(Set<String> countedStages, boolean includeCultivated) {
+    public PlantSpreadAdmission(Set<String> countedStages) { this(countedStages, false); }
     public enum Result { REGISTERED, FULL, NO_RULE, INVALID, PARENT_PAUSED, STALE_PARENT,
         NO_REPRODUCTION_BUDGET, POSITION_OCCUPIED, READ_ONLY }
     public PlantSpreadAdmission {
@@ -14,7 +15,7 @@ public record PlantSpreadAdmission(Set<String> countedStages) {
     }
 
     public boolean counts(PlantOrigin origin, String stage) {
-        return origin != PlantOrigin.PLAYER_CULTIVATED && countedStages.contains(stage);
+        return (includeCultivated || origin != PlantOrigin.PLAYER_CULTIVATED) && countedStages.contains(stage);
     }
 
     public int occupied(PlantPopulationCounts population) {

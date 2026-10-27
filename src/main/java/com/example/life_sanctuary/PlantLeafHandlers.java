@@ -13,8 +13,12 @@ public final class PlantLeafHandlers {
         public Event {
             Objects.requireNonNull(kind);
             Objects.requireNonNull(leafKey);
-            if (kind == PlantLeafTimer.Kind.SHEDDING ? leafKey.isBlank() : !leafKey.isEmpty())
+            if (kind == PlantLeafTimer.Kind.SHEDDING ? leafKey.isBlank()
+                    : !leafKey.isEmpty() && (!leafKey.startsWith("crown/") || leafKey.substring(6).isBlank()))
                 throw new IllegalArgumentException("Invalid leaf event key");
+        }
+        public java.util.Optional<String> crownKey() {
+            return kind == PlantLeafTimer.Kind.REGROWTH && !leafKey.isEmpty() ? java.util.Optional.of(leafKey.substring(6)) : java.util.Optional.empty();
         }
     }
     @FunctionalInterface

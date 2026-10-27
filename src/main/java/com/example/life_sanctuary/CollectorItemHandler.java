@@ -19,7 +19,7 @@ public final class CollectorItemHandler extends ComponentItemHandler {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-        return box.getCount() == 1 && CollectorInventory.accepts(stack);
+        return box.getCount() == 1 && CollectorInventory.accepts(stack) && CollectorFilter.read(box).allows(stack);
     }
 
     @Override

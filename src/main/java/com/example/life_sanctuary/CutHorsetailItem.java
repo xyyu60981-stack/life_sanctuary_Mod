@@ -33,7 +33,7 @@ public final class CutHorsetailItem extends BlockItem {
 
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        return spore ? 30 : super.getUseDuration(stack, entity);
+        return spore ? 10 : super.getUseDuration(stack, entity);
     }
 
     @Override

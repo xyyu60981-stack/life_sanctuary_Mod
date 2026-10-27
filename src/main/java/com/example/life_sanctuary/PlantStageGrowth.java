@@ -41,7 +41,7 @@ public final class PlantStageGrowth {
             PlantIndividualState expected, PlantStageStructure fullTarget, Map<BlockPos, BlockState> observed,
             PlantStageResources resources, PlantInitialCrown fullCrown, RandomSource random) {
         if (!level.getServer().isSameThread()) throw new IllegalStateException("Server thread required");
-        if (!PlantLifecycle.canRunTimer(expected) || expected.remainingTicks() != 0) return rejected();
+        if (PlantIndividuals.get(level).isWaitingForCuttingBud(expected.id()) || !HeterosporeTransitions.stageReady(level, expected)) return rejected();
         var selection = PlantCrownSpace.select(level, expected, fullTarget, fullCrown, observed);
         if (selection.selection().isEmpty()) return rejected();
         var selected = selection.selection().get();
@@ -59,7 +59,7 @@ public final class PlantStageGrowth {
             PlantStageStructure fullTarget, Map<BlockPos, BlockState> observed, PlantStageResources resources,
             PlantInitialCrown fullCrown, RandomSource random) {
         if (!level.getServer().isSameThread()) throw new IllegalStateException("Server thread required");
-        if (!PlantLifecycle.canRunTimer(expected) || expected.remainingTicks() != 0) return rejected();
+        if (PlantIndividuals.get(level).isWaitingForCuttingBud(expected.id()) || !HeterosporeTransitions.stageReady(level, expected)) return rejected();
         var selection = PlantCrownSpace.selectAdult(level, expected, fullTarget, fullCrown, observed);
         if (selection.selection().isEmpty()) return rejected();
         var selected = selection.selection().get();
@@ -71,7 +71,7 @@ public final class PlantStageGrowth {
             PlantStageStructure fullTarget, Map<BlockPos, BlockState> observed, PlantStageResources resources,
             PlantInitialCrown fullCrown, RandomSource random) {
         if (!level.getServer().isSameThread()) throw new IllegalStateException("Server thread required");
-        if (!PlantLifecycle.canRunTimer(expected) || expected.remainingTicks() != 0
+        if (PlantIndividuals.get(level).isWaitingForCuttingBud(expected.id()) || !HeterosporeTransitions.stageReady(level, expected)
                 || PlantHarvestEligibility.isFullyAdult(expected.species(), fullTarget.stage())) return rejected();
         var selection = PlantCrownSpace.selectGrowing(level, expected, fullTarget, fullCrown, observed);
         if (selection.selection().isEmpty()) return rejected();
@@ -86,7 +86,7 @@ public final class PlantStageGrowth {
         Objects.requireNonNull(random);
         Objects.requireNonNull(resources);
         var store = PlantIndividuals.get(level);
-        if (store.isReadOnly() || store.isApplyingStructure() || !PlantLifecycle.canRunTimer(expected) || expected.remainingTicks() != 0
+        if (store.isReadOnly() || store.isApplyingStructure() || PlantIndividuals.get(level).isWaitingForCuttingBud(expected.id()) || !HeterosporeTransitions.stageReady(level, expected)
                 || !expected.equals(store.find(expected.id()).orElse(null))) return rejected();
         var definition = PlantSpeciesRegistry.find(expected.species()).orElse(null);
         if (definition == null) return rejected();
@@ -95,6 +95,8 @@ public final class PlantStageGrowth {
                 || !current.transition().get().nextStage().equals(target.stage())
                 || target.stage().equals(expected.stage())) return rejected();
 
+        if (target.parts().values().stream().anyMatch(part -> !CycadSeedAppearance.matchesStage(part.state(), expected.species(), target.stage())))
+            return rejected();
         var owned = store.partsOf(expected.id());
         var leaves = store.leavesOf(expected.id());
         var plan = target.plan(expected, owned, observed);
@@ -118,6 +120,7 @@ public final class PlantStageGrowth {
         var preflight = PlantStructurePreflight.check(level, store, plan);
         if (!preflight.ready())
             return new PlantStructureCommitter.Result(PlantStructureCommitter.Status.REJECTED, Optional.of(preflight));
+        if (!PlantGrowthSpace.check(expected, target.stage(), owned.keySet(), observed).ready()) return rejected();
         // 先通过完整空间预检再抽下一阶段计时；常规阻挡重试不会提前刷新计时。
         long duration = 0;
         var nextTransition = definition.stages().get(target.stage()).transition();

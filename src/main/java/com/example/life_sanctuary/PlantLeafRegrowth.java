@@ -11,6 +11,74 @@ import net.minecraft.util.RandomSource;
 public final class PlantLeafRegrowth {
     private PlantLeafRegrowth() {}
 
+    public record Addition(String key, PlantLeafState leaf, Optional<String> retainedKey) {
+        public Addition {
+            java.util.Objects.requireNonNull(key);
+            java.util.Objects.requireNonNull(leaf);
+            java.util.Objects.requireNonNull(retainedKey);
+            if (key.isBlank() || !leaf.present()) throw new IllegalArgumentException("Invalid regrowth addition");
+        }
+    }
+
+    /** 同一芽丛补叶适配器使用；完整批次有任何一叶受阻则整批不提交，保留到期计时。 */
+    public static PlantStructureCommitter.Result placeAll(ServerLevel level, PlantStructurePlan plan,
+            PlantLeafData leaves, java.util.List<Addition> additions, BlockPos center, PlantStructureSupports supports) {
+        if (!level.getServer().isSameThread()) throw new IllegalStateException("Server thread required");
+        var store = PlantIndividuals.get(level);
+        var expected = plan.expectedIndividual();
+        if (store.isReadOnly() || store.isApplyingStructure() || !PlantLeafScheduler.canRun(expected)
+                || !store.find(expected.id()).filter(expected::equals).isPresent()
+                || !store.leavesOf(expected.id()).filter(leaves::equals).isPresent()) return rejected();
+        var batch = new PlantLeafRegrowthBatchChange(leaves, additions);
+        PlantLeafSet after;
+        try { after = batch.proposal(expected); }
+        catch (IllegalArgumentException | java.util.NoSuchElementException failure) { return rejected(); }
+        var owned = store.partsOf(expected.id());
+        if (batch.crownKey().isPresent() && !leaves.leaves().crowns().get(batch.crownKey().get()).center().equals(center)) return rejected();
+        if (!owned.containsKey(center) || !plan.dependencies().keySet().containsAll(owned.keySet()))
+            throw new IllegalArgumentException("Batch regrowth needs its crown and all old structure snapshots");
+        var roots = additions.stream().map(value -> value.leaf().role()).toList();
+        for (var addition : additions) {
+            var anchor = plan.changes().get(addition.leaf().anchor());
+            if (anchor == null || !anchor.role().equals(addition.leaf().role())) return rejected();
+        }
+        for (var entry : plan.changes().entrySet()) {
+            var change = entry.getValue();
+            if (owned.containsKey(entry.getKey()) || change.policy().requiresOwnership() || change.role().isEmpty()
+                    || roots.stream().filter(root -> change.role().equals(root) || change.role().startsWith(root + "/")).count() != 1)
+                return rejected();
+        }
+        var all = new HashSet<>(owned.keySet());
+        all.addAll(plan.changes().keySet());
+        if (!supports.positions().equals(all) || !supports.hasSupportPath(center, expected.base())) return rejected();
+        for (var addition : additions) {
+            var role = addition.leaf().role();
+            for (var entry : plan.changes().entrySet()) {
+                if (!entry.getValue().role().equals(role) && !entry.getValue().role().startsWith(role + "/")) continue;
+                var parents = supports.requiredSupports().get(entry.getKey());
+                if (parents.isEmpty() || parents.stream().anyMatch(parent -> !parent.equals(center)
+                        && (!plan.changes().containsKey(parent) || !(plan.changes().get(parent).role().equals(role)
+                            || plan.changes().get(parent).role().startsWith(role + "/"))))) return rejected();
+            }
+        }
+        // 原部件不能反过来依赖此次新叶。
+        for (var pos : owned.keySet())
+            if (supports.requiredSupports().get(pos).stream().anyMatch(plan.changes()::containsKey)) return rejected();
+        var checked = PlantStructurePreflight.check(level, store, plan);
+        if (!checked.ready()) return new PlantStructureCommitter.Result(PlantStructureCommitter.Status.REJECTED, Optional.of(checked));
+        var result = PlantStructureCommitter.applyLeafRegrowthBatch(level, plan, batch);
+        if (result.status() == PlantStructureCommitter.Status.COMMITTED
+                && !store.leavesOf(expected.id()).map(PlantLeafData::leaves).filter(after::equals).isPresent()) {
+            store.find(expected.id()).ifPresent(current -> {
+                var reasons = new HashSet<>(current.environmentReasons());
+                reasons.add("structure_commit_error");
+                store.replace(current, current.withEnvironmentReasons(reasons));
+            });
+            return new PlantStructureCommitter.Result(PlantStructureCommitter.Status.RECOVERY_REQUIRED, Optional.empty());
+        }
+        return result;
+    }
+
     /**
      * plan 只含本片新叶，dependencies 覆盖全部旧部件及物种额外生态读取。
      * 完整支撑图包含旧部件与新叶；新叶的支撑只能指向本叶其他部件或指定的现有中心芽丛。
@@ -38,7 +106,7 @@ public final class PlantLeafRegrowth {
         if (store.isReadOnly() || store.isApplyingStructure() || !PlantLeafScheduler.canRun(expected)
                 || !store.find(expected.id()).filter(expected::equals).isPresent()
                 || !store.leavesOf(expected.id()).filter(leaves::equals).isPresent()
-                || leaves.timers().regrowth().isEmpty() || !leaves.timers().regrowth().get().ready()) return rejected();
+                || leaves.timers().regrowthFor(leaves.leaves(), leaf.role()).filter(PlantLeafTimer::ready).isEmpty()) return rejected();
         if (expected.harvests().containsKey(newKey) || expected.reproduction().containsKey(newKey)) return rejected();
         if (leaf.reservesFertileSlot() && !PlantHarvestEligibility.canCollectSporeOrSeed(expected)) return rejected();
         // 有旧额度时可育新叶必须走继承入口，不能用空余名额绕过用户确认的继承规则。
@@ -80,7 +148,8 @@ public final class PlantLeafRegrowth {
             var expectedParts = new HashMap<>(owned);
             plan.changes().forEach((pos, change) -> expectedParts.put(pos, change.role()));
             if (after == null || !after.leaves().equals(afterLeaves) || !store.partsOf(expected.id()).equals(expectedParts)
-                    || after.timers().regrowth().isPresent() != (afterLeaves.freeLeafSlots() > 0)
+                    || after.timers().regrowthFor(afterLeaves, leaf.role()).isPresent()
+                        != (afterLeaves.crownOf(leaf.role()).map(afterLeaves::freeCrownSlots).orElseGet(afterLeaves::freeLeafSlots) > 0)
                     || !store.find(expected.id()).filter(expected::equals).isPresent()) {
                 store.find(expected.id()).ifPresent(current -> {
                     var reasons = new HashSet<>(current.environmentReasons());

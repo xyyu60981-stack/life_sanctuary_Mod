@@ -36,7 +36,8 @@ public final class PlantLifecycle {
     public static Result prune(PlantIndividuals store, UUID id) {
         if (store.isReadOnly()) return Result.REJECTED;
         var current = store.find(id).orElse(null);
-        if (current == null || current.source().isStatic() || !current.canBePruned()) return Result.REJECTED;
+        if (current == null || !current.canBePruned()
+                || current.source().isStatic() && !current.species().equals(LargeLeafMossRules.SPECIES)) return Result.REJECTED;
         if (current.pruned()) return Result.UNCHANGED;
         return store.replace(current, current.withPruned(true).withTimer(current.targetTicks(), 0))
                 ? Result.CHANGED : Result.REJECTED;
@@ -46,7 +47,8 @@ public final class PlantLifecycle {
     public static Result restorePruned(PlantIndividuals store, UUID id) {
         if (store.isReadOnly()) return Result.REJECTED;
         var current = store.find(id).orElse(null);
-        if (current == null || current.source().isStatic() || !current.canBePruned()) return Result.REJECTED;
+        if (current == null || !current.canBePruned()
+                || current.source().isStatic() && !current.species().equals(LargeLeafMossRules.SPECIES)) return Result.REJECTED;
         if (!current.pruned()) return Result.UNCHANGED;
         return store.replace(current, current.withPruned(false)) ? Result.CHANGED : Result.REJECTED;
     }
@@ -59,7 +61,7 @@ public final class PlantLifecycle {
      * share one commit. Never call finishStage again after that commit.
      */
     public static Result finishStage(PlantIndividuals store, PlantIndividualState expected, RandomSource random) {
-        if (store.isReadOnly() || !canRunTimer(expected) || expected.remainingTicks() != 0
+        if (store.isReadOnly() || store.isWaitingForCuttingBud(expected.id()) || !canRunTimer(expected) || expected.remainingTicks() != 0
                 || !expected.equals(store.find(expected.id()).orElse(null))) return Result.REJECTED;
         var definition = PlantSpeciesRegistry.find(expected.species()).orElse(null);
         if (definition == null) return Result.REJECTED;

@@ -15,15 +15,21 @@ import net.neoforged.neoforge.items.ItemHandlerCopySlot;
 public final class CollectorItemMenu extends ChestMenu {
     private final ItemStack box;
     private final int lockedInventorySlot;
+    private boolean standardOpening;
 
     public CollectorItemMenu(int id, Inventory inventory, InteractionHand hand, ItemStack box) {
         this(id, inventory, hand == InteractionHand.MAIN_HAND ? inventory.selected : 40, box,
-                CollectorInventory.capacity(box) == 54 ? MenuType.GENERIC_9x6 : MenuType.GENERIC_9x3);
+                LifeSanctuaryMod.COLLECTOR_ITEM_MENU.get());
+        standardOpening = true;
     }
 
     public CollectorItemMenu(int id, Inventory inventory, int inventorySlot, int rows) {
         this(id, inventory, inventorySlot, inventory.getItem(inventorySlot),
                 LifeSanctuaryMod.COLLECTOR_HOVER_MENU.get(), rows);
+    }
+    public CollectorItemMenu(int id, Inventory inventory, int inventorySlot, int rows, boolean standardOpening) {
+        this(id, inventory, inventorySlot, inventory.getItem(inventorySlot), LifeSanctuaryMod.COLLECTOR_ITEM_MENU.get(), rows);
+        this.standardOpening = standardOpening;
     }
 
     private CollectorItemMenu(int id, Inventory inventory, int inventorySlot, ItemStack box, MenuType<?> type) {
@@ -67,6 +73,10 @@ public final class CollectorItemMenu extends ChestMenu {
             return player.isAlive() && current.getCount() == 1 && CollectorInventory.capacity(current) == getRowCount() * 9;
         return player.isAlive() && current == box && box.getCount() == 1;
     }
+
+    int sourceInventorySlot() { return lockedInventorySlot; }
+    ItemStack sourceBox() { return box; }
+    boolean standardOpening() { return standardOpening; }
 
     @Override public void clicked(int slot, int button, ClickType type, Player player) {
         if (!stillValid(player)) return;

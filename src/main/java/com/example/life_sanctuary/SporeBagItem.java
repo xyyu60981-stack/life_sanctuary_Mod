@@ -28,13 +28,23 @@ public final class SporeBagItem extends Item {
     public static boolean consumesOnAcceptedUse() {
         return true;
     }
+    public static ItemStack filled(String speciesId, SporeBagContents.Form form) {
+        var stack = filled(speciesId); SporeBagContents.write(stack, form); return stack;
+    }
+    @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
+        var form = SporeBagContents.form(stack).orElse(SporeBagContents.Form.NORMAL);
+        return form == SporeBagContents.Form.NORMAL ? super.getName(stack)
+                : net.minecraft.network.chat.Component.translatable("item.life_sanctuary.spore_bag." + form.name().toLowerCase(java.util.Locale.ROOT));
+    }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
         String speciesId = species(stack);
         if (speciesId == null) return InteractionResult.PASS;
-        SporeBagEffect effect = ReproductiveBagEffects.spore(speciesId);
+        var form = SporeBagContents.form(stack);
+        if (form.isEmpty()) return InteractionResult.PASS;
+        SporeBagEffect effect = ReproductiveBagEffects.spore(speciesId, form.get());
         if (effect == null) return InteractionResult.PASS;
         if (!(context.getLevel() instanceof ServerLevel level)) {
             return InteractionResult.sidedSuccess(true);

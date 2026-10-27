@@ -93,7 +93,10 @@ public final class CollectorBlockItem extends BlockItem implements Equipable {
         ItemStack box = player.getItemInHand(hand);
         if (!level.isClientSide && !(player instanceof FakePlayer) && box.getCount() == 1) {
             player.openMenu(new SimpleMenuProvider((id, inventory, user) ->
-                    new CollectorItemMenu(id, inventory, hand, box), box.getHoverName()));
+                    new CollectorItemMenu(id, inventory, hand, box), box.getHoverName()), buffer -> {
+                        buffer.writeVarInt(hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : 40);
+                        buffer.writeVarInt(CollectorInventory.capacity(box) / 9);
+                    });
             level.playSound(null, player.blockPosition(), SoundEvents.CHEST_OPEN, SoundSource.PLAYERS, 0.5F, 1.0F);
         }
     }

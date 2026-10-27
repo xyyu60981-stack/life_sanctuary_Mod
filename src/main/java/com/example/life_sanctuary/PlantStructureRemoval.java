@@ -54,6 +54,11 @@ public final class PlantStructureRemoval {
 
     /** 移除或枯死转换成功后共用；不写世界，不替第三方回调修改过的状态注销。 */
     static boolean retire(ServerLevel level, PlantIndividuals store, PlantIndividualState expected, Map<BlockPos, String> expectedParts) {
+        return retire(level, store, expected, expectedParts, null, Map.of());
+    }
+
+    static boolean retire(ServerLevel level, PlantIndividuals store, PlantIndividualState expected, Map<BlockPos, String> expectedParts,
+            Map<BlockPos, BlockState> corpses, Map<String, PlantFlowerState> matureBefore) {
         if (store != PlantIndividuals.get(level)) throw new IllegalArgumentException("Wrong dimension individual store");
         if (!expected.equals(store.find(expected.id()).orElse(null))
                 || !store.partsOf(expected.id()).equals(expectedParts)
@@ -63,7 +68,7 @@ public final class PlantStructureRemoval {
         }
         var systems = PlantRhizomeSystems.get(level);
         var owner = systems.forShoot(expected.id());
-        if (store.remove(expected.id(), expected.base())) {
+        if (corpses == null ? store.remove(expected.id(), expected.base()) : store.removeWithRescuedSeeds(expected, corpses, matureBefore)) {
             if (owner.isEmpty()) return true;
             try {
                 if (RhizomeShootLifecycle.releaseRemoved(level, owner.get(), expected.id())

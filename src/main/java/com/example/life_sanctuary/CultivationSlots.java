@@ -8,13 +8,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * 四槽不可变状态，仅生成更新／领取提案，不直接修改真实库存。
+ * 单柜两槽／连接大柜四槽的不可变状态，仅生成更新／领取提案，不直接修改真实库存。
  * 方块实体须比较完整旧快照后连同输入消费或输出交付一次提交，不能只调用查询就给物品。
  */
 public record CultivationSlots(List<Optional<CultivationBatchCodec.ReadResult>> slots) {
     public CultivationSlots {
         slots = List.copyOf(slots);
-        if (slots.size() != CultivationRules.SLOT_COUNT) throw new IllegalArgumentException("Cultivation cabinet needs exactly four slots");
+        if (!CultivationRules.validSlotCount(slots.size())) throw new IllegalArgumentException("Cultivation cabinet needs two or four slots");
         var identities = new HashSet<UUID>();
         for (var slot : slots) {
             if (slot.orElse(null) instanceof CultivationBatchCodec.Loaded loaded && !identities.add(loaded.batch().id()))
@@ -23,9 +23,16 @@ public record CultivationSlots(List<Optional<CultivationBatchCodec.ReadResult>> 
     }
 
     public static CultivationSlots empty() {
-        return new CultivationSlots(Collections.nCopies(CultivationRules.SLOT_COUNT,
+        return empty(CultivationRules.SINGLE_SLOT_COUNT);
+    }
+
+    public static CultivationSlots empty(int capacity) {
+        if (!CultivationRules.validSlotCount(capacity)) throw new IllegalArgumentException("Invalid cultivation capacity");
+        return new CultivationSlots(Collections.nCopies(capacity,
                 Optional.<CultivationBatchCodec.ReadResult>empty()));
     }
+
+    public int capacity() { return slots.size(); }
 
     /** 任一不可读槽存在时整机禁止变更，避免将未知批次误判为空槽或与其他槽重复。 */
     public boolean isReadOnly() {
@@ -79,7 +86,7 @@ public record CultivationSlots(List<Optional<CultivationBatchCodec.ReadResult>> 
         int completed = 0;
         for (int slot = 0; slot < slots.size(); slot++)
             if (batchAt(slot).filter(CultivationBatch::finalReady).isPresent()) completed++;
-        return CultivationRules.comparatorSignal(completed);
+        return CultivationRules.comparatorSignal(completed, capacity());
     }
 
     private CultivationSlots replace(int slot, Optional<CultivationBatchCodec.ReadResult> value) {

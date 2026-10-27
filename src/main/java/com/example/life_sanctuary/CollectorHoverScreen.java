@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 /** Interactive replacement for the read-only tooltip, with vanilla inventory click handling. */
-public final class CollectorHoverScreen extends AbstractContainerScreen<CollectorItemMenu> {
+public final class CollectorHoverScreen<M extends net.minecraft.world.inventory.ChestMenu> extends AbstractContainerScreen<M> {
     private long outsideSince;
     private long openedAt;
     private int sourceX;
@@ -16,12 +16,12 @@ public final class CollectorHoverScreen extends AbstractContainerScreen<Collecto
     private final boolean hoverOpening;
     private final boolean returnToInventory;
 
-    public CollectorHoverScreen(CollectorItemMenu menu, Inventory inventory, Component title) {
+    public CollectorHoverScreen(M menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         imageWidth = 176;
         imageHeight = 114 + menu.getRowCount() * 18;
-        hoverOpening = CollectorHoverController.hoverOpening;
-        returnToInventory = CollectorHoverController.returnToInventory;
+        hoverOpening = menu instanceof CollectorItemMenu item && !item.standardOpening() && CollectorHoverController.hoverOpening;
+        returnToInventory = menu instanceof CollectorItemMenu item && !item.standardOpening() && CollectorHoverController.returnToInventory;
         CollectorHoverController.opened();
     }
 
@@ -29,21 +29,26 @@ public final class CollectorHoverScreen extends AbstractContainerScreen<Collecto
         super.init();
         if (!hoverOpening) {
             openedAt = System.currentTimeMillis();
-            return; // Key-opened windows use the normal centered position and explicit close.
+        } else {
+            sourceX = CollectorHoverController.anchorX;
+            sourceY = CollectorHoverController.anchorY;
+            // Prefer attaching the upper-left corner to the source slot's right edge.
+            // Ordinary inventory slots may flip left/up; equipped boxes prefer the right.
+            int desiredX = sourceX + 18;
+            if (!CollectorHoverController.anchorEquipped && desiredX + imageWidth > width - 2)
+                desiredX = sourceX - imageWidth - 2;
+            int desiredY = sourceY;
+            if (!CollectorHoverController.anchorEquipped && desiredY + imageHeight > height - 2)
+                desiredY = sourceY + 16 - imageHeight;
+            leftPos = Math.max(2, Math.min(Math.max(2, width - imageWidth - 2), desiredX));
+            topPos = Math.max(2, Math.min(Math.max(2, height - imageHeight - 2), desiredY));
+            openedAt = System.currentTimeMillis();
         }
-        sourceX = CollectorHoverController.anchorX;
-        sourceY = CollectorHoverController.anchorY;
-        // Prefer attaching the upper-left corner to the source slot's right edge.
-        // Ordinary inventory slots may flip left/up; equipped boxes prefer the right.
-        int desiredX = sourceX + 18;
-        if (!CollectorHoverController.anchorEquipped && desiredX + imageWidth > width - 2)
-            desiredX = sourceX - imageWidth - 2;
-        int desiredY = sourceY;
-        if (!CollectorHoverController.anchorEquipped && desiredY + imageHeight > height - 2)
-            desiredY = sourceY + 16 - imageHeight;
-        leftPos = Math.max(2, Math.min(Math.max(2, width - imageWidth - 2), desiredX));
-        topPos = Math.max(2, Math.min(Math.max(2, height - imageHeight - 2), desiredY));
-        openedAt = System.currentTimeMillis();
+        addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.translatable("menu.life_sanctuary.collector_filter.button"), button -> {
+            if (!menu.getCarried().isEmpty()) return;
+            CollectorHoverController.suppressReopen();
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new OpenCollectorFilterPayload(menu.containerId));
+        }).bounds(leftPos + imageWidth - 52, topPos + 2, 46, 14).build());
     }
 
     @Override protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
@@ -64,7 +69,7 @@ public final class CollectorHoverScreen extends AbstractContainerScreen<Collecto
     }
 
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, font.plainSubstrByWidth(title.getString(), imageWidth - 16), 8, 6, 0xEEEEEE, false);
+        graphics.drawString(font, font.plainSubstrByWidth(title.getString(), imageWidth - 66), 8, 6, 0xEEEEEE, false);
         int spores = 0;
         int pollen = 0;
         for (int i = 0; i < menu.getRowCount() * 9; i++) {

@@ -13,6 +13,7 @@ record PlantGrowingCrownChange(PlantLeafData before, PlantIndividualState target
         return !PlantHarvestEligibility.canCollectSporeOrSeed(owner)
                 && before.leaves().leaves().values().stream().noneMatch(PlantLeafState::fertile)
                 && before.timers().regrowth().filter(PlantLeafTimer::failed).isEmpty()
+                && before.timers().crownRegrowth().values().stream().noneMatch(PlantLeafTimer::failed)
                 && before.timers().shedding().isEmpty();
     }
 
@@ -30,7 +31,7 @@ record PlantGrowingCrownChange(PlantLeafData before, PlantIndividualState target
             if (leaves.putIfAbsent(key, leaf) != null) throw new IllegalArgumentException("Growing crown cannot reuse historical leaf keys");
         });
         return new PlantLeafData(new PlantLeafSet(crown.leaves().leafLimit(), crown.leaves().fertileLimit(),
-                leaves, crown.leaves().allowedRoles()), PlantLeafTimers.EMPTY);
+                leaves, crown.leaves().allowedRoles(), crown.leaves().crowns()), PlantLeafTimers.EMPTY);
     }
 
     static Map<BlockPos, String> nonLeafParts(PlantLeafData before, Map<BlockPos, String> owned) {

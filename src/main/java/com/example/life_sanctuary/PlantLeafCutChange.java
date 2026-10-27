@@ -14,7 +14,7 @@ record PlantLeafCutChange(String key, PlantLeafData before, RandomSource random)
         if (!before.afterParts(parts).leaves().equals(after))
             throw new IllegalArgumentException("Cut must remove exactly its own leaf");
         var timers = before.timers().afterStructureChange(after);
-        if (owner.source().canProgress()) timers = timers.startRegrowth(after, owner.source(), random).orElseThrow();
+        if (owner.source().canProgress()) timers = timers.regrowthAfterLoss(after, old.role(), owner.source(), random, true).orElseThrow();
         var next = new PlantLeafData(after, timers);
         next.validateOwner(owner, parts);
         return next;

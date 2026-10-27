@@ -86,6 +86,11 @@ public record PlantIndividualState(UUID id, ResourceLocation species, BlockPos b
         return new PlantIndividualState(id, species, base, source, stage, population,
                 canBePruned, value, targetTicks, elapsedTicks, environmentReasons, harvests, origin, reproduction, runnerBudget);
     }
+    /** Capability changes preserve identity, resources and timing; removing capability clears pruning. */
+    public PlantIndividualState withPruningCapability(boolean enabled) {
+        return new PlantIndividualState(id, species, base, source, stage, population, enabled, enabled && pruned,
+                targetTicks, elapsedTicks, environmentReasons, harvests, origin, reproduction, runnerBudget);
+    }
 
     /** Missing means uninitialized, zero means exhausted. Neither is an unlimited budget. */
     public PlantIndividualState withReproduction(Map<String, Integer> budgets) {

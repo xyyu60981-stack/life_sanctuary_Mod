@@ -108,7 +108,7 @@ public final class PlantLeafSkirtConversion {
             var after = store.leavesOf(expected.id()).orElse(null);
             var expectedLeaves = leaves.leaves().replace(key, leaf, leaf.withoutStructure()).orElseThrow();
             if (after == null || !after.leaves().equals(expectedLeaves) || after.timers().shedding().containsKey(key)
-                    || after.timers().regrowth().isEmpty() || !store.partsOf(expected.id()).equals(expectedParts)
+                    || after.timers().regrowthFor(expectedLeaves, leaf.role()).isEmpty() || !store.partsOf(expected.id()).equals(expectedParts)
                     || !store.find(expected.id()).filter(expected::equals).isPresent()) {
                 store.find(expected.id()).ifPresent(current -> {
                     var reasons = new HashSet<>(current.environmentReasons());

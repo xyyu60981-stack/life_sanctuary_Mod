@@ -55,7 +55,12 @@ public final class CollectorSporeHarvestAccess implements SporeHarvestAccess, Po
 
     @Override
     public boolean exchangeSporeBag(String speciesId, BlockPos source) {
-        ItemStack result = SporeBagItem.filled(speciesId);
+        return exchangeResult(SporeBagItem.filled(speciesId));
+    }
+    @Override public boolean exchangeSporeBag(String speciesId, SporeBagContents.Form form, BlockPos source) {
+        return exchangeResult(SporeBagItem.filled(speciesId, form));
+    }
+    private boolean exchangeResult(ItemStack result) {
         if (player instanceof FakePlayer && isEmptyBag(player.getItemInHand(hand)))
             return exchangeHeldBag(ReproductiveBagKind.SPORE, result, false);
         if (CollectorInventory.exchangeSporeBag(player.getItemInHand(hand), result, false)) return true;
@@ -66,8 +71,8 @@ public final class CollectorSporeHarvestAccess implements SporeHarvestAccess, Po
         ItemStack result = SporeBagItem.filled("equisetum_arvense");
         if (player instanceof FakePlayer && isEmptyBag(player.getItemInHand(hand)))
             return exchangeHeldBag(ReproductiveBagKind.SPORE, result, true);
-        return CollectorInventory.exchangeSporeBag(player.getItemInHand(hand), result, true)
-                || CollectorInventory.exchangeSporeBag(player.getItemBySlot(EquipmentSlot.LEGS), result, true);
+        return CollectorInventory.hasEmptyBag(player.getItemInHand(hand), ReproductiveBagKind.SPORE)
+                || CollectorInventory.hasEmptyBag(player.getItemBySlot(EquipmentSlot.LEGS), ReproductiveBagKind.SPORE);
     }
     @Override public void consumeEmptySporeBag() { throw new UnsupportedOperationException("Use atomic exchangeSporeBag"); }
     @Override public boolean exchangePollenBag(String speciesId, BlockPos source) {

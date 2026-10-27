@@ -49,6 +49,7 @@ public final class PlantLeafShedding {
         var leaf = leaves.leaves().leaves().get(key);
         var timer = leaves.timers().shedding().get(key);
         if (leaf == null || !leaf.present() || (!manual && (!leaf.exhausted() || timer == null || !timer.ready()))) return rejected();
+        if (manual && leaves.timers().regrowthFor(leaves.leaves(), leaf.role()).filter(PlantLeafTimer::failed).isPresent()) return rejected();
         var owned = store.partsOf(expected.id());
         if (!supports.positions().equals(owned.keySet()) || !observed.keySet().containsAll(owned.keySet()))
             throw new IllegalArgumentException("Leaf shedding requires complete structure/support snapshots");
@@ -74,7 +75,7 @@ public final class PlantLeafShedding {
             var expectedParts = new HashMap<>(owned);
             removed.forEach(expectedParts::remove);
             if (after == null || !after.leaves().equals(expectedLeaves) || after.timers().shedding().containsKey(key)
-                    || after.timers().regrowth().isPresent() != expected.source().canProgress()
+                    || after.timers().regrowthFor(expectedLeaves, leaf.role()).isPresent() != expected.source().canProgress()
                     || !store.partsOf(expected.id()).equals(expectedParts)
                     || !store.find(expected.id()).filter(expected::equals).isPresent()) {
                 store.find(expected.id()).ifPresent(current -> {

@@ -1,1 +1,250 @@
-{"parent":"minecraft:block/cube_all","textures":{"all":"life_sanctuary:block/dead_equisetales"}}
+{
+  "textures": {
+    "stem": "life_sanctuary:block/dead_equisetales",
+    "particle": "life_sanctuary:block/dead_equisetales"
+  },
+  "elements": [
+    {
+      "from": [3.0, 0.0, 3.0],
+      "to": [5.0, 16.0, 5.0],
+      "faces": {
+        "down": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 2.0]
+        },
+        "up": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 2.0]
+        },
+        "north": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        }
+      }
+    },
+    {
+      "from": [0.5, 0.0, 4.0],
+      "to": [7.5, 16.0, 4.0],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [4.0, 0.0, 0.5],
+      "to": [4.0, 16.0, 7.5],
+      "faces": {
+        "west": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [11.0, 0.0, 3.0],
+      "to": [13.0, 15.0, 5.0],
+      "faces": {
+        "down": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 2.0]
+        },
+        "up": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 2.0]
+        },
+        "north": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        }
+      }
+    },
+    {
+      "from": [8.5, 0.0, 4.0],
+      "to": [15.5, 15.0, 4.0],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [12.0, 0.0, 0.5],
+      "to": [12.0, 15.0, 7.5],
+      "faces": {
+        "west": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [3.0, 0.0, 11.0],
+      "to": [5.0, 14.0, 13.0],
+      "faces": {
+        "down": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 2.0]
+        },
+        "up": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 2.0]
+        },
+        "north": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 5.0, 16.0]
+        }
+      }
+    },
+    {
+      "from": [0.5, 0.0, 12.0],
+      "to": [7.5, 14.0, 12.0],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [4.0, 0.0, 8.5],
+      "to": [4.0, 14.0, 15.5],
+      "faces": {
+        "west": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [11.0, 0.0, 11.0],
+      "to": [13.0, 13.0, 13.0],
+      "faces": {
+        "down": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 2.0]
+        },
+        "up": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 2.0]
+        },
+        "north": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [11.0, 0.0, 13.0, 16.0]
+        }
+      }
+    },
+    {
+      "from": [8.5, 0.0, 12.0],
+      "to": [15.5, 13.0, 12.0],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [12.0, 0.0, 8.5],
+      "to": [12.0, 13.0, 15.5],
+      "faces": {
+        "west": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [8.0, 0.0, 16.0, 16.0]
+        }
+      },
+      "shade": false
+    }
+  ],
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout"
+}

@@ -48,11 +48,13 @@ public final class PlantLeafStatus {
                 earliest = Math.min(earliest, timer.remainingTicks());
             }
         }
-        var timer = data.timers().regrowth();
+        var timer = data.timers().regrowth().or(() -> data.timers().crownRegrowth().values().stream()
+                .min(java.util.Comparator.comparingLong(PlantLeafTimer::remainingTicks)));
         boolean handler = PlantLeafHandlers.find(plant.species()) != null;
         Regrowth state;
         if (store.isApplyingStructure(id)) state = Regrowth.APPLYING_STRUCTURE;
         else if (failed > 0 || timer.filter(PlantLeafTimer::failed).isPresent()
+                || data.timers().crownRegrowth().values().stream().anyMatch(PlantLeafTimer::failed)
                 || plant.environmentReasons().stream().anyMatch(reason -> reason.endsWith("_error"))) state = Regrowth.RECOVERY_REQUIRED;
         else if (PlantWithering.isWithering(plant)) state = Regrowth.WITHERING;
         else if (!plant.source().canProgress()) state = Regrowth.SOURCE_DISABLED;

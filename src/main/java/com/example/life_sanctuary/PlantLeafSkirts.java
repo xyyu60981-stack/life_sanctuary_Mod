@@ -11,6 +11,33 @@ import net.minecraft.resources.ResourceLocation;
 /** 可选物种机制。四个裙位存在于普通部件角色中，不占叶位、可育名额或独立计时。 */
 public final class PlantLeafSkirts {
     private PlantLeafSkirts() {}
+    /** 四个裙位的最近方向最大误差45度，严格小于46度可覆盖模型恰好落在对角线的叶。 */
+    public static final double CORRESPONDENCE_DEGREES = 46.0;
+
+    /** 五叶映射四裙位：最近方向唯一对应；对角线平局按北、东、南、西顺序稳定选择。 */
+    public static Direction correspondingSlot(double leafYawDegrees) {
+        if (!Double.isFinite(leafYawDegrees)) throw new IllegalArgumentException("Invalid leaf yaw");
+        Direction best = null;
+        double difference = Double.POSITIVE_INFINITY;
+        for (var slot : new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST }) {
+            double yaw = Math.toDegrees(Math.atan2(slot.getStepX(), slot.getStepZ()));
+            double delta = Math.abs(Math.IEEEremainder(leafYawDegrees - yaw, 360.0));
+            if (delta < difference) { difference = delta; best = slot; }
+        }
+        if (difference >= CORRESPONDENCE_DEGREES) throw new IllegalArgumentException("No matching leaf skirt direction");
+        return best;
+    }
+
+    /** 从实际叶锚点相对芽丛的水平向量取角度，不受叶片高度或跨区块影响。 */
+    public static Direction correspondingSlot(BlockPos crown, BlockPos leafAnchor) {
+        long dx = (long) leafAnchor.getX() - crown.getX(), dz = (long) leafAnchor.getZ() - crown.getZ();
+        if (dx == 0 && dz == 0) throw new IllegalArgumentException("Leaf anchor needs a horizontal direction");
+        return correspondingSlot(Math.toDegrees(Math.atan2(dx, dz)));
+    }
+
+    public static boolean corresponding(double leafYawDegrees, Direction skirt) {
+        return correspondingSlot(leafYawDegrees) == skirt;
+    }
     private static final Set<ResourceLocation> SPECIES = ConcurrentHashMap.newKeySet();
     public static void register(ResourceLocation species) {
         if (PlantSpeciesRegistry.find(Objects.requireNonNull(species)).isEmpty())

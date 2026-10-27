@@ -77,6 +77,14 @@ public final class PlantLeafInitialization {
 
     static boolean matchesInitial(PlantLeafData after, PlantLeafData initial, PlantIndividualState owner) {
         boolean needsWait = owner.source().canProgress() && initial.leaves().freeLeafSlots() > 0;
+        if (!initial.leaves().crowns().isEmpty()) {
+            var expected = new HashSet<String>();
+            if (needsWait) for (var key : initial.leaves().crowns().keySet())
+                if (initial.leaves().freeCrownSlots(key) > 0) expected.add(key);
+            return after.leaves().equals(initial.leaves()) && after.timers().shedding().isEmpty()
+                    && after.timers().regrowth().isEmpty() && after.timers().crownRegrowth().keySet().equals(expected)
+                    && after.timers().crownRegrowth().values().stream().allMatch(timer -> timer.elapsedTicks() == 0 && !timer.failed());
+        }
         return after.leaves().equals(initial.leaves()) && after.timers().shedding().isEmpty()
                 && after.timers().regrowth().isPresent() == needsWait
                 && after.timers().regrowth().map(timer -> timer.kind() == PlantLeafTimer.Kind.REGROWTH

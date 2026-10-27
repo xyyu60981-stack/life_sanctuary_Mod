@@ -24,5 +24,13 @@ public final class CultivationRecipes {
         return Optional.ofNullable(BY_SPECIES.get(species));
     }
 
+    /** 统一解析旧无命名空间标签和完整 ID；只找方案，就绪检查由具体入口完成。 */
+    public static Optional<CultivationRecipe> forSporeBag(net.minecraft.world.item.ItemStack stack) {
+        if (!ReproductiveBagKind.SPORE.isFilledBag(stack) || !SporeBagContents.cultivatable(stack)) return Optional.empty();
+        String label = SporeBagItem.species(stack);
+        var species = ResourceLocation.tryParse(label.contains(":") ? label : LifeSanctuaryMod.MODID + ":" + label);
+        return species == null ? Optional.empty() : find(species);
+    }
+
     public static Map<ResourceLocation, CultivationRecipe> snapshot() { return Map.copyOf(BY_SPECIES); }
 }

@@ -20,8 +20,14 @@ record PlantLeafInitializationChange(PlantLeafData initial, RandomSource random)
         if (!PlantHarvestEligibility.permitsInitialLeaves(initial, owner.species(), owner.stage()))
             throw new IllegalArgumentException("Immature crown cannot receive spore harvest quota");
         var timers = initial.timers();
-        if (owner.source().canProgress() && initial.leaves().freeLeafSlots() > 0)
-            timers = timers.startRegrowth(initial.leaves(), owner.source(), random).orElseThrow();
+        if (owner.source().canProgress() && initial.leaves().freeLeafSlots() > 0) {
+            if (initial.leaves().crowns().isEmpty()) timers = timers.startRegrowth(initial.leaves(), owner.source(), random).orElseThrow();
+            else for (var key : initial.leaves().crowns().keySet().stream().sorted().toList()) {
+                if (initial.leaves().freeCrownSlots(key) > 0)
+                    timers = timers.regrowthAfterLoss(initial.leaves(), initial.leaves().crowns().get(key).roles().stream().sorted().findFirst().orElseThrow(),
+                            owner.source(), random, false).orElseThrow();
+            }
+        }
         var next = new PlantLeafData(initial.leaves(), timers);
         next.validateOwner(owner, parts);
         return next;

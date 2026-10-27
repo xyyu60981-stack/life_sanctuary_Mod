@@ -1,1 +1,36 @@
-{"multipart":[{"when":{"nutritional_stems":"1|2|3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_0"}},{"when":{"nutritional_stems":"2|3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_1"}},{"when":{"nutritional_stems":"3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_2"}},{"when":{"spore_stem":"true"},"apply":{"model":"life_sanctuary:block/horsetail_stem_3"}}]}
+{
+  "multipart": [
+    {
+      "when": {
+        "nutritional_stems": "1|2|3"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_0"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "2|3"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_1"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "3"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_2"
+      }
+    },
+    {
+      "when": {
+        "spore_stem": "true"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_3"
+      }
+    }
+  ]
+}

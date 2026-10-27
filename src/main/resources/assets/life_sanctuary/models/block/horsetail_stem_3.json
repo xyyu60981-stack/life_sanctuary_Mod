@@ -1,40 +1,101 @@
 {
   "textures": {
-    "all": "life_sanctuary:block/equisetum_arvense_spore_stem",
-    "particle": "life_sanctuary:block/equisetum_arvense_spore_stem"
+    "stem": "life_sanctuary:block/equisetum_arvense_fertile",
+    "cone": "life_sanctuary:block/equisetum_arvense_cone",
+    "particle": "life_sanctuary:block/equisetum_arvense_fertile"
   },
   "elements": [
     {
-      "from": [
-        11,
-        0,
-        11
-      ],
-      "to": [
-        13,
-        12,
-        13
-      ],
+      "from": [11.0, 0.0, 11.0],
+      "to": [14.0, 12.0, 14.0],
       "faces": {
-        "up": {
-          "texture": "#all"
-        },
         "down": {
-          "texture": "#all"
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 3.0]
+        },
+        "up": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 3.0]
         },
         "north": {
-          "texture": "#all"
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 12.0]
         },
         "south": {
-          "texture": "#all"
-        },
-        "east": {
-          "texture": "#all"
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 12.0]
         },
         "west": {
-          "texture": "#all"
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 12.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [3.0, 0.0, 6.0, 12.0]
+        }
+      }
+    },
+    {
+      "from": [8.0, 0.0, 12.0],
+      "to": [16.0, 12.0, 12.0],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 12.0]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 12.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [12.0, 0.0, 8.0],
+      "to": [12.0, 12.0, 16.0],
+      "faces": {
+        "west": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 12.0]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [0.0, 0.0, 8.0, 12.0]
+        }
+      },
+      "shade": false
+    },
+    {
+      "from": [10.5, 8.0, 10.5],
+      "to": [15.5, 12.0, 15.5],
+      "faces": {
+        "down": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
+        },
+        "up": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
+        },
+        "north": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
+        },
+        "south": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
+        },
+        "west": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
+        },
+        "east": {
+          "texture": "#cone",
+          "uv": [0.0, 0.0, 5.0, 5.0]
         }
       }
     }
-  ]
+  ],
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout"
 }

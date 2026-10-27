@@ -14,7 +14,9 @@ public final class ReproductiveBagUseHandler {
     public static ReproductiveBagUseResult useSporeBag(ServerLevel level, BlockPos target, ItemStack stack,
             SporeBagEffect effect) {
         String speciesId = SporeBagItem.species(stack);
-        if (speciesId == null) return ReproductiveBagUseResult.rejected();
+        var form = SporeBagContents.form(stack);
+        if (effect == null || speciesId == null || form.isEmpty() || (form.get() == SporeBagContents.Form.MEGA || form.get() == SporeBagContents.Form.MICRO)
+                && effect != ReproductiveBagEffects.spore(speciesId, form.get())) return ReproductiveBagUseResult.rejected();
         ReproductiveBagUseResult result = effect.use(level, target, speciesId);
         consumeIfRequested(stack, result);
         return result;

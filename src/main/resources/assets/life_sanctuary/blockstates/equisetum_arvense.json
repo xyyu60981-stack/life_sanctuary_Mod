@@ -1,1 +1,76 @@
-{"multipart":[{"when":{"nutritional_stems":"1|2|3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_0"}},{"when":{"nutritional_stems":"2|3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_1"}},{"when":{"nutritional_stems":"3"},"apply":{"model":"life_sanctuary:block/horsetail_stem_2"}},{"when":{"spore_stem":"true"},"apply":{"model":"life_sanctuary:block/horsetail_stem_3"}}]}
+{
+  "multipart": [
+    {
+      "when": {
+        "nutritional_stems": "1|2|3",
+        "withering": "false"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_0"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "2|3",
+        "withering": "false"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_1"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "withering": "false"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_2"
+      }
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "withering": "false"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_stem_3"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "1|2|3",
+        "withering": "true"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_wilted_0"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "2|3",
+        "withering": "true"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_wilted_1"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "withering": "true"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_wilted_2"
+      }
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "withering": "true"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_wilted_3"
+      }
+    }
+  ]
+}

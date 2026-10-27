@@ -9,7 +9,11 @@ public final class PlantGrowthTickHandler {
     public void tick(LevelTickEvent.Post event) {
         if (event.getLevel() instanceof ServerLevel level) {
             PlantIndividuals.get(level).tickGrowth(level);
+            HollowLogEggSoaking.get(level).tick(level);
+            CharredMaterialTimers.get(level).tick(level);
             PlantRhizomeSystems.get(level).tickShoots(level);
+            LargeLeafMossGrowth.get(level).tick(level);
+            HeterosporeWorldData.get(level).tick(level);
         }
     }
 }

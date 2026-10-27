@@ -10,7 +10,17 @@ import java.util.Optional;
  * 稳定资源键一经出现即保留，包括零额度和已切除记录，禁止以重新放置刷新旧键。
  */
 public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLeafState> leaves,
-        java.util.Set<String> allowedRoles) {
+        java.util.Set<String> allowedRoles, Map<String, Crown> crowns) {
+    public record Crown(net.minecraft.core.BlockPos center, java.util.Set<String> roles) {
+        public Crown {
+            center = center.immutable();
+            roles = java.util.Set.copyOf(roles);
+            if (roles.isEmpty() || roles.stream().anyMatch(String::isBlank)) throw new IllegalArgumentException("Invalid crown leaf roles");
+        }
+    }
+    public PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLeafState> leaves, java.util.Set<String> allowedRoles) {
+        this(leafLimit, fertileLimit, leaves, allowedRoles, Map.of());
+    }
     /** 兼容尚未限定方向的物种；空集合表示没有额外的角色白名单。 */
     public PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLeafState> leaves) {
         this(leafLimit, fertileLimit, leaves, java.util.Set.of());
@@ -18,6 +28,15 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
     public PlantLeafSet {
         leaves = Map.copyOf(leaves);
         allowedRoles = java.util.Set.copyOf(allowedRoles);
+        crowns = Map.copyOf(crowns);
+        var crownRoles = new HashSet<String>();
+        var centers = new HashSet<net.minecraft.core.BlockPos>();
+        crowns.forEach((key, crown) -> {
+            if (key.isBlank() || !centers.add(crown.center())) throw new IllegalArgumentException("Duplicate or invalid crown");
+            for (var role : crown.roles()) if (!crownRoles.add(role)) throw new IllegalArgumentException("Leaf role belongs to multiple crowns");
+        });
+        if (!crowns.isEmpty() && (crownRoles.size() != leafLimit || !allowedRoles.isEmpty() && !allowedRoles.equals(crownRoles)))
+            throw new IllegalArgumentException("Crown roles must exactly cover allowed leaf slots");
         if (allowedRoles.stream().anyMatch(String::isBlank)) throw new IllegalArgumentException("Blank allowed leaf role");
         if (leafLimit < 1 || fertileLimit < 0 || fertileLimit > leafLimit)
             throw new IllegalArgumentException("Invalid independent leaf limits");
@@ -29,6 +48,8 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
             var leaf = entry.getValue();
             if (leaf.present() && !allowedRoles.isEmpty() && !allowedRoles.contains(leaf.role()))
                 throw new IllegalArgumentException("Leaf role is disabled for this stage");
+            if (leaf.present() && !crowns.isEmpty() && !crownRoles.contains(leaf.role()))
+                throw new IllegalArgumentException("Live leaf has no crown");
             if (leaf.present()) {
                 present++;
                 if (!occupied.add(leaf.anchor())) throw new IllegalArgumentException("Overlapping leaf anchors");
@@ -54,6 +75,14 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
     public int freeLeafSlots() { return leafLimit - presentLeaves(); }
     public int freeFertileSlots() { return fertileLimit - reservedFertileSlots(); }
 
+    public Optional<String> crownOf(String role) {
+        return crowns.entrySet().stream().filter(entry -> entry.getValue().roles().contains(role)).map(Map.Entry::getKey).findFirst();
+    }
+    public int freeCrownSlots(String key) {
+        var crown = java.util.Objects.requireNonNull(crowns.get(key), "Unknown crown");
+        return crown.roles().size() - (int) leaves.values().stream().filter(leaf -> leaf.present() && crown.roles().contains(leaf.role())).count();
+    }
+
     /** 仅用于首次结构或新叶提案；实际次数和可育掷骰必须由物种策略明确提供。 */
     public Optional<PlantLeafSet> addNew(String key, PlantLeafState leaf) {
         if (key == null || key.isBlank() || leaves.containsKey(key) || !leaf.present()
@@ -63,7 +92,7 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
             return Optional.empty();
         Map<String, PlantLeafState> next = new HashMap<>(leaves);
         next.put(key, leaf);
-        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles));
+        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles, crowns));
     }
 
     /** 过期快照或非法刷新均拒绝；当前方法只返回新账本，不改变存储或方块。 */
@@ -73,7 +102,7 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
         if (expected.equals(replacement)) return Optional.of(this);
         Map<String, PlantLeafState> next = new HashMap<>(leaves);
         next.put(key, replacement);
-        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles));
+        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles, crowns));
     }
 
     /** 将一份被砍叶的剩余次数完整转给新叶；旧键保留为零，名额与总次数不增加。 */
@@ -88,8 +117,10 @@ public record PlantLeafSet(int leafLimit, int fertileLimit, Map<String, PlantLea
         Map<String, PlantLeafState> next = new HashMap<>(leaves);
         next.put(retainedKey, new PlantLeafState(old.anchor(), old.role(), false, true, 0));
         next.put(newKey, leaf);
-        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles));
+        return Optional.of(new PlantLeafSet(leafLimit, fertileLimit, next, allowedRoles, crowns));
     }
 
-    public boolean allowsRole(String role) { return allowedRoles.isEmpty() || allowedRoles.contains(role); }
+    public boolean allowsRole(String role) {
+        return (allowedRoles.isEmpty() || allowedRoles.contains(role)) && (crowns.isEmpty() || crownOf(role).isPresent());
+    }
 }

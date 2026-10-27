@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "life_sanctuary:block/display_cabinet"
+    },
+    "facing=east": {
+      "model": "life_sanctuary:block/display_cabinet",
+      "y": 90
+    },
+    "facing=down": {
+      "model": "life_sanctuary:block/display_cabinet",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "life_sanctuary:block/display_cabinet",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "life_sanctuary:block/display_cabinet",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "life_sanctuary:block/display_cabinet",
+      "y": 180
+    }
+  }
+}

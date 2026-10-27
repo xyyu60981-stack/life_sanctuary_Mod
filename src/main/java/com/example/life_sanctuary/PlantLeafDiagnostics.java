@@ -51,9 +51,12 @@ public final class PlantLeafDiagnostics {
         data.timers().shedding().forEach((key, timer) -> {
             if (timer.failed()) failed.add(new Task(new PlantLeafHandlers.Event(PlantLeafTimer.Kind.SHEDDING, key), timer));
         });
+        data.timers().crownRegrowth().forEach((key, timer) -> {
+            if (timer.failed()) failed.add(new Task(new PlantLeafHandlers.Event(PlantLeafTimer.Kind.REGROWTH, "crown/" + key), timer));
+        });
         failed.sort(Comparator.comparing((Task task) -> task.event().kind().name())
                 .thenComparing(task -> task.event().leafKey()));
-        boolean hasLeafTasks = data.timers().regrowth().isPresent() || !data.timers().shedding().isEmpty();
+        boolean hasLeafTasks = data.timers().regrowth().isPresent() || !data.timers().shedding().isEmpty() || !data.timers().crownRegrowth().isEmpty();
         var report = new Report(individual, status, individual.environmentReasons(), failed,
                 hasLeafTasks && !status.hasHandler(),
                 status.witheringTimer().isPresent() && !status.hasWitheringHandler(),

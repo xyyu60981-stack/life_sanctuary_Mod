@@ -11,9 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,7 +31,23 @@ public final class CollectorBlockEntity extends BaseContainerBlockEntity {
     }
     @Override protected NonNullList<ItemStack> getItems() { return items; }
     @Override protected void setItems(NonNullList<ItemStack> items) { this.items = items; }
-    @Override public boolean canPlaceItem(int slot, ItemStack stack) { return CollectorInventory.accepts(stack); }
+    @Override public boolean canPlaceItem(int slot, ItemStack stack) { return CollectorInventory.accepts(stack) && filter().allows(stack); }
+    public CollectorFilter filter() {
+        return CollectorFilter.read(components().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY));
+    }
+    public void setFilter(CollectorFilter filter) {
+        var root = components().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+        setComponents(net.minecraft.core.component.DataComponentMap.builder().addAll(components())
+                .set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                        net.minecraft.world.item.component.CustomData.of(filter.writeInto(root))).build());
+        setChanged();
+    }
+    public boolean hasFilterConfiguration() {
+        return components().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(CollectorFilter.KEY);
+    }
     @Override public void clearContent() {
         if (isEmpty()) return;
         super.clearContent();
@@ -58,18 +71,6 @@ public final class CollectorBlockEntity extends BaseContainerBlockEntity {
         ContainerHelper.loadAllItems(tag, items, registries);
     }
     @Override protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
-        int rows = getContainerSize() / 9;
-        // Reuse vanilla layout/screen. Server slots enforce the whitelist for all click modes.
-        ChestMenu menu = new ChestMenu(rows == 6 ? MenuType.GENERIC_9x6 : MenuType.GENERIC_9x3,
-                id, inventory, this, rows);
-        for (int i = 0; i < getContainerSize(); i++) {
-            Slot original = menu.slots.get(i);
-            Slot filtered = new Slot(this, i, original.x, original.y) {
-                @Override public boolean mayPlace(ItemStack stack) { return CollectorInventory.accepts(stack); }
-            };
-            filtered.index = i;
-            menu.slots.set(i, filtered);
-        }
-        return menu;
+        return new CollectorBlockMenu(id, inventory, this);
     }
 }

@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "count=3,curled=false": {
+      "model": "life_sanctuary:block/large_leaf_moss_3_open"
+    },
+    "count=1,curled=false": {
+      "model": "life_sanctuary:block/large_leaf_moss_1_open"
+    },
+    "count=2,curled=true": {
+      "model": "life_sanctuary:block/large_leaf_moss_2_curled"
+    },
+    "count=3,curled=true": {
+      "model": "life_sanctuary:block/large_leaf_moss_3_curled"
+    },
+    "count=2,curled=false": {
+      "model": "life_sanctuary:block/large_leaf_moss_2_open"
+    },
+    "count=1,curled=true": {
+      "model": "life_sanctuary:block/large_leaf_moss_1_curled"
+    }
+  }
+}

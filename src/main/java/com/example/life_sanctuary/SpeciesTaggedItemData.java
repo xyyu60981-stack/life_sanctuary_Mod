@@ -22,7 +22,7 @@ public final class SpeciesTaggedItemData {
 
     /** Writes the species label into the supplied stack. */
     public static void write(ItemStack stack, String speciesId) {
-        CompoundTag tag = new CompoundTag();
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         tag.putString(SPECIES, speciesId);
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }

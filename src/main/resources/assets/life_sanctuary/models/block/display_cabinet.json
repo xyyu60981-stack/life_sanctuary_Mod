@@ -1,0 +1,75 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "minecraft:block/glass",
+    "glass": "minecraft:block/glass",
+    "base": "minecraft:block/smooth_stone"
+  },
+  "elements": [
+    {
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass"
+        },
+        "west": {
+          "texture": "#glass"
+        },
+        "east": {
+          "texture": "#glass"
+        },
+        "north": {
+          "texture": "#glass"
+        },
+        "down": {
+          "texture": "#glass"
+        },
+        "south": {
+          "texture": "#glass"
+        }
+      }
+    },
+    {
+      "to": [
+        15.9,
+        15.9,
+        15.9
+      ],
+      "from": [
+        0.1,
+        0.1,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#base"
+        },
+        "west": {
+          "texture": "#base"
+        },
+        "east": {
+          "texture": "#base"
+        },
+        "north": {
+          "texture": "#base"
+        },
+        "down": {
+          "texture": "#base"
+        },
+        "south": {
+          "texture": "#base"
+        }
+      }
+    }
+  ]
+}

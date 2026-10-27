@@ -173,6 +173,10 @@ public final class PlantStructureCommitter {
         return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, regrowth);
     }
 
+    static Result applyLeafRegrowthBatch(ServerLevel level, PlantStructurePlan plan, PlantLeafRegrowthBatchChange regrowth) {
+        return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, regrowth);
+    }
+
     static Result applyLeafCut(ServerLevel level, PlantStructurePlan plan, PlantLeafCutChange cut) {
         return apply(level, PlantIndividuals.get(level), plan, plan.expectedIndividual(), null, false, false, cut);
     }
@@ -185,6 +189,7 @@ public final class PlantStructureCommitter {
             PlantIndividualState next, PlantReproductionDebit debit, boolean runnerGrowth, boolean initializedResources,
             PlantLeafStructureChange leafChange) {
         if (store != PlantIndividuals.get(level)) throw new IllegalArgumentException("Wrong dimension store");
+        if (!CycadSeedAppearance.permits(plan, next)) return new Result(Status.REJECTED, Optional.empty());
         if (leafChange != null && !store.leavesOf(next.id()).equals(leafChange.expected()))
             return new Result(Status.REJECTED, Optional.empty());
         if (debit != null && (debit.expected().id().equals(next.id())
@@ -204,7 +209,9 @@ public final class PlantStructureCommitter {
                 || before.canBePruned() != next.canBePruned() || before.pruned() != next.pruned()
                 || (!before.environmentReasons().equals(next.environmentReasons()) && !(leafChange instanceof PlantBudLossChange)))
             throw new IllegalArgumentException("Structure commit cannot change identity or resource permissions");
-        validateStage(before, next);
+        validateStage(level, before, next);
+        if (!before.stage().equals(next.stage()) && store.isWaitingForCuttingBud(before.id()))
+            return new Result(Status.REJECTED, Optional.empty());
         // 同样覆盖直接调用通用结构提交的阶段适配器，不能绕过阶段入口破坏叶账本。
         if (!before.stage().equals(next.stage()) && !(leafChange instanceof PlantGrowingCrownChange)) {
             var stageLeaves = store.leavesOf(before.id());
@@ -213,6 +220,8 @@ public final class PlantStructureCommitter {
         }
         var checked = PlantStructurePreflight.check(level, store, plan);
         if (!checked.ready()) return new Result(Status.REJECTED, Optional.of(checked));
+        if (!before.stage().equals(next.stage()) && !PlantGrowthSpace.check(plan, next, store.partsOf(before.id()).keySet()).ready())
+            return new Result(Status.REJECTED, Optional.empty());
 
         var rhizomeStore = PlantRhizomeSystems.get(level);
         var inheritedNodes = new HashSet<BlockPos>();
@@ -348,13 +357,13 @@ public final class PlantStructureCommitter {
         });
     }
 
-    private static void validateStage(PlantIndividualState before, PlantIndividualState next) {
+    private static void validateStage(ServerLevel level, PlantIndividualState before, PlantIndividualState next) {
         if (before.stage().equals(next.stage())) {
             if (before.targetTicks() != next.targetTicks() || before.elapsedTicks() != next.elapsedTicks())
                 throw new IllegalArgumentException("Structural edits cannot reset a stage timer");
             return;
         }
-        if (!PlantLifecycle.canRunTimer(before) || before.remainingTicks() != 0 || next.elapsedTicks() != 0)
+        if (!HeterosporeTransitions.stageReady(level, before) || next.elapsedTicks() != 0)
             throw new IllegalArgumentException("Stage is not ready");
         var definition = PlantSpeciesRegistry.find(before.species()).orElseThrow();
         var transition = definition.requireTransition(before.stage());

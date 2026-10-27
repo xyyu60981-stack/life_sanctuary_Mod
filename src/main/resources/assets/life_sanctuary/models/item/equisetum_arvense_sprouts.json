@@ -1,1 +1,6 @@
-{"parent":"life_sanctuary:block/equisetum_arvense_sprouts"}
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "life_sanctuary:item/equisetum_arvense_sprouts"
+  }
+}

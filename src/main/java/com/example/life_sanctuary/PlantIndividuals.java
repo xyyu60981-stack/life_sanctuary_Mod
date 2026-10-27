@@ -21,7 +21,7 @@ import net.minecraft.world.level.saveddata.SavedData;
  * registration occur during reads. Unknown species/stages remain preserved for optional modules.
  */
 public final class PlantIndividuals extends SavedData {
-    private static final int VERSION = 12;
+    private static final int VERSION = 15;
     private static final Factory<PlantIndividuals> FACTORY = new Factory<>(PlantIndividuals::new, PlantIndividuals::load);
     private final Map<UUID, PlantIndividualState> individuals = new HashMap<>();
     private final Map<BlockPos, UUID> byBase = new HashMap<>();
@@ -32,6 +32,12 @@ public final class PlantIndividuals extends SavedData {
     private final Map<UUID, PlantWitheringTimer> witheringTimers = new HashMap<>();
     private final Map<UUID, Map<String, PlantFlowerState>> flowers = new HashMap<>();
     private final Map<UUID, PlantFlowerRound> flowerRounds = new HashMap<>();
+    private final PlantCycadScheduler cycadScheduler = new PlantCycadScheduler();
+    private final Map<UUID, PlantCuttingBud> cuttingBuds = new HashMap<>();
+    private final PlantCuttingBuds.Scheduler cuttingScheduler = new PlantCuttingBuds.Scheduler();
+    private final Map<PlantSeedSalvage.Key, PlantSeedSalvage.Entry> rescuedSeeds = new HashMap<>();
+    private final Map<BlockPos, Set<PlantSeedSalvage.Key>> rescuedSeedPositions = new HashMap<>();
+    private final Map<UUID, Integer> rescuedSeedSources = new HashMap<>();
     private final Map<UUID, PlantLeafData> leafData = new HashMap<>();
     private final Map<UUID, PlantLeafCounts> leafCounts = new HashMap<>();
     private final Map<UUID, PlantLeafPartIndex> leafPartIndices = new HashMap<>();
@@ -39,12 +45,14 @@ public final class PlantIndividuals extends SavedData {
     private final PlantPollenIndex pollenIndex = new PlantPollenIndex();
     private final PlantPopulationIndex populationIndex = new PlantPopulationIndex();
     private CompoundTag preservedUnsupportedData;
+    private ServerLevel boundLevel;
     private UUID applyingStructure;
     private RhizomeNaturalStructurePlan applyingNatural;
     private Map<UUID, Map<BlockPos, String>> applyingNaturalParts = Map.of();
 
     public static PlantIndividuals get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(FACTORY, "life_sanctuary_plant_individuals");
+        var store = level.getDataStorage().computeIfAbsent(FACTORY, "life_sanctuary_plant_individuals");
+        store.boundLevel = level; return store;
     }
 
     public boolean isReadOnly() { return preservedUnsupportedData != null; }
@@ -185,13 +193,20 @@ public final class PlantIndividuals extends SavedData {
         }
         populationIndex.changed(plan.expectedIndividual(), next);
         individuals.put(next.id(), next);
+        plan.changes().forEach((pos, change) -> {
+            if (change.expected().getBlock() != change.replacement().getBlock())
+                for (var key : Set.copyOf(rescuedSeedPositions.getOrDefault(pos, Set.of()))) removeRescuedSeeds(key);
+        });
         if (updatedLeaves != null) putLeafData(next.id(), updatedLeaves);
         leafScheduler.update(next, updatedLeaves);
         growth.update(next);
+        if (boundLevel != null && PlantSporeTraits.find(next.species()).differentiatedSpores())
+            HeterosporeWorldData.get(boundLevel).changed(boundLevel, plan.expectedIndividual(), next);
         if (budLossTimer != null) {
             witheringTimers.put(next.id(), budLossTimer);
             withering.updateWithering(next, budLossTimer);
         }
+        if (!PlantWithering.isWithering(plan.expectedIndividual()) && PlantWithering.isWithering(next)) discardImmatureSeeds(next.id());
         refreshPollenIndex(next.id());
         // Both records share this SavedData payload. No world/species callbacks between these writes.
         // Only the budget changes: the parent's existing timer and population index remain valid.
@@ -208,6 +223,8 @@ public final class PlantIndividuals extends SavedData {
             growth.tick(level, this);
             withering.tickWithering(level, this);
             leafScheduler.tick(level, this);
+            cycadScheduler.tick(level, this);
+            cuttingScheduler.tick(level, this);
         }
     }
 
@@ -318,7 +335,9 @@ public final class PlantIndividuals extends SavedData {
         if (current == null) return;
         var shedding = new HashMap<String, PlantLeafTimer>();
         current.timers().shedding().forEach((key, timer) -> shedding.put(key, timer.freezeForRecovery()));
-        var timers = new PlantLeafTimers(current.timers().regrowth().map(PlantLeafTimer::freezeForRecovery), shedding);
+        var crowns = new HashMap<String, PlantLeafTimer>();
+        current.timers().crownRegrowth().forEach((key, timer) -> crowns.put(key, timer.freezeForRecovery()));
+        var timers = new PlantLeafTimers(current.timers().regrowth().map(PlantLeafTimer::freezeForRecovery), shedding, crowns);
         putLeafData(id, new PlantLeafData(current.leaves(), timers));
         leafScheduler.cancel(id);
         setDirty();
@@ -373,7 +392,39 @@ public final class PlantIndividuals extends SavedData {
         return Optional.ofNullable(flowers.getOrDefault(id, Map.of()).get(key));
     }
 
-    public Optional<PlantFlowerRound> flowerRound(UUID id) { return Optional.ofNullable(flowerRounds.get(id)); }
+    public Optional<PlantFlowerRound> flowerRound(UUID id) { return Optional.ofNullable(cycadScheduler.current(id, flowerRounds.get(id))); }
+    PlantFlowerRound rawFlowerRound(UUID id) { return flowerRounds.get(id); }
+    void captureCycadClock(UUID id, PlantFlowerRound expected, PlantFlowerRound next) {
+        if (!java.util.Objects.equals(expected, next) && java.util.Objects.equals(flowerRounds.get(id), expected)) {
+            flowerRounds.put(id, next);
+            setDirty();
+        }
+    }
+    Optional<String> cycadFlowerKey(UUID id) {
+        var receptive = flowers.getOrDefault(id, Map.of()).entrySet().stream()
+                .filter(entry -> entry.getValue().receivesPollen()
+                        && partRole(id, entry.getValue().position()).filter(entry.getValue().role()::equals).isPresent()).toList();
+        if (receptive.size() != 1) return Optional.empty();
+        var entry = receptive.getFirst();
+        return entry.getValue().receivesPollen() && partRole(id, entry.getValue().position()).filter(entry.getValue().role()::equals).isPresent()
+                ? Optional.of(entry.getKey()) : Optional.empty();
+    }
+    boolean resolveCycadAttempt(PlantIndividualState expected, String key, PlantFlowerState expectedFlower,
+            PlantFlowerRound expectedRound, boolean success, int seeds) {
+        if (isReadOnly() || !expected.equals(find(expected.id()).orElse(null))
+                || !flowerRound(expected.id()).filter(expectedRound::equals).isPresent()
+                || !flower(expected.id(), key).filter(expectedFlower::equals).isPresent()
+                || !PlantPollination.canReceivePollen(this, expected, key) || !expectedRound.cycadReady()) return false;
+        if (success ? seeds <= 0 : seeds != 0) throw new IllegalArgumentException("Invalid cycad pollination seed result");
+        var round = expectedRound.resolveCycad(success);
+        var flower = success ? expectedFlower.withPhase(PlantFlowerState.Phase.FERTILIZED, seeds) : expectedFlower;
+        writable();
+        flowerRounds.put(expected.id(), round);
+        flowers.get(expected.id()).put(key, flower);
+        refreshPollenIndex(expected.id());
+        setDirty();
+        return true;
+    }
 
     boolean flowerRoundActive(UUID id) {
         var round = flowerRounds.get(id);
@@ -403,12 +454,13 @@ public final class PlantIndividuals extends SavedData {
     public boolean failFlowerRound(PlantIndividualState expected, long roundId, String flowerKey) {
         if (isReadOnly() || !expected.equals(find(expected.id()).orElse(null))) return false;
         writable();
-        var round = flowerRounds.get(expected.id());
+        var round = flowerRound(expected.id()).orElse(null);
         var flower = flower(expected.id(), flowerKey).orElse(null);
         if (round == null || round.id() != roundId || !round.active() || round.failed()
                 || expected.pruned() || !expected.environmentReasons().isEmpty() || flower == null || !flower.receivesPollen()
                 || !partRole(expected.id(), flower.position()).filter(flower.role()::equals).isPresent()) return false;
-        flowerRounds.put(expected.id(), new PlantFlowerRound(roundId, true, true));
+        flowerRounds.put(expected.id(), new PlantFlowerRound(roundId, true, true, round.cycadAttempts(), round.cycadElapsedTicks()));
+        refreshPollenIndex(expected.id());
         setDirty();
         return true;
     }
@@ -417,13 +469,13 @@ public final class PlantIndividuals extends SavedData {
     public boolean endFlowerRound(PlantIndividualState expected, long roundId) {
         if (isReadOnly() || !expected.equals(find(expected.id()).orElse(null))) return false;
         writable();
-        var round = flowerRounds.get(expected.id());
+        var round = flowerRound(expected.id()).orElse(null);
         if (round == null || round.id() != roundId) return false;
         if (!round.active()) return true;
         var states = flowers.get(expected.id());
         if (states != null) states.replaceAll((key, flower) -> flower.phase() == PlantFlowerState.Phase.FLOWERING
                 ? flower.withPhase(PlantFlowerState.Phase.CLOSED, 0) : flower);
-        flowerRounds.put(expected.id(), new PlantFlowerRound(roundId, false, round.failed()));
+        flowerRounds.put(expected.id(), new PlantFlowerRound(roundId, false, round.failed(), round.cycadAttempts(), round.cycadElapsedTicks()));
         refreshPollenIndex(expected.id());
         setDirty();
         return true;
@@ -438,14 +490,65 @@ public final class PlantIndividuals extends SavedData {
                 && available.test(flower.position()));
     }
 
+    public Optional<PlantCuttingBud> cuttingBud(UUID id) {
+        return Optional.ofNullable(cuttingScheduler.current(id, cuttingBuds.get(id)));
+    }
+
+    public boolean isWaitingForCuttingBud(UUID id) {
+        return cuttingBud(id).filter(bud -> !bud.present()).isPresent();
+    }
+
+    boolean initializeCuttingBud(PlantIndividualState expected, PlantCuttingBud bud) {
+        writable();
+        if (!expected.equals(find(expected.id()).orElse(null)) || cuttingBuds.containsKey(expected.id())) return false;
+        cuttingBuds.put(expected.id(), bud);
+        cuttingScheduler.update(this, expected);
+        setDirty();
+        return true;
+    }
+
+    void captureCuttingBud(UUID id, PlantCuttingBud bud) { cuttingBuds.put(id, bud); }
+    void pauseCuttingGrowth(UUID id) {
+        var plant = find(id).orElse(null);
+        if (plant != null) individuals.put(id, plant);
+        growth.cancel(id);
+    }
+    void clearCuttingBud(UUID id) { cuttingBuds.remove(id); cuttingScheduler.cancel(id); setDirty(); }
+    boolean replaceCuttingBud(UUID id, PlantCuttingBud expected, PlantCuttingBud next) {
+        writable();
+        if (!cuttingBud(id).filter(expected::equals).isPresent() || !individuals.containsKey(id)) return false;
+        cuttingBuds.put(id, next);
+        cuttingScheduler.cancel(id);
+        growth.update(individuals.get(id));
+        cuttingScheduler.update(this, individuals.get(id));
+        setDirty();
+        return true;
+    }
+
     private void refreshPollenIndex(UUID id) {
         var state = individuals.get(id);
-        if (state == null) pollenIndex.remove(id);
-        else pollenIndex.update(state, hasPollen(id, ignored -> true));
+        if (state == null) { pollenIndex.remove(id); cycadScheduler.cancel(id); }
+        else { pollenIndex.update(state, hasPollen(id, ignored -> true)); cycadScheduler.update(this, state); cuttingScheduler.update(this, state); }
     }
 
     Set<UUID> cycadPollenCandidates(ResourceLocation species, BlockPos center) {
         return isReadOnly() ? Set.of() : pollenIndex.cycadCandidates(species, center);
+    }
+    Set<UUID> cycadPopulationCandidates(ResourceLocation species, String population) {
+        return isReadOnly() ? Set.of() : pollenIndex.cycadPopulationCandidates(species, population);
+    }
+    private void discardImmatureSeeds(UUID id) {
+        var current = flowers.get(id);
+        if (current != null) current.replaceAll((key, flower) -> flower.pruned());
+    }
+    /** 物种环境枯死适配器确认进入枯死后调用；只删未成熟信息，绝不把它们提前成熟。 */
+    public boolean discardImmatureSeedsForWithering(PlantIndividualState expected) {
+        if (isReadOnly() || !expected.equals(find(expected.id()).orElse(null))) return false;
+        writable();
+        discardImmatureSeeds(expected.id());
+        refreshPollenIndex(expected.id());
+        setDirty();
+        return true;
     }
 
     /** 明确登记一个真实生殖结构；已有稳定键不能重复初始化。 */
@@ -533,7 +636,7 @@ public final class PlantIndividuals extends SavedData {
     /** Creation cannot overwrite an existing identity or occupied base. */
     public void create(PlantIndividualState state) {
         writable();
-        if (individuals.containsKey(state.id()) || byBase.containsKey(state.base())
+        if (individuals.containsKey(state.id()) || rescuedSeedSources.containsKey(state.id()) || byBase.containsKey(state.base())
                 || partOwners.containsKey(state.base()))
             throw new IllegalArgumentException("Individual or base already registered");
         individuals.put(state.id(), state);
@@ -551,6 +654,7 @@ public final class PlantIndividuals extends SavedData {
         if (!expected.id().equals(next.id()) || !expected.species().equals(next.species())
                 || !expected.base().equals(next.base()))
             throw new IllegalArgumentException("Cannot replace identity, species or base");
+        if (!expected.stage().equals(next.stage()) && isWaitingForCuttingBud(expected.id())) return false;
         if (!expected.equals(find(expected.id()).orElse(null))) return false;
         var currentLeaves = leavesOf(next.id()).orElse(null);
         if (currentLeaves != null) currentLeaves.validateOwner(next, parts.getOrDefault(next.id(), Map.of()));
@@ -559,10 +663,16 @@ public final class PlantIndividuals extends SavedData {
             populationIndex.changed(expected, next);
             individuals.put(next.id(), next);
             growth.update(next);
+            if (boundLevel != null && PlantSporeTraits.find(next.species()).differentiatedSpores())
+                HeterosporeWorldData.get(boundLevel).changed(boundLevel, expected, next);
+            if (boundLevel != null && next.species().equals(LargeLeafMossRules.SPECIES) && expected.pruned() != next.pruned())
+                LargeLeafMossGrowth.get(boundLevel).pruningChanged(boundLevel, expected, next);
+            cuttingScheduler.update(this, next);
             leafScheduler.update(next, currentLeaves);
-            if (!expected.pruned() && next.pruned() && flowers.containsKey(next.id()))
-                flowers.get(next.id()).replaceAll((key, flower) -> flower.pruned());
-            if (expected.pruned() != next.pruned() || !expected.environmentReasons().equals(next.environmentReasons()))
+            if (!expected.pruned() && next.pruned() || !PlantWithering.isWithering(expected) && PlantWithering.isWithering(next))
+                discardImmatureSeeds(next.id());
+            if (expected.pruned() != next.pruned() || !expected.environmentReasons().equals(next.environmentReasons())
+                    || !expected.population().equals(next.population()) || !expected.stage().equals(next.stage()) || expected.source() != next.source())
                 refreshPollenIndex(next.id());
             setDirty();
         }
@@ -575,9 +685,13 @@ public final class PlantIndividuals extends SavedData {
         PlantIndividualState current = individuals.get(id);
         if (current == null || !current.base().equals(base)) return false;
         individuals.remove(id);
+        if (boundLevel != null && PlantSporeTraits.find(current.species()).differentiatedSpores())
+            HeterosporeWorldData.get(boundLevel).remove(id);
         populationIndex.remove(current);
         growth.cancel(id);
         withering.cancel(id);
+        cycadScheduler.cancel(id);
+        clearCuttingBud(id);
         witheringTimers.remove(id);
         flowers.remove(id);
         flowerRounds.remove(id);
@@ -591,6 +705,81 @@ public final class PlantIndividuals extends SavedData {
         if (owned != null) owned.keySet().forEach(pos -> partOwners.remove(pos, id));
         setDirty();
         return true;
+    }
+
+    Map<String, PlantFlowerState> matureSeedsForWithering(PlantIndividualState expected) {
+        var ready = new HashMap<String, PlantFlowerState>();
+        flowers.getOrDefault(expected.id(), Map.of()).forEach((key, flower) -> {
+            if (flower.phase() == PlantFlowerState.Phase.SEEDS_READY
+                    && partRole(expected.id(), flower.position()).filter(flower.role()::equals).isPresent()) ready.put(key, flower);
+        });
+        return Map.copyOf(ready);
+    }
+
+    /** 活体注销与成熟种子迁移同在本SavedData内提交；世界事务回调已采走的种子不会再次保留。 */
+    boolean removeWithRescuedSeeds(PlantIndividualState expected, Map<BlockPos, net.minecraft.world.level.block.state.BlockState> corpses,
+            Map<String, PlantFlowerState> matureBefore) {
+        if (isReadOnly() || !expected.equals(find(expected.id()).orElse(null))) return false;
+        var uncollected = new HashMap<String, PlantFlowerState>();
+        matureBefore.forEach((key, value) -> {
+            if (flower(expected.id(), key).filter(value::equals).isPresent()) uncollected.put(key, value);
+        });
+        var solid = new HashSet<BlockPos>();
+        corpses.forEach((pos, state) -> {
+            if (!state.isAir() && !(state.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock)
+                    && !state.is(net.minecraft.world.level.block.Blocks.BUBBLE_COLUMN)) solid.add(pos.immutable());
+        });
+        var archived = new HashMap<PlantSeedSalvage.Key, PlantSeedSalvage.Entry>();
+        for (var selection : PlantSeedSalvage.plan(expected, uncollected, solid).entrySet()) {
+            var value = selection.getValue();
+            if (rescuedSeeds.containsKey(selection.getKey())) return false;
+            archived.put(selection.getKey(), new PlantSeedSalvage.Entry(selection.getKey(), value.species(), value.position(), value.seeds(),
+                    net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(corpses.get(value.position()).getBlock())));
+        }
+        if (!remove(expected.id(), expected.base())) return false;
+        archived.values().forEach(this::indexRescuedSeeds);
+        setDirty();
+        return true;
+    }
+
+    private void indexRescuedSeeds(PlantSeedSalvage.Entry entry) {
+        if (rescuedSeeds.putIfAbsent(entry.key(), entry) != null) throw new IllegalArgumentException("Duplicate salvaged seed identity");
+        rescuedSeedPositions.computeIfAbsent(entry.position(), ignored -> new HashSet<>()).add(entry.key());
+        rescuedSeedSources.merge(entry.key().sourcePlant(), 1, Integer::sum);
+    }
+
+    public Map<PlantSeedSalvage.Key, PlantSeedSalvage.Entry> rescuedSeedsAt(BlockPos pos) {
+        if (isReadOnly()) return Map.of();
+        var found = new HashMap<PlantSeedSalvage.Key, PlantSeedSalvage.Entry>();
+        for (var key : rescuedSeedPositions.getOrDefault(pos, Set.of())) found.put(key, rescuedSeeds.get(key));
+        return Map.copyOf(found);
+    }
+
+    private boolean removeRescuedSeeds(PlantSeedSalvage.Key key) {
+        var old = rescuedSeeds.remove(key);
+        if (old == null) return false;
+        var at = rescuedSeedPositions.get(old.position());
+        at.remove(key);
+        if (at.isEmpty()) rescuedSeedPositions.remove(old.position());
+        rescuedSeedSources.compute(key.sourcePlant(), (source, count) -> count == 1 ? null : count - 1);
+        setDirty();
+        return true;
+    }
+
+    /** 死体方块onRemove在确实被移除／替换后调用，不能因卸载区块或一次取消的破坏事件清除。 */
+    public void discardRescuedSeedsAt(BlockPos pos) {
+        writable();
+        for (var key : Set.copyOf(rescuedSeedPositions.getOrDefault(pos, Set.of()))) removeRescuedSeeds(key);
+    }
+
+    /** 物种先验证权限及库存空间，再取一次实际数量；不复活个体、不增加次数，也不自行扔落物。 */
+    public java.util.OptionalInt takeRescuedSeeds(ServerLevel level, PlantSeedSalvage.Entry expected) {
+        if (!level.getServer().isSameThread() || this != get(level)) throw new IllegalArgumentException("Wrong salvaged seed store/thread");
+        if (isReadOnly() || applyingStructure != null || !expected.equals(rescuedSeeds.get(expected.key())) || !PlantPollination.available(level, expected.position()))
+            return java.util.OptionalInt.empty();
+        var current = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(expected.position()).getBlock());
+        if (!current.equals(expected.corpseBlock())) { removeRescuedSeeds(expected.key()); return java.util.OptionalInt.empty(); }
+        return removeRescuedSeeds(expected.key()) ? java.util.OptionalInt.of(expected.seeds()) : java.util.OptionalInt.empty();
     }
 
     private void writable() {
@@ -612,6 +801,8 @@ public final class PlantIndividuals extends SavedData {
         long remaining = 0;
         Set<BlockPos> oldParts = new HashSet<>();
         for (var old : proposal.expected()) {
+            if (cuttingBuds.containsKey(old.id()))
+                throw new IllegalArgumentException("Cuttings require explicit bud inheritance before split/merge");
             if (leafData.containsKey(old.id()))
                 throw new IllegalArgumentException("Independent leaves require explicit split/merge inheritance");
             if (flowers.containsKey(old.id()) || flowerRounds.containsKey(old.id()))
@@ -878,8 +1069,15 @@ public final class PlantIndividuals extends SavedData {
                         if (!saved.contains("Id", Tag.TAG_LONG) || !saved.contains("Active", Tag.TAG_BYTE)
                                 || !saved.contains("Failed", Tag.TAG_BYTE))
                             throw new IllegalArgumentException("Incomplete flower round");
+                        if (version >= 14 && (!saved.contains("CycadAttempts", Tag.TAG_INT) || !saved.contains("CycadElapsedTicks", Tag.TAG_LONG)))
+                            throw new IllegalArgumentException("Incomplete cycad attempt state");
+                        if (saved.getByte("Active") < 0 || saved.getByte("Active") > 1 || saved.getByte("Failed") < 0 || saved.getByte("Failed") > 1)
+                            throw new IllegalArgumentException("Invalid flower round flags");
+                        if (version < 14 && (saved.contains("CycadAttempts") || saved.contains("CycadElapsedTicks")))
+                            throw new IllegalArgumentException("Unexpected legacy cycad attempt state");
                         data.flowerRounds.put(state.id(), new PlantFlowerRound(saved.getLong("Id"),
-                                saved.getBoolean("Active"), saved.getBoolean("Failed")));
+                                saved.getBoolean("Active"), saved.getBoolean("Failed"), version >= 14 ? saved.getInt("CycadAttempts") : 0,
+                                version >= 14 ? saved.getLong("CycadElapsedTicks") : 0));
                         if (!saved.getBoolean("Active") && data.flowers.getOrDefault(state.id(), Map.of()).values()
                                 .stream().anyMatch(flower -> flower.phase() == PlantFlowerState.Phase.FLOWERING))
                             throw new IllegalArgumentException("Closed flower round still has active flowers");
@@ -925,6 +1123,35 @@ public final class PlantIndividuals extends SavedData {
                     throw new IllegalArgumentException("Unexpected leaf data in legacy version");
                 }
             }
+            if (version >= 14) {
+                if (!tag.contains("RescuedSeeds", Tag.TAG_LIST)) throw new IllegalArgumentException("Missing salvaged seed list");
+                var savedSeeds = tag.getList("RescuedSeeds", Tag.TAG_COMPOUND);
+                if (savedSeeds.size() != ((ListTag) tag.get("RescuedSeeds")).size()) throw new IllegalArgumentException("Invalid salvaged seed list");
+                for (var seed : savedSeeds) {
+                    var rescued = PlantSeedSalvage.read((CompoundTag) seed);
+                    if (data.individuals.containsKey(rescued.key().sourcePlant())) throw new IllegalArgumentException("Salvaged seed source is still alive");
+                    data.indexRescuedSeeds(rescued);
+                }
+            } else if (tag.contains("RescuedSeeds")) throw new IllegalArgumentException("Unexpected legacy salvaged seeds");
+            if (version >= 15) {
+                if (!tag.contains("CuttingBuds", Tag.TAG_LIST)) throw new IllegalArgumentException("Missing cutting buds");
+                var savedBuds = tag.getList("CuttingBuds", Tag.TAG_COMPOUND);
+                if (savedBuds.size() != ((ListTag) tag.get("CuttingBuds")).size()) throw new IllegalArgumentException("Invalid cutting bud list");
+                for (var rawBud : savedBuds) {
+                    var saved = (CompoundTag) rawBud;
+                    if (!saved.hasUUID("Owner")) throw new IllegalArgumentException("Missing cutting owner");
+                    var id = saved.getUUID("Owner");
+                    var owner = data.individuals.get(id);
+                    var bud = PlantCuttingBud.read(saved);
+                    var role = data.parts.getOrDefault(id, Map.of()).get(bud.position());
+                    if (owner == null || !owner.stage().equals(bud.stage()) || !owner.source().canFinishCurrentCycle()
+                            || !bud.position().equals(owner.base().above()) || PlantWithering.isWithering(owner)
+                            || !data.parts.getOrDefault(id, Map.of()).containsKey(owner.base())
+                            || (bud.present() ? !bud.role().equals(role) : role != null)
+                            || data.cuttingBuds.putIfAbsent(id, bud) != null)
+                        throw new IllegalArgumentException("Invalid cutting bud owner");
+                }
+            } else if (tag.contains("CuttingBuds")) throw new IllegalArgumentException("Unexpected legacy cutting buds");
             data.setDirty(version < VERSION);
             data.individuals.values().forEach(data.growth::update);
             data.witheringTimers.forEach((id, timer) -> data.withering.updateWithering(data.individuals.get(id), timer));
@@ -940,6 +1167,10 @@ public final class PlantIndividuals extends SavedData {
             data.witheringTimers.clear();
             data.flowers.clear();
             data.flowerRounds.clear();
+            data.cuttingBuds.clear();
+            data.rescuedSeeds.clear();
+            data.rescuedSeedPositions.clear();
+            data.rescuedSeedSources.clear();
             data.leafData.clear();
             data.leafCounts.clear();
             data.leafPartIndices.clear();
@@ -993,13 +1224,15 @@ public final class PlantIndividuals extends SavedData {
                 savedFlowers.add(saved);
             });
             entry.put("Flowers", savedFlowers);
-            var round = flowerRounds.get(state.id());
+            var round = flowerRound(state.id()).orElse(null);
             entry.putBoolean("HasFlowerRound", round != null);
             if (round != null) {
                 CompoundTag saved = new CompoundTag();
                 saved.putLong("Id", round.id());
                 saved.putBoolean("Active", round.active());
                 saved.putBoolean("Failed", round.failed());
+                saved.putInt("CycadAttempts", round.cycadAttempts());
+                saved.putLong("CycadElapsedTicks", round.cycadElapsedTicks());
                 entry.put("FlowerRound", saved);
             }
             var witheringTimer = witheringTimer(state.id());
@@ -1046,6 +1279,18 @@ public final class PlantIndividuals extends SavedData {
             entries.add(entry);
         }
         tag.put("Individuals", entries);
+        var savedSeeds = new ListTag();
+        rescuedSeeds.values().stream().sorted(java.util.Comparator
+                .comparing((PlantSeedSalvage.Entry seed) -> seed.key().sourcePlant()).thenComparing(seed -> seed.key().flowerKey()))
+                .forEach(seed -> savedSeeds.add(PlantSeedSalvage.write(seed)));
+        tag.put("RescuedSeeds", savedSeeds);
+        var savedBuds = new ListTag();
+        cuttingBuds.keySet().stream().sorted().forEach(id -> {
+            var saved = cuttingBud(id).orElseThrow().save();
+            saved.putUUID("Owner", id);
+            savedBuds.add(saved);
+        });
+        tag.put("CuttingBuds", savedBuds);
         return tag;
     }
 }

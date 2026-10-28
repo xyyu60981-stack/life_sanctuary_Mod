@@ -83,28 +83,36 @@ public final class HorsetailStemInteraction {
 
         int selected = targetedStem(state, pos, event.getHitVec().getLocation());
         if (selected < 0) return;
+        BlockPos base = state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
+                ? EquisetumArvenseBlock.base(state, pos) : pos;
+        BlockState baseState = level.getBlockState(base);
+        if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
+                && (!baseState.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
+                    || baseState.getValue(EquisetumArvenseBlock.PART) != net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER)) return;
+        // A half awaiting neighbor synchronization must not return a stem absent from the shared base state.
+        if ((mask(baseState) & (1 << selected)) == 0) return;
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
         if (!(level instanceof ServerLevel server)) return;
 
         boolean spore = selected == 3;
-        int remaining = count(state) - (spore ? 0 : 1);
-        boolean hasSpore = state.getValue(EquisetumArvenseBlock.SPORE_STEM) && !spore;
+        int remaining = count(baseState) - (spore ? 0 : 1);
+        boolean hasSpore = baseState.getValue(EquisetumArvenseBlock.SPORE_STEM) && !spore;
         BlockState next;
         if (remaining == 0) {
             // With the last nutritional stem removed, a remaining detached spore stem is decoration.
             next = hasSpore ? LifeSanctuaryMod.EQUISETUM_ARVENSE_SPORE_STEM.get().defaultBlockState()
                     : Blocks.AIR.defaultBlockState();
         } else {
-            next = state.setValue(EquisetumArvenseBlock.SPORE_STEM, hasSpore);
-            next = state.getBlock() instanceof PlacedHorsetailBlock
+            next = baseState.setValue(EquisetumArvenseBlock.SPORE_STEM, hasSpore);
+            next = baseState.getBlock() instanceof PlacedHorsetailBlock
                     ? next.setValue(PlacedHorsetailBlock.STEMS, remaining)
                     : next.setValue(EquisetumArvenseBlock.NUTRITIONAL_STEMS, remaining);
         }
-        if (!server.setBlock(pos, next, Block.UPDATE_ALL)) return;
-        if (spore && state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get()) && remaining > 0) {
+        if (!server.setBlock(base, next, Block.UPDATE_ALL)) return;
+        if (spore && baseState.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get()) && remaining > 0) {
             // Keep an exhausted marker: removing the structure must never mint a new quota.
-            HorsetailPopulations.get(server).setSporeHarvestCount(pos, 0);
+            HorsetailPopulations.get(server).setSporeHarvestCount(base, 0);
         }
 
         ItemStack returned = new ItemStack(spore ? LifeSanctuaryMod.EQUISETUM_ARVENSE_SPORE_STEM_ITEM.get()

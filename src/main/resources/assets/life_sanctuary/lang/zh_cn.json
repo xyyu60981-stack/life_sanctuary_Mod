@@ -1,0 +1,11 @@
+{
+  "tooltip.life_sanctuary.gametophyte.species": "物种：%s",
+  "command.life_sanctuary.gametophyte.unloaded": "目标区块未加载。",
+  "command.life_sanctuary.gametophyte.unknown": "此处没有可确认身份的配子体，或其记录与实际方块不符。",
+  "block.life_sanctuary.sphenophyte_gametophyte": "楔叶类配子体",
+  "block.life_sanctuary.fern_gametophyte": "真蕨类配子体",
+  "block.life_sanctuary.homosporous_lycopod_gametophyte": "同孢性石松配子体",
+  "block.life_sanctuary.female_lycopod_gametophyte": "异孢性石松雌配子体",
+  "block.life_sanctuary.male_lycopod_gametophyte": "异孢性石松雄配子体",
+  "block.life_sanctuary.mixed_lycopod_gametophyte": "异孢性石松混合配子体"
+}

@@ -37,11 +37,24 @@ public class EquisetumArvenseGametophyteBlock extends SupportedHorsetailBlock im
 
     @Override
     protected void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, RandomSource random) {
+        advance(level, pos);
+    }
+
+    static void advance(net.minecraft.server.level.ServerLevel level, BlockPos pos) {
         var data = HorsetailPopulations.get(level);
         if (!data.canGrowInClimate(level, pos)) return;
         var member = data.member(pos);
-        if (level.getBlockState(pos).is(this) && member != null && member.source().canFinishCurrentCycle()) {
-            level.setBlock(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get().defaultBlockState(), Block.UPDATE_ALL);
+        if (HorsetailPopulations.isGametophyte(level.getBlockState(pos)) && member != null && member.source().canFinishCurrentCycle()) {
+            var sprouts = LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get().defaultBlockState();
+            if (!level.setBlock(pos, sprouts, Block.UPDATE_ALL)) {
+                var current = level.getBlockState(pos);
+                if (HorsetailPopulations.isGametophyte(current)) level.scheduleTick(pos, current.getBlock(), 200);
+                return;
+            }
+            if (!level.getBlockState(pos).equals(sprouts) || !member.equals(data.member(pos))) {
+                LifeSanctuaryMod.LOGGER.error("Horsetail gametophyte transition changed during callback at {}", pos);
+                return;
+            }
             data.transition(pos, member);
             data.setStage(pos, PlantStage.SPROUTS);
             level.scheduleTick(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get(), HorsetailSpreadRules.SPROUTS_TO_ADULT_TICKS);

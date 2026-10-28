@@ -49,8 +49,13 @@ public final class SporeBagItem extends Item {
         if (!(context.getLevel() instanceof ServerLevel level)) {
             return InteractionResult.sidedSuccess(true);
         }
+        var player = context.getPlayer();
+        if (player != null && (!level.mayInteract(player, context.getClickedPos())
+                || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)))
+            return InteractionResult.FAIL;
         ReproductiveBagUseResult result = ReproductiveBagUseHandler.useSporeBag(
                 level, context.getClickedPos(), stack, effect);
-        return result.success() ? InteractionResult.sidedSuccess(false) : InteractionResult.PASS;
+        return result.success() ? InteractionResult.sidedSuccess(false)
+                : result.recoveryRequired() ? InteractionResult.FAIL : InteractionResult.PASS;
     }
 }

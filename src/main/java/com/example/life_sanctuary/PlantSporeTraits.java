@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 /** Species traits, not item/block tags. Seed-plant heterospory alone never enables lycopod game rules. */
 public final class PlantSporeTraits {
     private PlantSporeTraits() {}
-    public enum Group { UNCLASSIFIED, BRYOPHYTE, SEED_PLANT, FERN, RHYNIOPHYTE, LYCOPOD, TREE_LYCOPOD }
+    public enum Group { UNCLASSIFIED, BRYOPHYTE, SEED_PLANT, FERN, SPHENOPHYTE, RHYNIOPHYTE, LYCOPOD, TREE_LYCOPOD }
     public enum Mode { UNCLASSIFIED, HOMOSPOROUS, HETEROSPOROUS }
     public enum Sex { FEMALE, MALE, MONOECIOUS }
     public enum TreeFamily { GUANGDE_WOOD, SCALE_TREE, SEAL_TREE, NEST_TREE, NAVEL_LYCOPOD }
@@ -19,7 +19,7 @@ public final class PlantSporeTraits {
         }
         public Mode mode() { return switch (group) {
             case SEED_PLANT, TREE_LYCOPOD -> Mode.HETEROSPOROUS;
-            case FERN, RHYNIOPHYTE, LYCOPOD -> Mode.HOMOSPOROUS;
+            case FERN, SPHENOPHYTE, RHYNIOPHYTE, LYCOPOD -> Mode.HOMOSPOROUS;
             default -> Mode.UNCLASSIFIED;
         }; }
         public boolean differentiatedSpores() { return group == Group.TREE_LYCOPOD; }
@@ -28,7 +28,10 @@ public final class PlantSporeTraits {
     private static final Map<ResourceLocation, Profile> PROFILES = new ConcurrentHashMap<>();
     public static void register(ResourceLocation species, Profile profile) {
         java.util.Objects.requireNonNull(profile);
-        if (PlantSpeciesRegistry.find(species).isEmpty()) throw new IllegalArgumentException("Spore traits need a registered species");
+        var definition = PlantSpeciesRegistry.find(species).orElseThrow(
+                () -> new IllegalArgumentException("Spore traits need a registered species"));
+        if (profile.differentiatedSpores() && definition.population().isEmpty())
+            throw new IllegalArgumentException("Tree lycopod heterospory requires a population region");
         if (PROFILES.putIfAbsent(species, profile) != null) throw new IllegalArgumentException("Duplicate spore traits " + species);
     }
     public static void inherit(ResourceLocation child, ResourceLocation parent) {

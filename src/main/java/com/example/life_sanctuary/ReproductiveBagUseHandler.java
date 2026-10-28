@@ -15,7 +15,9 @@ public final class ReproductiveBagUseHandler {
             SporeBagEffect effect) {
         String speciesId = SporeBagItem.species(stack);
         var form = SporeBagContents.form(stack);
-        if (effect == null || speciesId == null || form.isEmpty() || (form.get() == SporeBagContents.Form.MEGA || form.get() == SporeBagContents.Form.MICRO)
+        boolean differentiated = PlantSporeTraits.species(speciesId).map(PlantSporeTraits::find)
+                .map(PlantSporeTraits.Profile::differentiatedSpores).orElse(false);
+        if (effect == null || speciesId == null || form.isEmpty() || differentiated
                 && effect != ReproductiveBagEffects.spore(speciesId, form.get())) return ReproductiveBagUseResult.rejected();
         ReproductiveBagUseResult result = effect.use(level, target, speciesId);
         consumeIfRequested(stack, result);

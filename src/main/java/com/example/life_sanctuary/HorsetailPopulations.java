@@ -142,7 +142,12 @@ public final class HorsetailPopulations extends SavedData {
     public static boolean isLivingHorsetail(net.minecraft.world.level.block.state.BlockState state) {
         return state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
                 || state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get())
-                || state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_GAMETOPHYTE.get());
+                || isGametophyte(state);
+    }
+
+    public static boolean isGametophyte(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_GAMETOPHYTE.get())
+                || state.is(LifeSanctuaryMod.SPHENOPHYTE_GAMETOPHYTE.get());
     }
 
     /** Sets the remaining harvest count when a reproductive structure matures. */
@@ -221,7 +226,7 @@ public final class HorsetailPopulations extends SavedData {
         environmentStates.put(pos.immutable(), PlantEnvironmentState.UNKNOWN);
         climates.remove(pos);
         var state = level.getBlockState(pos);
-        if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_GAMETOPHYTE.get())) {
+        if (isGametophyte(state)) {
             stages.put(pos.immutable(), PlantStage.GAMETOPHYTE);
             level.scheduleTick(pos, state.getBlock(), HorsetailSpreadRules.GAMETOPHYTE_TO_SPROUTS_MIN_TICKS
                     + level.random.nextInt(HorsetailSpreadRules.GAMETOPHYTE_TO_SPROUTS_MAX_TICKS

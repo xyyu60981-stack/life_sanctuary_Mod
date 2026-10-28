@@ -40,9 +40,13 @@ public final class PollenBagItem extends Item {
         if (!(context.getLevel() instanceof ServerLevel level)) {
             return InteractionResult.sidedSuccess(true);
         }
+        var player = context.getPlayer();
+        if (player != null && (!level.mayInteract(player, context.getClickedPos())
+                || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)))
+            return InteractionResult.FAIL;
         ReproductiveBagUseResult result = ReproductiveBagUseHandler.usePollenBag(
                 level, context.getClickedPos(), stack, effect);
-        if (!result.success()) return InteractionResult.PASS;
+        if (!result.success()) return result.recoveryRequired() ? InteractionResult.FAIL : InteractionResult.PASS;
         if (result.greenParticles()) {
             var center = context.getClickedPos().getCenter();
             level.sendParticles(ParticleTypes.HAPPY_VILLAGER, center.x, center.y + 1.0D, center.z,

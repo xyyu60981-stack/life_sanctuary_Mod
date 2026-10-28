@@ -122,6 +122,25 @@ public class LifeSanctuaryMod {
     public static final DeferredBlock<Block> DEAD_EQUISETALES = BLOCKS.registerBlock("dead_equisetales", properties -> new DeadEquisetalesBlock(properties.mapColor(MapColor.COLOR_BROWN).noOcclusion().instabreak().sound(SoundType.GRASS)));
     public static final DeferredItem<BlockItem> DEAD_EQUISETALES_ITEM = ITEMS.registerSimpleBlockItem("dead_equisetales", DEAD_EQUISETALES);
     public static final DeferredBlock<Block> EQUISETUM_ARVENSE_GAMETOPHYTE = BLOCKS.registerBlock("equisetum_arvense_gametophyte", properties -> new EquisetumArvenseGametophyteBlock(properties.mapColor(MapColor.PLANT).noOcclusion().instabreak().sound(SoundType.GRASS)));
+    public static final DeferredBlock<SharedGametophyteBlock> SPHENOPHYTE_GAMETOPHYTE = sharedGametophyte("sphenophyte_gametophyte");
+    public static final DeferredBlock<SharedGametophyteBlock> FERN_GAMETOPHYTE = sharedGametophyte("fern_gametophyte");
+    public static final DeferredBlock<SharedGametophyteBlock> HOMOSPOROUS_LYCOPOD_GAMETOPHYTE = sharedGametophyte("homosporous_lycopod_gametophyte");
+    public static final DeferredBlock<SharedGametophyteBlock> FEMALE_LYCOPOD_GAMETOPHYTE = sharedGametophyte("female_lycopod_gametophyte");
+    public static final DeferredBlock<SharedGametophyteBlock> MALE_LYCOPOD_GAMETOPHYTE = sharedGametophyte("male_lycopod_gametophyte");
+    public static final DeferredBlock<SharedGametophyteBlock> MIXED_LYCOPOD_GAMETOPHYTE = sharedGametophyte("mixed_lycopod_gametophyte");
+    private static DeferredBlock<SharedGametophyteBlock> sharedGametophyte(String id) {
+        return BLOCKS.registerBlock(id, p -> new SharedGametophyteBlock(p.mapColor(MapColor.PLANT).instabreak().sound(SoundType.GRASS)));
+    }
+    public static final DeferredItem<SharedGametophyteItem> SPHENOPHYTE_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.SPHENOPHYTE);
+    public static final DeferredItem<SharedGametophyteItem> FERN_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.FERN);
+    public static final DeferredItem<SharedGametophyteItem> HOMOSPOROUS_LYCOPOD_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.HOMOSPOROUS_LYCOPOD);
+    public static final DeferredItem<SharedGametophyteItem> FEMALE_LYCOPOD_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.FEMALE_LYCOPOD);
+    public static final DeferredItem<SharedGametophyteItem> MALE_LYCOPOD_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.MALE_LYCOPOD);
+    public static final DeferredItem<SharedGametophyteItem> MIXED_LYCOPOD_GAMETOPHYTE_ITEM = sharedGametophyteItem(GametophyteAppearance.MIXED_LYCOPOD);
+    private static DeferredItem<SharedGametophyteItem> sharedGametophyteItem(GametophyteAppearance appearance) {
+        return ITEMS.register(appearance.name().toLowerCase(java.util.Locale.ROOT) + "_gametophyte",
+                () -> new SharedGametophyteItem(new Item.Properties(), appearance));
+    }
     public static final DeferredItem<HorsetailPlantItem> EQUISETUM_ARVENSE_GAMETOPHYTE_ITEM = ITEMS.register("equisetum_arvense_gametophyte", () -> new HorsetailPlantItem(EQUISETUM_ARVENSE_GAMETOPHYTE.get(), new Item.Properties()));
     public static final DeferredBlock<Block> EQUISETUM_ARVENSE_SPROUTS = BLOCKS.registerBlock("equisetum_arvense_sprouts", properties -> new EquisetumArvenseSproutsBlock(properties.mapColor(MapColor.PLANT).noOcclusion().instabreak().sound(SoundType.GRASS)));
     public static final DeferredItem<HorsetailPlantItem> EQUISETUM_ARVENSE_SPROUTS_ITEM = ITEMS.register("equisetum_arvense_sprouts", () -> new HorsetailPlantItem(EQUISETUM_ARVENSE_SPROUTS.get(), new Item.Properties()));
@@ -240,6 +259,7 @@ public class LifeSanctuaryMod {
         NeoForge.EVENT_BUS.register(new ShelterDiscovery());
         NeoForge.EVENT_BUS.register(new HorsetailStemInteraction());
         NeoForge.EVENT_BUS.addListener(CultivationCabinetCommands::register);
+        NeoForge.EVENT_BUS.addListener(GametophyteCommands::register);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -268,11 +288,19 @@ public class LifeSanctuaryMod {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            SharedGametophyteBlocks.register(GametophyteAppearance.SPHENOPHYTE, SPHENOPHYTE_GAMETOPHYTE.get());
+            SharedGametophyteBlocks.register(GametophyteAppearance.FERN, FERN_GAMETOPHYTE.get());
+            SharedGametophyteBlocks.register(GametophyteAppearance.HOMOSPOROUS_LYCOPOD, HOMOSPOROUS_LYCOPOD_GAMETOPHYTE.get());
+            SharedGametophyteBlocks.register(GametophyteAppearance.FEMALE_LYCOPOD, FEMALE_LYCOPOD_GAMETOPHYTE.get());
+            SharedGametophyteBlocks.register(GametophyteAppearance.MALE_LYCOPOD, MALE_LYCOPOD_GAMETOPHYTE.get());
+            SharedGametophyteBlocks.register(GametophyteAppearance.MIXED_LYCOPOD, MIXED_LYCOPOD_GAMETOPHYTE.get());
+        });
         event.enqueueWork(LargeLeafMossRules::setup);
         event.enqueueWork(CycadGrowthProfile.COMMON::registerDefinition);
         event.enqueueWork(TansachanaCycad.PROFILE::registerDefinition);
         event.enqueueWork(() -> PlantSporeTraits.register(PlantSpeciesRegistry.HORSETAIL.id(),
-                new PlantSporeTraits.Profile(PlantSporeTraits.Group.FERN, false)));
+                new PlantSporeTraits.Profile(PlantSporeTraits.Group.SPHENOPHYTE, false)));
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
 

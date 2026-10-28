@@ -17,12 +17,11 @@ public interface SporeHarvestAccess {
         giveSporeBag(speciesId, source);
         return true;
     }
-    /** Legacy adapters can only emit their canonical default form; typed adapters override this. */
+    /** Differentiated spores require an adapter that explicitly handles the selected bag form. */
     default boolean exchangeSporeBag(String speciesId, SporeBagContents.Form form, BlockPos source) {
         var species = PlantSporeTraits.species(speciesId).orElse(null);
         if (species == null || !SporeBagContents.allowed(PlantSporeTraits.find(species), form)) return false;
-        var defaultForm = PlantSporeTraits.find(species).differentiatedSpores() ? SporeBagContents.Form.MIXED : SporeBagContents.Form.NORMAL;
-        return form == defaultForm && exchangeSporeBag(speciesId, source);
+        return form == SporeBagContents.Form.NORMAL && exchangeSporeBag(speciesId, source);
     }
     /** Whether an empty spore bag is available in the permitted collection source. */
     boolean hasEmptySporeBag();

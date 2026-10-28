@@ -14,7 +14,15 @@ public interface WaterDependentPlant {
         }
     }
 
-    Requirement waterRequirement(BlockState state);
+    default Requirement waterRequirement(BlockState state) {
+        throw new UnsupportedOperationException("This plant requires a position-aware water query");
+    }
+
+    default java.util.Optional<Requirement> waterRequirement(ServerLevel level, BlockPos pos, BlockState state) {
+        return java.util.Optional.of(waterRequirement(state));
+    }
+
+    default void waterStatusChanged(ServerLevel level, BlockPos pos, BlockState state, boolean dry) {}
 
     /** Multi-block or epiphytic plants may override this to return their actual supporting base. */
     default BlockPos waterSearchCenter(BlockPos pos, BlockState state) {

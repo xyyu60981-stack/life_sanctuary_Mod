@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "withering=false": { "model": "life_sanctuary:block/equisetum_arvense_gametophyte" },
+    "withering=true": { "model": "life_sanctuary:block/equisetum_arvense_gametophyte_withered" }
+  }
+}

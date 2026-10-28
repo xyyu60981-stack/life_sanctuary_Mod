@@ -154,6 +154,28 @@ public final class NaturalPlantStructurePlacement {
                         java.util.Optional.empty());
             }
         }
+        if (result.status() == PlantStructureCommitter.Status.COMMITTED
+                && PlantSporeTraits.find(state.species()).differentiatedSpores()) {
+            try {
+                // Static natural plants have no growth callback that could assign their sex later.
+                // Do this only after the entire world structure (including its crown) is committed.
+                if (!store.find(state.id()).filter(state::equals).isPresent()
+                        || !store.partsOf(state.id()).containsKey(state.base())
+                        || HeterosporeWorldData.get(level).assignSex(level, state).isEmpty())
+                    throw new IllegalStateException("Natural tree lycopod sex initialization failed");
+            } catch (RuntimeException failure) {
+                org.slf4j.LoggerFactory.getLogger(NaturalPlantStructurePlacement.class)
+                        .error("Cannot initialize sex for natural plant {}", state.id(), failure);
+                store.find(state.id()).filter(current -> current.species().equals(state.species())
+                        && current.base().equals(state.base())).ifPresent(current -> {
+                    var reasons = new java.util.HashSet<>(current.environmentReasons());
+                    reasons.add("heterospore_sex_assignment_error");
+                    store.replace(current, current.withEnvironmentReasons(reasons));
+                });
+                return new PlantStructureCommitter.Result(PlantStructureCommitter.Status.RECOVERY_REQUIRED,
+                        java.util.Optional.empty());
+            }
+        }
         // Incomplete recovery keeps its identity/error record for diagnosis, never retries.
         return result;
     }

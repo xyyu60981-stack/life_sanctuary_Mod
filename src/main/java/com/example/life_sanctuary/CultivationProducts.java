@@ -13,6 +13,7 @@ public final class CultivationProducts {
     private CultivationProducts() {}
     private record Key(ResourceLocation species, ResourceLocation output) {}
     private static final Map<Key, ItemStack> TEMPLATES = new ConcurrentHashMap<>();
+    private static final java.util.Set<Key> STAGE_TAGGED = ConcurrentHashMap.newKeySet();
 
     /** 只查询是否已配置，不复制物品；适合调度前检查，不代表目标库存有容量。 */
     public static boolean isAvailable(ResourceLocation species, ResourceLocation output) {
@@ -50,6 +51,19 @@ public final class CultivationProducts {
         TEMPLATES.put(key, template.copy());
     }
 
+    /** Explicit opt-in for a real plant item whose placement adapter understands completed-stage data. */
+    public static synchronized void registerStageTagged(ResourceLocation species, ResourceLocation output, ItemStack template) {
+        register(species, output, template);
+        STAGE_TAGGED.add(new Key(species, output));
+    }
+
+    /** Setup-time validation without exposing the mutable stored template. */
+    static synchronized boolean stageTaggedItem(ResourceLocation species, ResourceLocation output, net.minecraft.world.item.Item item) {
+        var key = new Key(species, output);
+        var template = TEMPLATES.get(key);
+        return template != null && STAGE_TAGGED.contains(key) && template.is(item);
+    }
+
     /**
      * 每次返回独立物品副本；不可堆叠产物分成四栈。列表不可改，栈可供库存适配器消费。
      * 缺失映射不猜测默认物品；调用者仍须一次性确认整批容量，再通过输出事务交付。
@@ -58,6 +72,9 @@ public final class CultivationProducts {
         java.util.Objects.requireNonNull(product);
         var template = TEMPLATES.get(new Key(product.species(), product.output()));
         if (template == null) return Optional.empty();
+        template = template.copy();
+        if (STAGE_TAGGED.contains(new Key(product.species(), product.output())))
+            new CultivatedStageData(product.species(), product.phase()).write(template);
         int limit = template.getMaxStackSize();
         if (limit < 1) throw new IllegalStateException("Invalid cultivation product stack limit");
         var stacks = new ArrayList<ItemStack>();

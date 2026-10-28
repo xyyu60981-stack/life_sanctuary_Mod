@@ -35,11 +35,15 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
             var registered = BuiltInRegistries.ITEM.getOptional(item).filter(value -> value != Items.AIR);
             var stack = new ItemStack(registered.orElse(Items.BARRIER));
             if (registered.isEmpty()) stack.set(DataComponents.CUSTOM_NAME, Component.literal(item.toString()));
-            else if (!species.isEmpty()) SpeciesTaggedItemData.write(stack, species);
+            else if (!species.isEmpty()) {
+                SpeciesTaggedItemData.write(stack, species);
+                if (stack.getItem() instanceof SharedGametophyteItem)
+                    stack.set(DataComponents.CUSTOM_NAME, stack.getHoverName().copy().append(" [" + species + "]"));
+            }
             return stack;
         }
         static Rule from(ItemStack sample, boolean anySpecies) {
-            var species = SpeciesTaggedItemData.read(sample);
+            var species = speciesOf(sample);
             return new Rule(BuiltInRegistries.ITEM.getKey(sample.getItem()), anySpecies || species == null ? "" : species);
         }
     }
@@ -55,6 +59,10 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
         if (mode == Mode.BROKEN) return false;
         boolean match = entries.stream().flatMap(Optional::stream).anyMatch(rule -> rule.matches(item, species));
         return mode == Mode.WHITELIST ? match : !match;
+    }
+    private static String speciesOf(ItemStack stack) {
+        return stack.getItem() instanceof SharedGametophyteItem shared
+                ? shared.species(stack).map(Object::toString).orElse(null) : SpeciesTaggedItemData.read(stack);
     }
     public CollectorFilter cycleMode() {
         return mode == Mode.BROKEN ? this : new CollectorFilter(Mode.values()[(mode.ordinal() + 1) % 3], entries);
@@ -118,6 +126,6 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
         return ReproductiveBagKind.SPORE.isEmptyBag(stack) || ReproductiveBagKind.POLLEN.isEmptyBag(stack);
     }
     public boolean allows(ItemStack stack) {
-        return stack.isEmpty() || isSupply(stack) || allows(BuiltInRegistries.ITEM.getKey(stack.getItem()), SpeciesTaggedItemData.read(stack));
+        return stack.isEmpty() || isSupply(stack) || allows(BuiltInRegistries.ITEM.getKey(stack.getItem()), speciesOf(stack));
     }
 }

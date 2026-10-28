@@ -46,7 +46,7 @@ public class EquisetumArvenseSproutsBlock extends SupportedHorsetailBlock implem
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         if (level instanceof ServerLevel server && HorsetailPopulations.get(server).sourceOf(pos).isStatic()) return false;
-        return allowsBonemealInClimate(level, pos, state);
+        return allowsBonemealInClimate(level, pos, state) && EquisetumArvenseBlock.canFitAdult(level, pos);
     }
 
     @Override
@@ -59,9 +59,10 @@ public class EquisetumArvenseSproutsBlock extends SupportedHorsetailBlock implem
         var data = HorsetailPopulations.get(level);
         if (!isValidBonemealTarget(level, pos, state)) return;
         var member = data.member(pos);
-        level.setBlock(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE.get().defaultBlockState(), Block.UPDATE_ALL);
+        if (member == null || !EquisetumArvenseBlock.growFromSprouts(level, pos, member.source().canExpand())) return;
         data.transition(pos, member);
         data.setStage(pos, PlantStage.ADULT);
+        if (member.source().canExpand()) level.scheduleTick(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE.get(), 1);
     }
 
     @Override
@@ -75,9 +76,13 @@ public class EquisetumArvenseSproutsBlock extends SupportedHorsetailBlock implem
         if (!data.canGrowInClimate(level, pos)) return;
         var member = data.member(pos);
         if (level.getBlockState(pos).is(this) && member != null && member.source().canFinishCurrentCycle()) {
-            level.setBlock(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE.get().defaultBlockState(), Block.UPDATE_ALL);
-            data.transition(pos, member);
-            data.setStage(pos, PlantStage.ADULT);
+            if (EquisetumArvenseBlock.growFromSprouts(level, pos, member.source().canExpand())) {
+                data.transition(pos, member);
+                data.setStage(pos, PlantStage.ADULT);
+                if (member.source().canExpand()) level.scheduleTick(pos, LifeSanctuaryMod.EQUISETUM_ARVENSE.get(), 1);
+            } else {
+                level.scheduleTick(pos, this, 200 + random.nextInt(201));
+            }
         }
     }
 

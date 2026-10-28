@@ -685,6 +685,7 @@ public final class PlantIndividuals extends SavedData {
         PlantIndividualState current = individuals.get(id);
         if (current == null || !current.base().equals(base)) return false;
         individuals.remove(id);
+        if (boundLevel != null) PlantWaterMonitoring.get(boundLevel).remove(current.base());
         if (boundLevel != null && PlantSporeTraits.find(current.species()).differentiatedSpores())
             HeterosporeWorldData.get(boundLevel).remove(id);
         populationIndex.remove(current);

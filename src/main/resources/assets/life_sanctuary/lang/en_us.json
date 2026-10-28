@@ -1,4 +1,13 @@
 {
+  "tooltip.life_sanctuary.gametophyte.species": "Species: %s",
+  "command.life_sanctuary.gametophyte.unloaded": "The target chunk is not loaded.",
+  "command.life_sanctuary.gametophyte.unknown": "No verified gametophyte identity was found, or the record does not match the block.",
+  "block.life_sanctuary.sphenophyte_gametophyte": "Sphenophyte Gametophyte",
+  "block.life_sanctuary.fern_gametophyte": "Fern Gametophyte",
+  "block.life_sanctuary.homosporous_lycopod_gametophyte": "Homosporous Lycopod Gametophyte",
+  "block.life_sanctuary.female_lycopod_gametophyte": "Female Lycopod Gametophyte",
+  "block.life_sanctuary.male_lycopod_gametophyte": "Male Lycopod Gametophyte",
+  "block.life_sanctuary.mixed_lycopod_gametophyte": "Mixed Lycopod Gametophyte",
   "itemGroup.life_sanctuary": "Life Sanctuary",
   "block.life_sanctuary.horizontal_light_cultivation_cabinet": "卧式光照培养柜",
   "container.life_sanctuary.large_horizontal_light_cultivation_cabinet": "大型卧式光照培养柜",

@@ -22,6 +22,7 @@ public final class PlantWaterMonitoring extends SavedData {
     private static final class Entry {
         String group;
         boolean dry;
+        boolean known;
         long remaining;
         long next;
         Entry(String group) { this.group = group; }
@@ -39,12 +40,24 @@ public final class PlantWaterMonitoring extends SavedData {
         return e == null ? new Status(false, 0) : new Status(e.dry, e.remaining);
     }
 
+    /** Missing monitoring data must not be displayed as confirmed sufficient water. */
+    public Optional<Status> inspect(BlockPos pos) {
+        Entry e = entries.get(pos);
+        return e == null || !e.known ? Optional.empty() : Optional.of(new Status(e.dry, e.remaining));
+    }
+
     /** Call on placement/stage change with the existing population, never a newly invented water population. */
     public void register(ServerLevel level, BlockPos pos, PlantSource source, PlantPopulationTag population) {
+        register(level, pos, source, population.serializedName());
+    }
+
+    public void register(ServerLevel level, BlockPos pos, PlantSource source, String population) {
         remove(pos);
-        if (source.isStatic() || !(level.getBlockState(pos).getBlock() instanceof WaterDependentPlant)) return;
+        if (source.isStatic() || population == null || population.isBlank()
+                || !(level.getBlockState(pos).getBlock() instanceof WaterDependentPlant plant)
+                || plant.waterRequirement(level, pos, level.getBlockState(pos)).isEmpty()) return;
         BlockPos key = pos.immutable();
-        Entry e = new Entry(population.serializedName());
+        Entry e = new Entry(population);
         entries.put(key, e);
         check(level, key, e, false);
         setDirty();
@@ -80,15 +93,22 @@ public final class PlantWaterMonitoring extends SavedData {
     private void check(ServerLevel level, BlockPos pos, Entry e, boolean elapsed) {
         long now = level.getGameTime();
         if (!level.getChunkSource().hasChunk(pos.getX() >> 4, pos.getZ() >> 4)) {
+            if (e.known) { e.known = false; setDirty(); }
             scheduleIndividual(pos, e, now, 1000);
             return; // No forced chunk loads and no decline charged during this skipped check.
         }
         var state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof WaterDependentPlant plant)) { remove(pos); return; }
-        var rule = plant.waterRequirement(state);
+        var rule = plant.waterRequirement(level, pos, state).orElse(null);
+        if (rule == null) { remove(pos); return; }
         Boolean water = findWater(level, plant.waterSearchCenter(pos, state), rule);
-        if (water == null) { scheduleIndividual(pos, e, now, 1000); return; }
-        if (water) { joinWet(pos, e, now); setDirty(); return; }
+        if (water == null) {
+            if (e.known) { e.known = false; setDirty(); }
+            scheduleIndividual(pos, e, now, 1000); return;
+        }
+        e.known = true;
+        if (water) { plant.waterStatusChanged(level, pos, state, false); joinWet(pos, e, now); setDirty(); return; }
+        plant.waterStatusChanged(level, pos, state, true);
         if (!e.dry) { e.dry = true; e.remaining = rule.dryTicks(); }
         else if (elapsed) e.remaining = Math.max(0, e.remaining - Math.min(1000, e.remaining));
         if (e.remaining == 0 && plant.finishWaterDecline(level, pos, state)) { remove(pos); return; }
@@ -138,6 +158,7 @@ public final class PlantWaterMonitoring extends SavedData {
             BlockPos pos = BlockPos.of(saved.getLong("Position"));
             Entry e = new Entry(saved.getString("Group"));
             e.dry = saved.getBoolean("Dry");
+            e.known = saved.contains("Known", Tag.TAG_BYTE) ? saved.getBoolean("Known") : e.dry;
             e.remaining = Math.max(0, saved.getLong("Remaining"));
             e.next = saved.getLong("Next");
             data.entries.put(pos, e);
@@ -162,6 +183,7 @@ public final class PlantWaterMonitoring extends SavedData {
             saved.putLong("Position", pos.asLong());
             saved.putString("Group", e.group);
             saved.putBoolean("Dry", e.dry);
+            saved.putBoolean("Known", e.known);
             saved.putLong("Remaining", e.remaining);
             boolean individual = !wet.getOrDefault(e.group, Set.of()).contains(pos);
             saved.putBoolean("Individual", individual);

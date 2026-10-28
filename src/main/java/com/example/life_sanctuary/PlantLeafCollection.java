@@ -37,18 +37,20 @@ public final class PlantLeafCollection {
     public static Result collectSpore(ServerLevel level, PlantIndividualState expected, PlantLeafData leaves,
             String key, SporeHarvestAccess access, RandomSource random) {
         var traits = PlantSporeTraits.find(expected.species());
-        if (traits.differentiatedSpores() && !traits.allMonoecious()) {
+        if (traits.differentiatedSpores()) {
             var sex = HeterosporeWorldData.get(level).sex(expected);
             return sex.isEmpty() ? Result.REJECTED : collectSpore(level, expected, leaves, key, access, random, PlantSporeTraits.form(sex.get()));
         }
-        return collectSpore(level, expected, leaves, key, access, random,
-                traits.differentiatedSpores() ? SporeBagContents.Form.MIXED : SporeBagContents.Form.NORMAL);
+        return collectSpore(level, expected, leaves, key, access, random, SporeBagContents.Form.NORMAL);
     }
     /** The form must come from trusted plant/structure sex data, never from an unchecked client request. */
     public static Result collectSpore(ServerLevel level, PlantIndividualState expected, PlantLeafData leaves,
             String key, SporeHarvestAccess access, RandomSource random, SporeBagContents.Form form) {
         if (!level.getServer().isSameThread()) throw new IllegalStateException("Server thread required");
-        if (!SporeBagContents.allowed(PlantSporeTraits.find(expected.species()), form)) return Result.REJECTED;
+        var traits = PlantSporeTraits.find(expected.species());
+        if (!SporeBagContents.allowed(traits, form)
+                || traits.differentiatedSpores() && !HeterosporeWorldData.get(level).sex(expected)
+                        .map(PlantSporeTraits::form).filter(form::equals).isPresent()) return Result.REJECTED;
         Objects.requireNonNull(access);
         Objects.requireNonNull(random);
         var store = PlantIndividuals.get(level);

@@ -44,12 +44,14 @@ public record GametophyteStatus(GametophyteIdentity identity, PlantSource source
         var biology = HeterosporeWorldData.get(level);
         var cycle = biology.cycle(plant.id());
         boolean fault = plant.environmentReasons().stream().anyMatch(reason -> reason.endsWith("_error"))
+                || SharedGametophyteWater.monitoringUnavailable(level, plant)
                 || cycle.isPresent() && biology.frozen(plant.id());
         Growth growth = fault ? Growth.RECOVERY_REQUIRED : plant.source().isStatic() ? Growth.STATIC
                 : plant.pruned() || !plant.environmentReasons().isEmpty() ? Growth.PAUSED : Growth.ACTIVE;
         var water = SharedGametophyteWater.requirement(level, plant.base()).isPresent()
                 ? PlantWaterMonitoring.get(level).inspect(plant.base())
                 : Optional.<PlantWaterMonitoring.Status>empty();
+        if (growth == Growth.ACTIVE && SharedGametophyteWater.requiresWater(plant) && water.isEmpty()) growth = Growth.UNKNOWN;
         return Optional.of(new GametophyteStatus(identity, plant.source(), plant.stage(), growth,
                 plant.environmentReasons(), cycle, water));
     }

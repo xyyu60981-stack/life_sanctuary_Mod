@@ -44,6 +44,10 @@ public final class HomosporousGametophyteGrowth {
             if (store != PlantIndividuals.get(level) || store.isReadOnly() || store.isApplyingStructure()
                     || !PlantLifecycle.canRunTimer(expected) || expected.remainingTicks() != 0
                     || !store.find(expected.id()).filter(expected::equals).isPresent()) return;
+            if (SharedGametophyteWater.monitoringUnavailable(level, expected)) {
+                PlantLifecycle.setPauseReason(store, expected.id(), "water_monitoring_error", true);
+                return;
+            }
             var identity = GametophyteIdentity.at(level, expected.base()).orElse(null);
             if (identity == null || !identity.species().equals(species)
                     || identity.form() != SporeBagContents.Form.NORMAL

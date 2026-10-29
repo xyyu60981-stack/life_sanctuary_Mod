@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 
 /** The growing horsetail stage advances only while its chunk is loaded. */
 public class EquisetumArvenseSproutsBlock extends SupportedHorsetailBlock implements BonemealableBlock, EnvironmentSensitivePlant {
+    private static final net.minecraft.world.phys.shapes.VoxelShape OUTLINE = Block.box(6, 0, 6, 10, 11.6, 10);
     public static final BooleanProperty WITHERING = BooleanProperty.create("withering");
 
     public EquisetumArvenseSproutsBlock(Properties properties) {
@@ -21,6 +22,11 @@ public class EquisetumArvenseSproutsBlock extends SupportedHorsetailBlock implem
 
     @Override
     protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) { builder.add(WITHERING); }
+
+    @Override
+    protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
+            net.minecraft.world.level.BlockGetter level, BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) { return OUTLINE; }
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {

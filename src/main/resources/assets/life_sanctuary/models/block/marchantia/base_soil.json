@@ -1,0 +1,81 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "surface": "life_sanctuary:block/marchantia_soil",
+    "particle": "#surface"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        1,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#surface"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#surface",
+          "cullface": "down"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            0.25
+          ],
+          "texture": "#surface"
+        },
+        "south": {
+          "uv": [
+            0,
+            15.75,
+            16,
+            16
+          ],
+          "texture": "#surface"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#surface"
+        },
+        "east": {
+          "uv": [
+            15.75,
+            0,
+            16,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#surface"
+        }
+      }
+    }
+  ]
+}

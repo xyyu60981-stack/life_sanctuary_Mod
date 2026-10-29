@@ -1,0 +1,6669 @@
+{
+  "meta": {
+    "format_version": "5.0",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "vegetative",
+  "parent": "",
+  "java_block_version": "26.3",
+  "ambientocclusion": true,
+  "front_gui_light": false,
+  "visible_box": [
+    2,
+    3,
+    2
+  ],
+  "variable_placeholders": "",
+  "multi_file_ruleset": "",
+  "variable_placeholder_buttons": [],
+  "unhandled_root_fields": {},
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "central_axis_1x1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.75,
+        0,
+        7.75
+      ],
+      "to": [
+        8.25,
+        21.4,
+        8.25
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        8.25,
+        0,
+        8.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2.0,
+            2.9655,
+            6.0,
+            62.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            2.0,
+            2.9655,
+            6.0,
+            62.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            2.0,
+            2.9655,
+            6.0,
+            62.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            2.0,
+            2.9655,
+            6.0,
+            62.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            54.0,
+            14.0,
+            58.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            54.0,
+            14.0,
+            58.0,
+            18.0
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "a54cf09b-eab5-500f-b63a-121b68cffd9f"
+    },
+    {
+      "name": "expanded_whorl_0_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        2.7,
+        8.15
+      ],
+      "to": [
+        13.0,
+        6.1,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "dbf01baa-e87a-5a4f-b04d-cf2c9536670e"
+    },
+    {
+      "name": "expanded_whorl_0_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        2.7,
+        8.15
+      ],
+      "to": [
+        13.0,
+        6.1,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 6,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        2.7,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "616f2d5e-36cd-5b9c-9257-04d4bd3e2e97"
+    },
+    {
+      "name": "expanded_whorl_0_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        2.7,
+        8.0
+      ],
+      "to": [
+        7.85,
+        6.1,
+        13.0
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "40d9a08f-690e-550f-844d-849aa8d9af59"
+    },
+    {
+      "name": "expanded_whorl_0_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        2.7,
+        8.0
+      ],
+      "to": [
+        7.85,
+        6.1,
+        13.0
+      ],
+      "autouv": 0,
+      "color": 7,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        2.7,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b73a9960-2e32-5e77-bac3-cd4cddccc414"
+    },
+    {
+      "name": "expanded_whorl_0_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.0,
+        2.7,
+        8.15
+      ],
+      "to": [
+        8.0,
+        6.1,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "09ed0038-8cd8-5fa2-a9dc-7aa81af76219"
+    },
+    {
+      "name": "expanded_whorl_0_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.0,
+        2.7,
+        8.15
+      ],
+      "to": [
+        8.0,
+        6.1,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 2,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        2.7,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "34e56cc7-903c-51ed-a8d7-b0978376c613"
+    },
+    {
+      "name": "expanded_whorl_0_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        2.7,
+        3.0
+      ],
+      "to": [
+        7.85,
+        6.1,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "8a059168-ba76-5e53-aa6d-e8f115eddb18"
+    },
+    {
+      "name": "expanded_whorl_0_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        2.7,
+        3.0
+      ],
+      "to": [
+        7.85,
+        6.1,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 9,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        2.7,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "93a1c140-b60f-5929-8b87-29872bded042"
+    },
+    {
+      "name": "expanded_whorl_1_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        5.6,
+        8.05
+      ],
+      "to": [
+        12.55,
+        9,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        8.0,
+        0,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "7e23b181-c8d4-5b71-b64b-46d62a950b41"
+    },
+    {
+      "name": "expanded_whorl_1_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        5.6,
+        8.05
+      ],
+      "to": [
+        12.55,
+        9,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        5.6,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "6f06954b-2759-5898-b18a-b27cdb723088"
+    },
+    {
+      "name": "expanded_whorl_1_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        5.6,
+        8.0
+      ],
+      "to": [
+        7.95,
+        9,
+        12.55
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        7.95,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "82113493-9b58-5a0b-83bb-fd6193e45833"
+    },
+    {
+      "name": "expanded_whorl_1_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        5.6,
+        8.0
+      ],
+      "to": [
+        7.95,
+        9,
+        12.55
+      ],
+      "autouv": 0,
+      "color": 9,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.95,
+        5.6,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "ee300a9b-815b-5a36-b6ec-f971d5cd04c4"
+    },
+    {
+      "name": "expanded_whorl_1_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.45,
+        5.6,
+        8.05
+      ],
+      "to": [
+        8.0,
+        9,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.0,
+        0,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "95097b98-0d30-5d4e-8a23-6e385cf1d801"
+    },
+    {
+      "name": "expanded_whorl_1_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.45,
+        5.6,
+        8.05
+      ],
+      "to": [
+        8.0,
+        9,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 4,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        5.6,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "1b10a851-b143-560a-a896-4fe34a6eaf19"
+    },
+    {
+      "name": "expanded_whorl_1_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        5.6,
+        3.45
+      ],
+      "to": [
+        7.95,
+        9,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 5,
+      "origin": [
+        7.95,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "ea4cc3da-91c0-594f-a1c8-20537f99dd3f"
+    },
+    {
+      "name": "expanded_whorl_1_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        5.6,
+        3.45
+      ],
+      "to": [
+        7.95,
+        9,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 8,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.95,
+        5.6,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "76cdd9e1-4263-5202-bb2c-9daed1735ffd"
+    },
+    {
+      "name": "expanded_whorl_2_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        8.6,
+        7.95
+      ],
+      "to": [
+        12.1,
+        12,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        8.0,
+        0,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "51d1d81e-87c5-5561-8a5b-eb1446d886b6"
+    },
+    {
+      "name": "expanded_whorl_2_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        8.6,
+        7.95
+      ],
+      "to": [
+        12.1,
+        12,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 6,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        8.6,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "44c60814-82dd-5779-8890-d1ad689b1879"
+    },
+    {
+      "name": "expanded_whorl_2_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        8.6,
+        8.0
+      ],
+      "to": [
+        8.05,
+        12,
+        12.1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        8.05,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "4e7e91ef-422d-5974-ad6d-53516e18e378"
+    },
+    {
+      "name": "expanded_whorl_2_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        8.6,
+        8.0
+      ],
+      "to": [
+        8.05,
+        12,
+        12.1
+      ],
+      "autouv": 0,
+      "color": 7,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.05,
+        8.6,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b092f009-11ac-5f47-8545-17cc18451d67"
+    },
+    {
+      "name": "expanded_whorl_2_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.9,
+        8.6,
+        7.95
+      ],
+      "to": [
+        8.0,
+        12,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.0,
+        0,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "623048ae-e478-5ea6-be65-839f1ec912c5"
+    },
+    {
+      "name": "expanded_whorl_2_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.9,
+        8.6,
+        7.95
+      ],
+      "to": [
+        8.0,
+        12,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 1,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        8.6,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "bf0d2614-942c-5f06-abf6-49215652da49"
+    },
+    {
+      "name": "expanded_whorl_2_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        8.6,
+        3.9
+      ],
+      "to": [
+        8.05,
+        12,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.05,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "4be2fa87-a25c-5100-82dd-fd3917b88da6"
+    },
+    {
+      "name": "expanded_whorl_2_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        8.6,
+        3.9
+      ],
+      "to": [
+        8.05,
+        12,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 3,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.05,
+        8.6,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "971d4f03-0a72-5744-8771-79f6e510a2dc"
+    },
+    {
+      "name": "expanded_whorl_3_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        11.5,
+        7.85
+      ],
+      "to": [
+        11.65,
+        14.9,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        8.0,
+        0,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "cee8fb3b-f84f-54c4-840f-2d8f083cb4ad"
+    },
+    {
+      "name": "expanded_whorl_3_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        11.5,
+        7.85
+      ],
+      "to": [
+        11.65,
+        14.9,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 0,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        11.5,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "e4ff087a-122e-5f7b-8ab6-0f0df2c0f421"
+    },
+    {
+      "name": "expanded_whorl_3_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        11.5,
+        8.0
+      ],
+      "to": [
+        8.15,
+        14.9,
+        11.65
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8.15,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "194f87be-b4d7-5b72-b411-6f4339d6c7ce"
+    },
+    {
+      "name": "expanded_whorl_3_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        11.5,
+        8.0
+      ],
+      "to": [
+        8.15,
+        14.9,
+        11.65
+      ],
+      "autouv": 0,
+      "color": 8,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.15,
+        11.5,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b8f690ce-edf6-5a27-a50a-a067ac7080de"
+    },
+    {
+      "name": "expanded_whorl_3_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        4.35,
+        11.5,
+        7.85
+      ],
+      "to": [
+        8.0,
+        14.9,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.0,
+        0,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "84bc0711-0be4-5e1a-8464-ae1dd8a2c607"
+    },
+    {
+      "name": "expanded_whorl_3_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        4.35,
+        11.5,
+        7.85
+      ],
+      "to": [
+        8.0,
+        14.9,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 8,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        11.5,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b8dcea15-9e5e-5271-9012-91f30a5d0c34"
+    },
+    {
+      "name": "expanded_whorl_3_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        11.5,
+        4.35
+      ],
+      "to": [
+        8.15,
+        14.9,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 5,
+      "origin": [
+        8.15,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "668f6d50-c1a8-59ad-818d-7803a1d35744"
+    },
+    {
+      "name": "expanded_whorl_3_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        11.5,
+        4.35
+      ],
+      "to": [
+        8.15,
+        14.9,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 6,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.15,
+        11.5,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "f42c70dd-6bf2-5b7b-90e5-baa8deb597fc"
+    },
+    {
+      "name": "expanded_whorl_4_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        14.2,
+        8.15
+      ],
+      "to": [
+        11.2,
+        17.6,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b863b333-502a-5044-9e62-24688ec16703"
+    },
+    {
+      "name": "expanded_whorl_4_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        14.2,
+        8.15
+      ],
+      "to": [
+        11.2,
+        17.6,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 3,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        14.2,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b88748c7-09f5-5a7e-8794-d866cde87fc5"
+    },
+    {
+      "name": "expanded_whorl_4_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        14.2,
+        8.0
+      ],
+      "to": [
+        7.85,
+        17.6,
+        11.2
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "f3ff5454-330a-58e4-b25b-08973946da16"
+    },
+    {
+      "name": "expanded_whorl_4_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        14.2,
+        8.0
+      ],
+      "to": [
+        7.85,
+        17.6,
+        11.2
+      ],
+      "autouv": 0,
+      "color": 8,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        14.2,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "287b19b6-f6cc-5169-b33c-e653ded990bd"
+    },
+    {
+      "name": "expanded_whorl_4_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        4.8,
+        14.2,
+        8.15
+      ],
+      "to": [
+        8.0,
+        17.6,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "6630b46e-029d-5d81-9681-21e0f4a44f46"
+    },
+    {
+      "name": "expanded_whorl_4_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        4.8,
+        14.2,
+        8.15
+      ],
+      "to": [
+        8.0,
+        17.6,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        14.2,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "c1df2d6f-2d5b-5177-9ccb-ebf72f725b62"
+    },
+    {
+      "name": "expanded_whorl_4_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        14.2,
+        4.8
+      ],
+      "to": [
+        7.85,
+        17.6,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 5,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "225eaecd-1ff5-5a26-a3ff-868c393e38fb"
+    },
+    {
+      "name": "expanded_whorl_4_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        14.2,
+        4.8
+      ],
+      "to": [
+        7.85,
+        17.6,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 1,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        14.2,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "69f186ee-94f9-5e3b-80c4-87d2056ee222"
+    },
+    {
+      "name": "expanded_whorl_5_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        16.7,
+        8.05
+      ],
+      "to": [
+        10.75,
+        20.1,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        8.0,
+        0,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "6a533968-05fe-54f5-8afd-17e2d4d09c51"
+    },
+    {
+      "name": "expanded_whorl_5_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        16.7,
+        8.05
+      ],
+      "to": [
+        10.75,
+        20.1,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 1,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        16.7,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "2bc7cbab-5cb6-588d-8890-3f683d4dd1be"
+    },
+    {
+      "name": "expanded_whorl_5_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        16.7,
+        8.0
+      ],
+      "to": [
+        7.95,
+        20.1,
+        10.75
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        7.95,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "49ae3717-abb7-5d2b-ac58-86209bafeba3"
+    },
+    {
+      "name": "expanded_whorl_5_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        16.7,
+        8.0
+      ],
+      "to": [
+        7.95,
+        20.1,
+        10.75
+      ],
+      "autouv": 0,
+      "color": 0,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.95,
+        16.7,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "1af09f01-eb7d-5f6f-b029-d1f7aa8d6d07"
+    },
+    {
+      "name": "expanded_whorl_5_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        5.25,
+        16.7,
+        8.05
+      ],
+      "to": [
+        8.0,
+        20.1,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        8.0,
+        0,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "ba9953fd-89b2-5616-a32d-fff3bf19c21b"
+    },
+    {
+      "name": "expanded_whorl_5_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        5.25,
+        16.7,
+        8.05
+      ],
+      "to": [
+        8.0,
+        20.1,
+        8.05
+      ],
+      "autouv": 0,
+      "color": 6,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        16.7,
+        8.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "a5f3e3f7-f1ae-5995-8c2d-7c946a9220d1"
+    },
+    {
+      "name": "expanded_whorl_5_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        16.7,
+        5.25
+      ],
+      "to": [
+        7.95,
+        20.1,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        7.95,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "e0aa7f9f-9ef6-54fa-bf01-21e82ec677c0"
+    },
+    {
+      "name": "expanded_whorl_5_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.95,
+        16.7,
+        5.25
+      ],
+      "to": [
+        7.95,
+        20.1,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 8,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.95,
+        16.7,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "796ab08a-d79e-5d01-8004-5047e995c237"
+    },
+    {
+      "name": "expanded_whorl_6_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        18.9,
+        7.95
+      ],
+      "to": [
+        10.3,
+        22.3,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8.0,
+        0,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "aa85208d-2cc2-51c2-bb72-021b4983df1f"
+    },
+    {
+      "name": "expanded_whorl_6_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        18.9,
+        7.95
+      ],
+      "to": [
+        10.3,
+        22.3,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        18.9,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "355dd9cd-cd1b-5b62-90cc-54057d7883ff"
+    },
+    {
+      "name": "expanded_whorl_6_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        18.9,
+        8.0
+      ],
+      "to": [
+        8.05,
+        22.3,
+        10.3
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        8.05,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "c3da3010-fd4a-58ec-aeb4-5f158c934a7e"
+    },
+    {
+      "name": "expanded_whorl_6_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        18.9,
+        8.0
+      ],
+      "to": [
+        8.05,
+        22.3,
+        10.3
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.05,
+        18.9,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "893275bb-fd7b-545e-a62c-a891c9885c05"
+    },
+    {
+      "name": "expanded_whorl_6_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        5.7,
+        18.9,
+        7.95
+      ],
+      "to": [
+        8.0,
+        22.3,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        8.0,
+        0,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b4005c4d-214b-520f-a08e-d7508e34d06f"
+    },
+    {
+      "name": "expanded_whorl_6_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        5.7,
+        18.9,
+        7.95
+      ],
+      "to": [
+        8.0,
+        22.3,
+        7.95
+      ],
+      "autouv": 0,
+      "color": 9,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        18.9,
+        7.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "4d3445b5-3415-5240-a7b7-965d0afc91d2"
+    },
+    {
+      "name": "expanded_whorl_6_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        18.9,
+        5.7
+      ],
+      "to": [
+        8.05,
+        22.3,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.05,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "3e41622a-0d4b-50d1-998d-a155d4165c5e"
+    },
+    {
+      "name": "expanded_whorl_6_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.05,
+        18.9,
+        5.7
+      ],
+      "to": [
+        8.05,
+        22.3,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 7,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.05,
+        18.9,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "7dac0924-2368-55ec-8f75-803d6933549e"
+    },
+    {
+      "name": "expanded_whorl_7_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        20.5,
+        7.85
+      ],
+      "to": [
+        9.85,
+        23.2,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        0,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "a590459c-c064-57b2-b2b6-a38e1c9e5ded"
+    },
+    {
+      "name": "expanded_whorl_7_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        20.5,
+        7.85
+      ],
+      "to": [
+        9.85,
+        23.2,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 0,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        20.5,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "5d853c67-4e5a-5297-8f09-7823cb671513"
+    },
+    {
+      "name": "expanded_whorl_7_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        20.5,
+        8.0
+      ],
+      "to": [
+        8.15,
+        23.2,
+        9.85
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8.15,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "14aa7d19-b8a4-5027-9f59-d80ebe0f9798"
+    },
+    {
+      "name": "expanded_whorl_7_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        20.5,
+        8.0
+      ],
+      "to": [
+        8.15,
+        23.2,
+        9.85
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.15,
+        20.5,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "9beedc7f-b126-5933-b7af-d4d3f78d06da"
+    },
+    {
+      "name": "expanded_whorl_7_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        6.15,
+        20.5,
+        7.85
+      ],
+      "to": [
+        8.0,
+        23.2,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        8.0,
+        0,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "ee43c198-a6e6-548a-bbfe-a2329cd5712c"
+    },
+    {
+      "name": "expanded_whorl_7_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        6.15,
+        20.5,
+        7.85
+      ],
+      "to": [
+        8.0,
+        23.2,
+        7.85
+      ],
+      "autouv": 0,
+      "color": 3,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        20.5,
+        7.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "89b1ada4-34f6-5d72-b837-e07b8191eed1"
+    },
+    {
+      "name": "expanded_whorl_7_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        20.5,
+        6.15
+      ],
+      "to": [
+        8.15,
+        23.2,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.15,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "6e317840-0425-5dda-a880-0b7df5292232"
+    },
+    {
+      "name": "expanded_whorl_7_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.15,
+        20.5,
+        6.15
+      ],
+      "to": [
+        8.15,
+        23.2,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 3,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.15,
+        20.5,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "11deaaba-7af1-5efe-8aef-3ac20074f9ef"
+    },
+    {
+      "name": "terminal_fine_leaf_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        21,
+        8.15
+      ],
+      "to": [
+        8.9,
+        23.2,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "e8919c3a-e2df-5eed-b191-5ecdfafd87fd"
+    },
+    {
+      "name": "terminal_fine_leaf_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8.0,
+        21,
+        8.15
+      ],
+      "to": [
+        8.9,
+        23.2,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 1,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        21,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "f1273b5b-3758-5bc2-90f8-5adfef4756c4"
+    },
+    {
+      "name": "terminal_fine_leaf_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        21,
+        8.0
+      ],
+      "to": [
+        7.85,
+        23.2,
+        8.9
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "f5aabd48-1b93-5da6-87a3-8e7cf63896d8"
+    },
+    {
+      "name": "terminal_fine_leaf_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        21,
+        8.0
+      ],
+      "to": [
+        7.85,
+        23.2,
+        8.9
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        21,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "bc19ae3a-50b3-5a30-95e2-6339486e1a58"
+    },
+    {
+      "name": "terminal_fine_leaf_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.1,
+        21,
+        8.15
+      ],
+      "to": [
+        8.0,
+        23.2,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8.0,
+        0,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "9c005488-11d2-50fb-97e9-36e2d9350fc2"
+    },
+    {
+      "name": "terminal_fine_leaf_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.1,
+        21,
+        8.15
+      ],
+      "to": [
+        8.0,
+        23.2,
+        8.15
+      ],
+      "autouv": 0,
+      "color": 0,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8.0,
+        21,
+        8.15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "be215368-660c-5764-bd16-d8caaf9d8896"
+    },
+    {
+      "name": "terminal_fine_leaf_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        21,
+        7.1
+      ],
+      "to": [
+        7.85,
+        23.2,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        7.85,
+        0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "7ee23b4a-5f3b-5673-812d-55e015e52677"
+    },
+    {
+      "name": "terminal_fine_leaf_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        7.85,
+        21,
+        7.1
+      ],
+      "to": [
+        7.85,
+        23.2,
+        8.0
+      ],
+      "autouv": 0,
+      "color": 7,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        7.85,
+        21,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            22.0,
+            2.0,
+            38.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            38.0,
+            2.0,
+            22.0,
+            18.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "9d5a8260-c64d-5bf0-abec-c00b17b63703"
+    }
+  ],
+  "groups": [],
+  "outliner": [
+    "a54cf09b-eab5-500f-b63a-121b68cffd9f",
+    "dbf01baa-e87a-5a4f-b04d-cf2c9536670e",
+    "616f2d5e-36cd-5b9c-9257-04d4bd3e2e97",
+    "40d9a08f-690e-550f-844d-849aa8d9af59",
+    "b73a9960-2e32-5e77-bac3-cd4cddccc414",
+    "09ed0038-8cd8-5fa2-a9dc-7aa81af76219",
+    "34e56cc7-903c-51ed-a8d7-b0978376c613",
+    "8a059168-ba76-5e53-aa6d-e8f115eddb18",
+    "93a1c140-b60f-5929-8b87-29872bded042",
+    "7e23b181-c8d4-5b71-b64b-46d62a950b41",
+    "6f06954b-2759-5898-b18a-b27cdb723088",
+    "82113493-9b58-5a0b-83bb-fd6193e45833",
+    "ee300a9b-815b-5a36-b6ec-f971d5cd04c4",
+    "95097b98-0d30-5d4e-8a23-6e385cf1d801",
+    "1b10a851-b143-560a-a896-4fe34a6eaf19",
+    "ea4cc3da-91c0-594f-a1c8-20537f99dd3f",
+    "76cdd9e1-4263-5202-bb2c-9daed1735ffd",
+    "51d1d81e-87c5-5561-8a5b-eb1446d886b6",
+    "44c60814-82dd-5779-8890-d1ad689b1879",
+    "4e7e91ef-422d-5974-ad6d-53516e18e378",
+    "b092f009-11ac-5f47-8545-17cc18451d67",
+    "623048ae-e478-5ea6-be65-839f1ec912c5",
+    "bf0d2614-942c-5f06-abf6-49215652da49",
+    "4be2fa87-a25c-5100-82dd-fd3917b88da6",
+    "971d4f03-0a72-5744-8771-79f6e510a2dc",
+    "cee8fb3b-f84f-54c4-840f-2d8f083cb4ad",
+    "e4ff087a-122e-5f7b-8ab6-0f0df2c0f421",
+    "194f87be-b4d7-5b72-b411-6f4339d6c7ce",
+    "b8f690ce-edf6-5a27-a50a-a067ac7080de",
+    "84bc0711-0be4-5e1a-8464-ae1dd8a2c607",
+    "b8dcea15-9e5e-5271-9012-91f30a5d0c34",
+    "668f6d50-c1a8-59ad-818d-7803a1d35744",
+    "f42c70dd-6bf2-5b7b-90e5-baa8deb597fc",
+    "b863b333-502a-5044-9e62-24688ec16703",
+    "b88748c7-09f5-5a7e-8794-d866cde87fc5",
+    "f3ff5454-330a-58e4-b25b-08973946da16",
+    "287b19b6-f6cc-5169-b33c-e653ded990bd",
+    "6630b46e-029d-5d81-9681-21e0f4a44f46",
+    "c1df2d6f-2d5b-5177-9ccb-ebf72f725b62",
+    "225eaecd-1ff5-5a26-a3ff-868c393e38fb",
+    "69f186ee-94f9-5e3b-80c4-87d2056ee222",
+    "6a533968-05fe-54f5-8afd-17e2d4d09c51",
+    "2bc7cbab-5cb6-588d-8890-3f683d4dd1be",
+    "49ae3717-abb7-5d2b-ac58-86209bafeba3",
+    "1af09f01-eb7d-5f6f-b029-d1f7aa8d6d07",
+    "ba9953fd-89b2-5616-a32d-fff3bf19c21b",
+    "a5f3e3f7-f1ae-5995-8c2d-7c946a9220d1",
+    "e0aa7f9f-9ef6-54fa-bf01-21e82ec677c0",
+    "796ab08a-d79e-5d01-8004-5047e995c237",
+    "aa85208d-2cc2-51c2-bb72-021b4983df1f",
+    "355dd9cd-cd1b-5b62-90cc-54057d7883ff",
+    "c3da3010-fd4a-58ec-aeb4-5f158c934a7e",
+    "893275bb-fd7b-545e-a62c-a891c9885c05",
+    "b4005c4d-214b-520f-a08e-d7508e34d06f",
+    "4d3445b5-3415-5240-a7b7-965d0afc91d2",
+    "3e41622a-0d4b-50d1-998d-a155d4165c5e",
+    "7dac0924-2368-55ec-8f75-803d6933549e",
+    "a590459c-c064-57b2-b2b6-a38e1c9e5ded",
+    "5d853c67-4e5a-5297-8f09-7823cb671513",
+    "14aa7d19-b8a4-5027-9f59-d80ebe0f9798",
+    "9beedc7f-b126-5933-b7af-d4d3f78d06da",
+    "ee43c198-a6e6-548a-bbfe-a2329cd5712c",
+    "89b1ada4-34f6-5d72-b837-e07b8191eed1",
+    "6e317840-0425-5dda-a880-0b7df5292232",
+    "11deaaba-7af1-5efe-8aef-3ac20074f9ef",
+    "e8919c3a-e2df-5eed-b191-5ecdfafd87fd",
+    "f1273b5b-3758-5bc2-90f8-5adfef4756c4",
+    "f5aabd48-1b93-5da6-87a3-8e7cf63896d8",
+    "bc19ae3a-50b3-5a30-95e2-6339486e1a58",
+    "9c005488-11d2-50fb-97e9-36e2d9350fc2",
+    "be215368-660c-5764-bd16-d8caaf9d8896",
+    "7ee23b4a-5f3b-5673-812d-55e015e52677",
+    "9d5a8260-c64d-5bf0-abec-c00b17b63703"
+  ],
+  "textures": [
+    {
+      "name": "horsetail_atlas.png",
+      "path": "",
+      "folder": "",
+      "namespace": "",
+      "id": "0",
+      "group": "",
+      "scope": 0,
+      "width": 64,
+      "height": 64,
+      "uv_width": 64,
+      "uv_height": 64,
+      "particle": false,
+      "use_as_default": false,
+      "layers_enabled": false,
+      "sync_to_project": "",
+      "file_format": "png",
+      "render_mode": "default",
+      "render_sides": "auto",
+      "wrap_mode": "limited",
+      "pbr_channel": "color",
+      "fps": 7,
+      "force_translucent": false,
+      "frame_time": 1,
+      "frame_order_type": "loop",
+      "frame_order": "",
+      "frame_interpolate": false,
+      "visible": true,
+      "internal": true,
+      "saved": false,
+      "uuid": "c96f073a-3409-5813-9caa-471332fc524a",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAGYklEQVR4nOVbbWwURRh+Z3buq22q1BQ0xm9yJRYxkcSKBg1q/PgjCL+MiQrEiEYkKn6kCRqj8gcI0Rg0MQIxJhJMDEV/GAUl1ohQIYhtU06otkYtYqAg9L52d8w7u7O7d73bvb3bete7J9nsO7Nz233er3lndkueePdmDiZmt82E46f/BifuV+6w5Gs6ZkNrSwzar+iEcCQKo78chgsTSTgxeMwas3TVJgJVxL7dmy0+sVgYIuEQMEURbVXTIJ3JQjKZscZTaHBQaHAwrwGcWx4FhACoqibcX1NV4LoOXLevVwOHTn3A57evJE63l2iORSEaDUMoZNDMZlUrHCRYumfcagyALUvQZXZIo0QVRShF01Tj+hRE/Iotdl7a+tRBX38BY14CyTc3xSAaMfpS6ayVC0r2AE3T7QZVQNONdigcER7BGA2cfKmkX9xxJx86fiSnz2lhtDySb2mOWX2ZbDZnDPPzcBpqTjcIZ9JJ0FQNqhkBt869CZbM3ViRD7Lutze4Duj/+ltLVggBqhg6i0SbgIXDoCUnoBrWLwane2PMS7dHoIx9OSGw/pkXXG/44LIllozW1jTjhpgH1GwWVEeElIsVi6/nj3c/CQu6VlecUXCel5Cujm5vKSSVyR0Dpbi9CUrxcMQPU6ybl4vXPlvER36/4Jv84NBOnlAPTup3FjkItHZghZAmEqL9nDgVYp+iKNZRDspx++1H3oMgwPzkAKbYOQChhEKgZLI5XuKGdZ8u5K8v7SX51q9WAkSwTXvfBLe1wL1koSVj0aOpDhfjHCqdBCpNevnYeWKH6/Utzx4gRQshWD5TnHL67BwInCii8CFYACAIRR3870lvV/9aHoT1JyXBgW0JcIOua8AhJGoA2/QcFIX6nuq29qyGcsl/338YggLzN5yIWUBRQsILuG7Evu5RDQU5zaWSlc06vhVAce4zQSgBXddBYQyymTQQwByAYcA96/ogyO/oW8O/fOMr2NozGFjeYF6zwOC+7xwtkQAMwngGAiE6tZVdPoIkX9Is4NwRqkdQaHCQx+6LWwHcuTwuPMA5DW7/IlHVPT4v3P7oda4ZuPu2e4KbBusRFBocrNoPcPLoh7y5KVrS2AsTKZg175GiIRmf1w6RGAMWtu2qZtzX6ySR6HGNoXh88ZTlgJ/2vsUvbZ/h6zdjp87AjXetIYVywA1dl0G0JQThqL0q7Tp5dWXT4HQCWh7JN7XaO8Pqn/rUhkD3x3dbFlj/0B5f3vLr4M/w74wWX3/vnzPnIUgwz9VgCYQXdM0zrwH3owRcQ2Bp7Qde6w6/YH6mQUkeCe8/cFS0JXnZD7Cn5D+u4fsFn4TwN06QXntD5Ujv5OdfNzxGAp0GF5iE8ewkX8hDvIAbLLrPI+g3UdTvD9DybkCllKoEfMlSzhEkmNdqcHt8sSVjfCM5VEIh6+cqwTsfSKv6Qf54vyEU2DS43/QEqYhzp7SCSkC5mCICUUA5e3KVTIPrTTLSzfMVIZWBR+e1nTAwPFB0qhz97SScbSmtCpQ4ez6V01YrDAlW7g+dRGRY5GN0ZBw+evnHml5NMr91QCH4LYBqdj+gEKZ6P+CdtQ/wb36wvzFyw6JbOuDpjbtJXSmg2qDQ4CDVXA7XAlg9LYfLAYUGB4UGBwuiDqgbDxjYlphEfujQLi4P2XZey79hoev596glMK8Bn2+2V4tIQLaljOc585eQQn1Sdt5j2ikgMXrakpEItiUplCVJeb3v2BiA2ffqqueF7LzHtKsDNqx8yZLPpbLQGg1Bx1WXCKIo43cC8SvbxHUkOj6RhoubIqLv4NBfQna+Pn+/d4hMqzog8UduThgz+2a1NYnvBvEled/QGFwUC4OO3wtw/J6QQ2LktCVXuGSfUjCvAcV2XJCUYVnjewFB1PyAUhAXyjBktw8oal8BvPDDI2E8iEPmxfprWQFpjzqg2I6LQQ6AmGc8hCeY21aYG6Rcu/TB+73AnMvtd3fnUhlojYYFubPJtOHiSBJsS3OHB0i5lsG8BuSkANPSmPhs2UFUeIF5mAnR7K6Pf5nRpZULyLYCbKtPCw/o9ngv8MrDz1myEesciGl9i6huvOXhLmNqFcyrDnCGAM9xe1uWSVCOl27vlOsiBLjD7fNly9LF5BoFhQYHhQYH8xrwyaHhmlq8BA0KDQ4KDQ5a7QeoNv4Dl+xhSpYcxTYAAAAASUVORK5CYII="
+    }
+  ]
+}

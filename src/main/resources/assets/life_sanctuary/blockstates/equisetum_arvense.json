@@ -2,75 +2,261 @@
   "multipart": [
     {
       "when": {
-        "nutritional_stems": "1|2|3",
-        "withering": "false"
+        "nutritional_stems": "1",
+        "withering": "false",
+        "part": "lower"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_0"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v1_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v2_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v3_lower",
+          "weight": 1
+        }
+      ]
     },
     {
       "when": {
-        "nutritional_stems": "2|3",
-        "withering": "false"
+        "nutritional_stems": "1",
+        "withering": "true",
+        "part": "lower"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_1"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c1_a_lower",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "withering": "false",
+        "part": "lower"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v1_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v2_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v3_lower",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "withering": "true",
+        "part": "lower"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c2_a_lower",
+          "weight": 1
+        }
+      ]
     },
     {
       "when": {
         "nutritional_stems": "3",
-        "withering": "false"
+        "withering": "false",
+        "part": "lower"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_2"
-      }
-    },
-    {
-      "when": {
-        "spore_stem": "true",
-        "withering": "false"
-      },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_3"
-      }
-    },
-    {
-      "when": {
-        "nutritional_stems": "1|2|3",
-        "withering": "true"
-      },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_wilted_0"
-      }
-    },
-    {
-      "when": {
-        "nutritional_stems": "2|3",
-        "withering": "true"
-      },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_wilted_1"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v1_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v2_lower",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v3_lower",
+          "weight": 1
+        }
+      ]
     },
     {
       "when": {
         "nutritional_stems": "3",
-        "withering": "true"
+        "withering": "true",
+        "part": "lower"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_wilted_2"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c3_a_lower",
+          "weight": 1
+        }
+      ]
     },
     {
       "when": {
         "spore_stem": "true",
-        "withering": "true"
+        "nutritional_stems": "1",
+        "withering": "false",
+        "part": "lower"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_wilted_3"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c1_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c1_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "2",
+        "withering": "false",
+        "part": "lower"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c2_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c2_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "3",
+        "withering": "false",
+        "part": "lower"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c3_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_sp_c3_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "1",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "1",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c1_a_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c2_a_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c3_a_upper",
+          "weight": 1
+        }
+      ]
     }
   ]
 }

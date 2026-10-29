@@ -1,0 +1,739 @@
+{
+  "files": [
+    {
+      "path": "model-sources/horsetail-v8/manifest.json",
+      "bytes": 2290,
+      "sha256": "7f0b11743e32bf81a63c790cc77896cb60d3aa1711e38328cdbfd7a0b012c35b"
+    },
+    {
+      "path": "model-sources/horsetail-v8/README.md",
+      "bytes": 3747,
+      "sha256": "6e49e13ca820262d8c51093dbc8dc6da3aa2b72656ef30725c12a2c2ec1e49c5"
+    },
+    {
+      "path": "model-sources/horsetail-v8/丛生方案_v3.md",
+      "bytes": 3098,
+      "sha256": "af4aabb0abf309ef5e12a4fed959e638eee2025df016aff6036297cb74b96e14"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/blockstate_lower.json",
+      "bytes": 5921,
+      "sha256": "ca5c09271958f1139d562c3629ebf618e305f12dcbe89f8be52f03682aefef5f"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/blockstate_upper.json",
+      "bytes": 4232,
+      "sha256": "4a5739d3fe199d51cad964208901a753348241ff5ab5673db097d2fecfd4bd16"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v1_lower.json",
+      "bytes": 25410,
+      "sha256": "8a99a45d2908ed2672378d3bd24a6a298fd7de18cd783bfdf14d83d497b5be6a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v1_upper.json",
+      "bytes": 25359,
+      "sha256": "51be3e164f50e9f6a7757d830efc09437a2239ab5fe91ba73c72e0516736f128"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v2_lower.json",
+      "bytes": 30466,
+      "sha256": "f049efea089c848987c4350e731cdfbbaf9a654335b5e523185d067ddc19f5a0"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v2_upper.json",
+      "bytes": 25553,
+      "sha256": "ca872550f43bbf711862212b6b6547c62b472f976fb9442b30d44ff032f1eb76"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v3_lower.json",
+      "bytes": 30450,
+      "sha256": "81609e7e523ae26414c2ebe6f9091564d936d756f8e365a4badf0ebf963af5a7"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_a_v3_upper.json",
+      "bytes": 20673,
+      "sha256": "ad308f91eb2400b6607a20f287b16786ad6e333b77e7b40a2a5cb06ed8fe5884"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_j_v1_lower.json",
+      "bytes": 30549,
+      "sha256": "47a1cc10d1ed47d2c7a8aeefb569933365f64f9edd1e2aa0c1f774c56fd77d8c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_j_v2_lower.json",
+      "bytes": 30549,
+      "sha256": "47a1cc10d1ed47d2c7a8aeefb569933365f64f9edd1e2aa0c1f774c56fd77d8c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c1_j_v3_lower.json",
+      "bytes": 30549,
+      "sha256": "47a1cc10d1ed47d2c7a8aeefb569933365f64f9edd1e2aa0c1f774c56fd77d8c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v1_lower.json",
+      "bytes": 55712,
+      "sha256": "3b5b57250df3e98d3404d968453c3141ecd592be1019459573bb99da80402ae3"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v1_upper.json",
+      "bytes": 45883,
+      "sha256": "da1f97eeed8fd908b6078d9b9c3ba85e3d2c6c8363ca910f1ec389676233206f"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v2_lower.json",
+      "bytes": 55820,
+      "sha256": "f6ec1447760dad2379325171919be61ebe3479db15e25830fee47496c8042263"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v2_upper.json",
+      "bytes": 50884,
+      "sha256": "238a074ec4ff3f2ff5cddc00b6d450e73086381009800faa1f42ab4319f57050"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v3_lower.json",
+      "bytes": 55944,
+      "sha256": "1e5ed5365f12381bfcaf48aebea2c7a8a90803aee954ed3572a3e66f8e0eba27"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_a_v3_upper.json",
+      "bytes": 46154,
+      "sha256": "db3e3874ce46c47d16615c7110e7ce1d4a7289fb844104d8002f100540224b57"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v1_lower.json",
+      "bytes": 55965,
+      "sha256": "e14fd74991b106067265c710cbcf354400cba1a22c26f737e1f5a5f16da4c4d8"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v1_upper.json",
+      "bytes": 25351,
+      "sha256": "2268cccea288c428593224c8663a203afd8e49da4287aa696816236ed7a64a2b"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v2_lower.json",
+      "bytes": 61017,
+      "sha256": "c3892166a75c7545ecd0a9a42a9286269466029dcf5de30ef680b94a4218ee3b"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v2_upper.json",
+      "bytes": 25545,
+      "sha256": "c074ed670f53524362a4784eb06c627e4567bb76382f519d54dfc0767da7de37"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v3_lower.json",
+      "bytes": 61001,
+      "sha256": "034c9eeff6ffb883e1e6b44f7c7e16b193c5dba8b6f3daf8a6853efd93a8ea13"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c2_j_v3_upper.json",
+      "bytes": 20669,
+      "sha256": "37ff4afd000aa90a52d96792f8e5853db90666031e8a11510759cc7efc5c1b74"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v1_lower.json",
+      "bytes": 81038,
+      "sha256": "6c1f9210b44384d891ee74744cf3cf4f5dd42c7204474ad5caed33f17acca015"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v1_upper.json",
+      "bytes": 71208,
+      "sha256": "f8101098fba3f7eccf47e8d4e97b57beba7e8277685fa739c8c80eee01c9e917"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v2_lower.json",
+      "bytes": 86066,
+      "sha256": "6e312d574a475a46b3413c738de21f4b3be3337d6e0fece0f2c525f30a4ce703"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v2_upper.json",
+      "bytes": 71331,
+      "sha256": "c24a947e1ed5ffdae3c1aec053b1321f0bce917f85ce54dd5baaa236b4208c77"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v3_lower.json",
+      "bytes": 81148,
+      "sha256": "225d865e5476f259bfa29f7b0f3fd2869607472eda95c26923b0abbc82ea1f6a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_a_v3_upper.json",
+      "bytes": 71315,
+      "sha256": "d288ed639fd14d813c54f88d5ba340dcf36f0068325a36e519b013aeb5e29cad"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v1_lower.json",
+      "bytes": 86069,
+      "sha256": "1985583b49252f3bce602580e087c69f81568f12ae346b68cd24ffb6d2791c19"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v1_upper.json",
+      "bytes": 45811,
+      "sha256": "ba1243309d998fe6f33548b0cd95e8ea6b4c4a75b31f5842fd158252c6909f7e"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v2_lower.json",
+      "bytes": 86195,
+      "sha256": "7f2296609099179c30f026bf0471563bef80d40bc88f375f609e214888dd7862"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v2_upper.json",
+      "bytes": 50794,
+      "sha256": "59e6f5350bf48ddcf4e401536d93b7b54d0c25b3330948591d879b4c610e44ff"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v3_lower.json",
+      "bytes": 86319,
+      "sha256": "a3548ea0cd6b58c4ebe3c0496f690ea9b40bda0362db962597dc0cc4204b5832"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_c3_j_v3_upper.json",
+      "bytes": 46064,
+      "sha256": "8fb446221045e511335a3465f531981d740a2827e63be95ff51c2a388d61809a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c1_a_lower.json",
+      "bytes": 25419,
+      "sha256": "d87813f5373de103eed6de00ff28920735d81349d68a4ccd3da3bce66542c7be"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c1_a_upper.json",
+      "bytes": 25368,
+      "sha256": "932051211011f941a119e7458eab52fcd73a6e31ae4358a6d8f3e3cdda39b04f"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c1_j_lower.json",
+      "bytes": 30558,
+      "sha256": "9ee0f56f7f5d88a52b2dc6bcc9de9a2819d5d3e15df9c06bafa5b5bc686d6c18"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c2_a_lower.json",
+      "bytes": 55721,
+      "sha256": "f050c0b6c90deeddbe82b4fe888de7750c8ef058c8a20f6fd6557f83404c3c71"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c2_a_upper.json",
+      "bytes": 45892,
+      "sha256": "1db38a401df0f0ae45fb7f29fc6727116c09353d6ba5501655d1d8af3ef453bc"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c2_j_lower.json",
+      "bytes": 55974,
+      "sha256": "a39d2ca65373b414c6506ecf7dd15f7788f7c33a079e23932c2e3b64e0ab1536"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c2_j_upper.json",
+      "bytes": 25360,
+      "sha256": "880d91ccd2c6d08c43f9bded2e3dd1979792dc0204267dea60585aee0b634514"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c3_a_lower.json",
+      "bytes": 81047,
+      "sha256": "3f2ef743234f8bf4e9aaf6ac0f7ff454f14800286f43f57bfa874ee9ea647aad"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c3_a_upper.json",
+      "bytes": 71217,
+      "sha256": "e3120f37e8ee470adacda54df7ce84ce4e64075d3291da40fe21b7574fdb96c2"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c3_j_lower.json",
+      "bytes": 86078,
+      "sha256": "f5454a7b612570b614efd54e030a970cb351e83b9c073205768c06f3986fea90"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_nv_w_c3_j_upper.json",
+      "bytes": 45820,
+      "sha256": "7dbfc0544617e8059147c139a9717d8c179417c81082e0cd7c61de46bc9ffbce"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c1_rust.json",
+      "bytes": 42565,
+      "sha256": "3c1814c25bd6fed53e464b026122cd25778041f4aff0f4ee57fd9e4717b0eb66"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c1_straw.json",
+      "bytes": 42699,
+      "sha256": "2f15e5a1467405b5ba779bcd767ef0b168c946ec72a4f7c7e713f62aa31a470d"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c2_rust.json",
+      "bytes": 42479,
+      "sha256": "e9ad353325fd7cc29217a6ca1ad464d9ea3600774ff5d88842d03ec9eeb058c2"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c2_straw.json",
+      "bytes": 42613,
+      "sha256": "ca978a123d0bd8822931fe1860d605c48773bf2a4dde26563919205a4b34d81c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c3_rust.json",
+      "bytes": 42565,
+      "sha256": "6eb4f9fd7a476500e477496536c63e5871986477f810d4e46e843847c2ec7fb2"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/horsetail_sp_c3_straw.json",
+      "bytes": 42699,
+      "sha256": "6d381beca7f572ff352103804cddfeec3b9402c42cbadedce516dd1590140e64"
+    },
+    {
+      "path": "model-sources/horsetail-v8/clump/README.md",
+      "bytes": 2194,
+      "sha256": "c49d158866d04248512fda1bc0c197f061ad74f8e923fb523ba90e8da7abf7b7"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/dead_equisetales.png",
+      "bytes": 1454,
+      "sha256": "9c162aa036c3c7da0c376ca2bb9762dd74d6dad22a927ccc99006a9e70726db2"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/equisetum_arvense.png",
+      "bytes": 1655,
+      "sha256": "78f65d9fbed23dae87087a923fda78b2296cf4451dd663cbec121d3134a45f91"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/equisetum_arvense_gametophyte.png",
+      "bytes": 2292,
+      "sha256": "046a2ba244c6d626633a72a026c3e59e17e28da4be038a5a507e550f2c77bcb4"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/equisetum_arvense_spore_stem.png",
+      "bytes": 1233,
+      "sha256": "a2edd27de78047bd3f280dc38a15c633aa1dcb933f7f805fe0618cd416a96558"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/equisetum_arvense_sprouts.png",
+      "bytes": 1849,
+      "sha256": "93801eac039b9197f8825129ebdd89c45adb8a5aea856560820170ee59fb59dd"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item/README.md",
+      "bytes": 1144,
+      "sha256": "12b51cd0a8cad2f3ca427ce134bf755a94806b275a2549e39d71e4c1ec57ae09"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item_16/dead_equisetales.png",
+      "bytes": 562,
+      "sha256": "eccf7efc1d8688a9dff9f43ae807e071928002f13f39062bb7f35b9bf5539f32"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item_16/equisetum_arvense.png",
+      "bytes": 648,
+      "sha256": "1a11e9f32c1f6a95e51e32e9c8a2528f3096f190868dec850dc18490036a6c0f"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item_16/equisetum_arvense_gametophyte.png",
+      "bytes": 844,
+      "sha256": "c236fdcda99253c572c442ad296a2b6882354a8c98a254c2004580584dd7ba7a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item_16/equisetum_arvense_spore_stem.png",
+      "bytes": 541,
+      "sha256": "b526c1bfcd4fbbefdbc5919754e00ed7a288f8d35a97cb4efba55c6aaf49e5b9"
+    },
+    {
+      "path": "model-sources/horsetail-v8/item_16/equisetum_arvense_sprouts.png",
+      "bytes": 777,
+      "sha256": "29618f992ea36201b67726e19589a40bea30bcf42137e6c88712ced8030f0ed5"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/fertile_stem.json",
+      "bytes": 42437,
+      "sha256": "e6291cb72efdc5cc3fa05ec3621fde217dca8188a175fbebac67a29a26b0c430"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/fertile_stem_rust.json",
+      "bytes": 42442,
+      "sha256": "313b2278de3e2b26221d81edefbc3580256f7f474bc17d23c14be253389fa298"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/gametophyte.json",
+      "bytes": 4950,
+      "sha256": "c2b456556dd307454aa64f176e977afb0984e9ea61eaba350da66715bb971857"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/juvenile.json",
+      "bytes": 30527,
+      "sha256": "e8006c1e69fb713a71ef37f81cb8a660000e38e8b95a9921803902f985f9fa16"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/vegetative.json",
+      "bytes": 44798,
+      "sha256": "35df14787f23a5f07c18ff6a2eccff7e8d58b60ba24179d9024de1b58313dadf"
+    },
+    {
+      "path": "model-sources/horsetail-v8/java_export/vegetative_short.json",
+      "bytes": 45009,
+      "sha256": "351033827354a82cf18ad2700986548bcb904693765869832fd4290b056c49af"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/fertile_stem.bbmodel",
+      "bytes": 58978,
+      "sha256": "138ab1660f1e8dca6321036c7b57af02e5c2e077ac65b281adc2ae774a152b22"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/fertile_stem_rust.bbmodel",
+      "bytes": 59060,
+      "sha256": "5ebc597d97930af357e665afea79dc05dfe72ca9d412c86ff0ee67e1beb48cb2"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/gametophyte.bbmodel",
+      "bytes": 17023,
+      "sha256": "c1ba88d2be07f73df8b953004a24498e1433a3f6b91c280f69b033c0d65cb3ee"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/juvenile.bbmodel",
+      "bytes": 85962,
+      "sha256": "ab57a3c7c96f2ab7546c254e379b225498e81519acbd5657973786503db57d15"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/vegetative.bbmodel",
+      "bytes": 126017,
+      "sha256": "cc63a9d391313a35e9b5ff393c2bbb68df6c658f722e41ca9346a0b7270511e0"
+    },
+    {
+      "path": "model-sources/horsetail-v8/models/vegetative_short.bbmodel",
+      "bytes": 126308,
+      "sha256": "6ed82c2ed98c30f914e5a14564eacd20b34b4098d8d203b85f80ca25aacb4b1a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/blockstate.json",
+      "bytes": 2022,
+      "sha256": "f0ad4d9ffcbe676a65444d540a77f6b71058af06eb2c19b5288607a873a30a70"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_c1.json",
+      "bytes": 45138,
+      "sha256": "f7f2ed14e588531cc263da21d8502925cf4a4e8a2f9d8d5fbfff2de858160124"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_c2.json",
+      "bytes": 90360,
+      "sha256": "32a727d7490c8e842a589f1f31c9628104d54cc72dfbd9ac9c5824711b60df01"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_c3.json",
+      "bytes": 135292,
+      "sha256": "f643812a6de6b55e31dd61e0c1fbbf6bece3a5c8e75fb39480379e4934d1d6dc"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c0_rust.json",
+      "bytes": 42393,
+      "sha256": "3442d33e58149dffc7205ac0d97f82203c87a43f1dfcbd192367bf0f72dc8d04"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c0_straw.json",
+      "bytes": 42527,
+      "sha256": "d4b99fae498cf4f5592011de1fbb14be56b9a12f8b1d70c411259da87618ffc9"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c1_rust.json",
+      "bytes": 42565,
+      "sha256": "ebbccc5f396081e0459571702bc2138caac3dfcd42f0b72ebf9c9da1fb7e80b8"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c1_straw.json",
+      "bytes": 42699,
+      "sha256": "2fc65df99d20ffe2f7e0709178c126183208698cd3f09298f522a076dbc08bfd"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c2_rust.json",
+      "bytes": 42479,
+      "sha256": "3d719a4460f46e8a44c830456b7f95c67fbb6f7583afc8d2e96ae86a9f98c38c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c2_straw.json",
+      "bytes": 42613,
+      "sha256": "771124546134581d50551cc89de12cb090e43d2c9122daa87c8b727af5c8a1a4"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c3_rust.json",
+      "bytes": 42565,
+      "sha256": "682e5c621d4836109efc36706cba017a06b2738a332738ceae0c2e000df5ee44"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/horsetail_placed_spore_c3_straw.json",
+      "bytes": 42699,
+      "sha256": "4c73d3d4d8d67eeba0b7dfa9de2d9ef0ce26faca52166c5ac28f1c411c055374"
+    },
+    {
+      "path": "model-sources/horsetail-v8/placed/README.md",
+      "bytes": 1056,
+      "sha256": "997f967417d1ac9c8745bee8448678c1e57cf543680f3b6100e44f304a47aad6"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/atlas_layout.png",
+      "bytes": 13591,
+      "sha256": "1216aa52143415cb9650ea7ae609f5cb6bcef8385c2af8bdd0ed466f0fc4e245"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/atlas_layout_rust.png",
+      "bytes": 13690,
+      "sha256": "08adab4de6fd3d10478905d8c464fd2ed68a8b39280efd41bd0525e2e822eefb"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump3_sample.bbmodel",
+      "bytes": 364877,
+      "sha256": "59632b14036553a034604070421789d55eba9cbf344a183256ecb58676e5f868"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_3adult_spore.bbmodel",
+      "bytes": 419501,
+      "sha256": "3a314fd7686fcf680221f9aefef51ff536f1dba191b1d7ba86f710571be124c6"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_matrix.png",
+      "bytes": 45556,
+      "sha256": "da86436b4ab162ccdbc97c786ff06c66d129351e4b03b3e962ca04eac5090b0f"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_matrix2.png",
+      "bytes": 46147,
+      "sha256": "ef38064d08ca12bc5d69100f487795d436ff92d509033bfc3db0ae164f02713c"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_test.png",
+      "bytes": 29863,
+      "sha256": "b9b877b39517c6b55043fc996e2305fbbba35fa9e0d01437fceb87d93d2284b3"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_v3_growing.png",
+      "bytes": 18569,
+      "sha256": "1a5ad8962454bc6de2725ebbfbb64d1ea5f861d54fa2f436aff7b583d4e31b99"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/clump_v3_heights.png",
+      "bytes": 54072,
+      "sha256": "c47646ba52893a1fb6cff29ec9de03e84ecfdc0bb9b81298ebb00a5dfad59b4b"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/item_icons.png",
+      "bytes": 13981,
+      "sha256": "9c8076534077559fd5840b22ed764b0ec11116805b06f2de34a00e70a2bbfc2b"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/overview.png",
+      "bytes": 23096,
+      "sha256": "85fc1e568d500b52794c7e26c840f2cf85eaad3c99d59f9b30df5f722975b93e"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/placed_preview.png",
+      "bytes": 38445,
+      "sha256": "a1c2fae62cfc7e0c65d7a2149146bff472985ae452e8a9c6214b55dafbd9ff95"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/vegetative_variant.png",
+      "bytes": 24539,
+      "sha256": "1fca9622e062d0ecd89047fcf0e50a903ebbf85fe21e461fe2e79cb834fd9ed3"
+    },
+    {
+      "path": "model-sources/horsetail-v8/preview/withered_compare.png",
+      "bytes": 21545,
+      "sha256": "c4806b51fd49bfc69803545f6038555b40c2ead4d0a8a5728cdec5f978036114"
+    },
+    {
+      "path": "model-sources/horsetail-v8/textures/horsetail_atlas.png",
+      "bytes": 1691,
+      "sha256": "4b40a103eb5279858b73128441b2a2bfbd14a9eb850be5eedcf65ca51d28ae02"
+    },
+    {
+      "path": "model-sources/horsetail-v8/textures/horsetail_atlas_rust.png",
+      "bytes": 1745,
+      "sha256": "59dd0ac6e6c1a2efb3c01feeeafdd69df9527234ec1354550d2b4125c193ddcc"
+    },
+    {
+      "path": "model-sources/horsetail-v8/textures/horsetail_atlas_withered.png",
+      "bytes": 1602,
+      "sha256": "05f7c9ed536b65edd6d8d88473c89a15ef041ea937273277971f16de99c31a4e"
+    },
+    {
+      "path": "model-sources/horsetail-v8/textures/layout.json",
+      "bytes": 1478,
+      "sha256": "5c505d41a373ba3c37e8b9b7c7e8c2b3463a48d2df6b15bed6f9ae3b7c739ea9"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/preview_split.png",
+      "bytes": 15416,
+      "sha256": "43111e333ec35c36dd367623a82991bdad68aaadc106872bc74e41fa948bd837"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/README.md",
+      "bytes": 3520,
+      "sha256": "e66b327899d82e76cb93cedc701326714d4d5a1fb111c52557e846b8efab2041"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/vegetative_lower.json",
+      "bytes": 25384,
+      "sha256": "25fe19b69d956b4ee2e1cf82e4871f3553e5a7a7447b6fdaa1c20173a7f491ab"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/vegetative_short_lower.json",
+      "bytes": 30354,
+      "sha256": "c0cc25fbbf20323ba43c6b08abea5fd3e834923b040546e6fb1c56d6f66e7399"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/vegetative_short_upper.json",
+      "bytes": 20616,
+      "sha256": "c6add4ce6cce655ffaea5cd508e89b5715a01e89a2d1d4cec2e51665ee78c1a8"
+    },
+    {
+      "path": "model-sources/horsetail-v8/two_block/vegetative_upper.json",
+      "bytes": 25371,
+      "sha256": "d35dec854e3f879b09442d7741a8cd3010d559ae89ef50669819399c15eb7b9a"
+    },
+    {
+      "path": "model-sources/horsetail-v8/_prev_13blocks/horsetail_atlas.png",
+      "bytes": 1775,
+      "sha256": "f0d6b58713de2383e6020c8294dcc40a5480eb3514bcb47cdc925af75f783269"
+    },
+    {
+      "path": "model-sources/luminous-moss/guangxian_atlas.png",
+      "bytes": 7054,
+      "sha256": "6e18884fc6ce434964e1881a0a467e5394e00cdc3e081cfc78e6353fe8465565"
+    },
+    {
+      "path": "model-sources/luminous-moss/光藓.bbmodel",
+      "bytes": 24089,
+      "sha256": "24f0262f94d9cc8b47672a90fdf5d669626fc110832e163cd780f67452e3500a"
+    },
+    {
+      "path": "model-sources/luminous-moss/光藓_孢蒴.bbmodel",
+      "bytes": 15985,
+      "sha256": "96876b892745738c10d3b54c1c43129e687be11950c7e1bce40649e64b21ebb2"
+    },
+    {
+      "path": "model-sources/luminous-moss/光藓_幼苗.bbmodel",
+      "bytes": 12595,
+      "sha256": "51589733a0b8f551da605455fe63a7970097434ed8c3eca82c44d4679cb7f404"
+    },
+    {
+      "path": "model-sources/marchantia/地钱1.bbmodel",
+      "bytes": 1102991,
+      "sha256": "44dd67db891ae7068023b682e360b97e49297e6bdb5d1646689b3806b0ade6e8"
+    },
+    {
+      "path": "model-sources/marchantia/地钱2.bbmodel",
+      "bytes": 19949,
+      "sha256": "6ef784a7ef82f833424b0550191ae79a7e512945a1afa5a1534df44dca011a32"
+    },
+    {
+      "path": "model-sources/marchantia/地钱_雌生殖托.bbmodel",
+      "bytes": 17709,
+      "sha256": "0353f46f53c725ebcc0f1ec3b15703c7344f98d7d6db47fe9b51a29906afab2e"
+    },
+    {
+      "path": "model-sources/marchantia/地钱_雄生殖托.bbmodel",
+      "bytes": 19261,
+      "sha256": "aa419cb8cff0f4a2ae5a316c71f71f06813a205d72b143d366cdd9ee624474c2"
+    },
+    {
+      "path": "model-sources/marchantia/地钱_雌生殖托.json",
+      "bytes": 12048,
+      "sha256": "9ce5701e6b03778cbafaa0e7b8ad4087483f0177056519de5c3c78e1dbb07809"
+    },
+    {
+      "path": "model-sources/marchantia/地钱_雄生殖托.json",
+      "bytes": 13049,
+      "sha256": "d9e4773b36aa3c631b794ef34ad30545e474299fef9705abc09dc020bf349c4e"
+    },
+    {
+      "path": "model-sources/marchantia/地钱1_无缝.png",
+      "bytes": 12913,
+      "sha256": "1d93d5e9e9e5b15da8a1ac885a16e2ce47d0ff6739bb8ecc4524d54e4c0cfb28"
+    },
+    {
+      "path": "model-sources/marchantia/其他贴图/地钱2_无缝.png",
+      "bytes": 2119381,
+      "sha256": "695fb69a07c79698cc6289b943c6c71258507feacf3e2cbafea8e0e84b486ab0"
+    },
+    {
+      "path": "model-sources/marchantia/marchantia_receptacle.png",
+      "bytes": 128,
+      "sha256": "25fe275a0885dfb463a6baa6b14503b6e237093ce9e21474560625e8b8014b2e"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_atlas.png",
+      "bytes": 36558,
+      "sha256": "dbfe67f8d95eec0b2b195f16420b342562b7060759867d7e297211cd9296d208"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_blockstate.json",
+      "bytes": 2112,
+      "sha256": "01f99152d142a1563a9127e56f42ff652188b37cbc0d46049c9cb88aae5f4207"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_side_1.json",
+      "bytes": 719,
+      "sha256": "e12ba6e9f74fb9a146de9881fdb579494adf93f3c52a4fd678213f505ac0bf75"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_side_2.json",
+      "bytes": 721,
+      "sha256": "26527a5ffdbaa9bc63e726fc333dba0a54c30ea8e55f4ea1459b2db136a56516"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_side_3.json",
+      "bytes": 721,
+      "sha256": "7c2a622b3ed11a8bfe28a76d3534b44b6e5f2a4df1ffaf0ff54c65195ceb3464"
+    },
+    {
+      "path": "model-sources/attached-moss/attached_moss_side_4.json",
+      "bytes": 723,
+      "sha256": "f1e72cd53ef735d8636389d25005cb562346df41a8f4a56f2e4f45330256de0e"
+    },
+    {
+      "path": "model-sources/attached-moss/README.md",
+      "bytes": 4342,
+      "sha256": "05bdb13ee249a7b21943a2fa8b62b435367bf5dfa2288ff5df8658e8c8e19b6c"
+    },
+    {
+      "path": "model-sources/star-moss/README.md",
+      "bytes": 2038,
+      "sha256": "4487b70677caa58692cd10ca8e94175f3b720010280ffb6403371e452a5fe23f"
+    },
+    {
+      "path": "model-sources/star-moss/xingtai_atlas.png",
+      "bytes": 5522,
+      "sha256": "3cb2a2b8161b97750ffab8fb540e79179ae4608fbe801ba2089ac6380629945e"
+    },
+    {
+      "path": "model-sources/star-moss/xingtai_body.json",
+      "bytes": 1396,
+      "sha256": "4e2c9558611ca98385d8c547a44249b28523cd7b01c0c0e80a7b969dc8b7b524"
+    },
+    {
+      "path": "model-sources/star-moss/xingtai_receptacle_1.json",
+      "bytes": 2639,
+      "sha256": "7757de9c69973919f5d632f1f00544ba03e10fc81769864023cd74bb983b79f6"
+    },
+    {
+      "path": "model-sources/star-moss/xingtai_receptacle_2.json",
+      "bytes": 2643,
+      "sha256": "adfef871e00b1914e8c30b2a451148b61851e05982dc7a67be37b7364eac1ae1"
+    },
+    {
+      "path": "model-sources/star-moss/xingtai_receptacle_3.json",
+      "bytes": 2635,
+      "sha256": "8bfd23ac649f180e311f27761e1b934578e66ba8b3e7e7cf4742205809d78fab"
+    },
+    {
+      "path": "model-sources/star-moss/星苔_本体.bbmodel",
+      "bytes": 9090,
+      "sha256": "26b43b3237ce7ebd7fb932c702084ada1d653fb4e3a644239f9e671df5c25cc2"
+    },
+    {
+      "path": "model-sources/star-moss/星苔_生殖托_1.bbmodel",
+      "bytes": 9771,
+      "sha256": "5a2e441a8024ed4b4d5ca784cda0664bda02ac391d34643b28c32ef4a7d904e8"
+    },
+    {
+      "path": "model-sources/star-moss/星苔_生殖托_2.bbmodel",
+      "bytes": 9777,
+      "sha256": "f96e090661748d50440eca302623d68801f504aefed92d2a7708f32adf916abc"
+    },
+    {
+      "path": "model-sources/star-moss/星苔_生殖托_3.bbmodel",
+      "bytes": 9767,
+      "sha256": "19843a472f7675f81aeee94c0e4edc2d6fe5e1bfb8bf6aa3caca7093f1a5f6e9"
+    }
+  ]
+}

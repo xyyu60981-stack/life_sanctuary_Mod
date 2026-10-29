@@ -13,6 +13,7 @@ public final class HeterosporeTransitions {
 
     /** Ordinary species retain their timer rules; registered differentiated gametophytes require callback authority. */
     static boolean stageReady(ServerLevel level, PlantIndividualState expected) {
+        if (SharedGametophyteWater.monitoringUnavailable(level, expected)) return false;
         var adapter = HeterosporeAdapters.find(expected.species());
         if (adapter != null && adapter.gametophyteStage().equals(expected.stage()))
             return HeterosporeWorldData.get(level).authorizes(level, expected, HeterosporeCycle.Action.SEEDLING);

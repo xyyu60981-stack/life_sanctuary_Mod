@@ -1,0 +1,33 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "atlas": "life_sanctuary:block/guangxian_atlas",
+    "particle": "#atlas"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        -16,
+        -0.01
+      ],
+      "to": [
+        16,
+        0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.823529411764707,
+            8.235294117647058,
+            15.843137254901961,
+            15.764705882352942
+          ],
+          "texture": "#atlas"
+        }
+      }
+    }
+  ]
+}

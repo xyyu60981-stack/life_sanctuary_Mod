@@ -13,6 +13,10 @@ public final class PollenBagItem extends Item {
         super(properties);
     }
 
+    @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
+        return PlantSpeciesNames.bag(species(stack), super.getName(stack));
+    }
+
     /** Returns the pollen species label, or {@code null} for an empty bag. */
     public static String species(ItemStack stack) {
         return SpeciesTaggedItemData.read(stack);

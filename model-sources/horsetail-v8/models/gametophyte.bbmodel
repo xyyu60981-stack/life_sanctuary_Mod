@@ -1,0 +1,789 @@
+{
+  "meta": {
+    "format_version": "5.0",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "gametophyte",
+  "parent": "",
+  "java_block_version": "26.3",
+  "ambientocclusion": true,
+  "front_gui_light": false,
+  "visible_box": [
+    2,
+    3,
+    2
+  ],
+  "variable_placeholders": "",
+  "multi_file_ruleset": "",
+  "variable_placeholder_buttons": [],
+  "unhandled_root_fields": {},
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "lobed_thallus_0",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.32,
+        8
+      ],
+      "to": [
+        11.4,
+        2.18,
+        8
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8,
+        -0.44,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "b50e07bd-6177-55c4-9201-8a5367af36fb"
+    },
+    {
+      "name": "lobed_thallus_1",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.2,
+        8
+      ],
+      "to": [
+        11.75,
+        2.53,
+        8
+      ],
+      "autouv": 0,
+      "color": 0,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8,
+        -0.2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "465106f6-4aba-580f-b71d-4d402ed6d383"
+    },
+    {
+      "name": "lobed_thallus_2",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.32,
+        8
+      ],
+      "to": [
+        8,
+        2.64,
+        12.1
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        8,
+        -0.44,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "31636dee-b60e-54d5-afde-43926964d274"
+    },
+    {
+      "name": "lobed_thallus_3",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.2,
+        8
+      ],
+      "to": [
+        8,
+        2.3,
+        11.4
+      ],
+      "autouv": 0,
+      "color": 5,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8,
+        -0.2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "47a840c1-1dd1-5491-8755-9f456ebfe707"
+    },
+    {
+      "name": "lobed_thallus_4",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        4.25,
+        -0.32,
+        8
+      ],
+      "to": [
+        8,
+        2.41,
+        8
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        8,
+        -0.44,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "1b704c86-bfd5-5eca-a229-3c355111e2fd"
+    },
+    {
+      "name": "lobed_thallus_5",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        3.9,
+        -0.2,
+        8
+      ],
+      "to": [
+        8,
+        2.76,
+        8
+      ],
+      "autouv": 0,
+      "color": 7,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8,
+        -0.2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "7d15bf11-9ac3-5b89-90aa-2ad3cd90d0e1"
+    },
+    {
+      "name": "lobed_thallus_6",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.32,
+        4.6
+      ],
+      "to": [
+        8,
+        2.18,
+        8
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        8,
+        -0.44,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "c38d1228-29c8-5d51-a00f-b109575f1249"
+    },
+    {
+      "name": "lobed_thallus_7",
+      "box_uv": false,
+      "render_order": "default",
+      "rescale": false,
+      "locked": false,
+      "shade_direction_override": "",
+      "light_emission": 0,
+      "export": true,
+      "scope": 0,
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        -0.2,
+        4.25
+      ],
+      "to": [
+        8,
+        2.53,
+        8
+      ],
+      "autouv": 0,
+      "color": 4,
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "origin": [
+        8,
+        -0.2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            10.0,
+            22.0,
+            26.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            26.0,
+            22.0,
+            10.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": null
+        }
+      },
+      "type": "cube",
+      "uuid": "73d6db8c-44f6-5941-8f3e-29688a809d12"
+    }
+  ],
+  "groups": [],
+  "outliner": [
+    "b50e07bd-6177-55c4-9201-8a5367af36fb",
+    "465106f6-4aba-580f-b71d-4d402ed6d383",
+    "31636dee-b60e-54d5-afde-43926964d274",
+    "47a840c1-1dd1-5491-8755-9f456ebfe707",
+    "1b704c86-bfd5-5eca-a229-3c355111e2fd",
+    "7d15bf11-9ac3-5b89-90aa-2ad3cd90d0e1",
+    "c38d1228-29c8-5d51-a00f-b109575f1249",
+    "73d6db8c-44f6-5941-8f3e-29688a809d12"
+  ],
+  "textures": [
+    {
+      "name": "horsetail_atlas.png",
+      "path": "",
+      "folder": "",
+      "namespace": "",
+      "id": "0",
+      "group": "",
+      "scope": 0,
+      "width": 64,
+      "height": 64,
+      "uv_width": 64,
+      "uv_height": 64,
+      "particle": false,
+      "use_as_default": false,
+      "layers_enabled": false,
+      "sync_to_project": "",
+      "file_format": "png",
+      "render_mode": "default",
+      "render_sides": "auto",
+      "wrap_mode": "limited",
+      "pbr_channel": "color",
+      "fps": 7,
+      "force_translucent": false,
+      "frame_time": 1,
+      "frame_order_type": "loop",
+      "frame_order": "",
+      "frame_interpolate": false,
+      "visible": true,
+      "internal": true,
+      "saved": false,
+      "uuid": "4df251bd-3258-5e48-921a-dbc9beaedd31",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAGYklEQVR4nOVbbWwURRh+Z3buq22q1BQ0xm9yJRYxkcSKBg1q/PgjCL+MiQrEiEYkKn6kCRqj8gcI0Rg0MQIxJhJMDEV/GAUl1ohQIYhtU06otkYtYqAg9L52d8w7u7O7d73bvb3bete7J9nsO7Nz233er3lndkueePdmDiZmt82E46f/BifuV+6w5Gs6ZkNrSwzar+iEcCQKo78chgsTSTgxeMwas3TVJgJVxL7dmy0+sVgYIuEQMEURbVXTIJ3JQjKZscZTaHBQaHAwrwGcWx4FhACoqibcX1NV4LoOXLevVwOHTn3A57evJE63l2iORSEaDUMoZNDMZlUrHCRYumfcagyALUvQZXZIo0QVRShF01Tj+hRE/Iotdl7a+tRBX38BY14CyTc3xSAaMfpS6ayVC0r2AE3T7QZVQNONdigcER7BGA2cfKmkX9xxJx86fiSnz2lhtDySb2mOWX2ZbDZnDPPzcBpqTjcIZ9JJ0FQNqhkBt869CZbM3ViRD7Lutze4Duj/+ltLVggBqhg6i0SbgIXDoCUnoBrWLwane2PMS7dHoIx9OSGw/pkXXG/44LIllozW1jTjhpgH1GwWVEeElIsVi6/nj3c/CQu6VlecUXCel5Cujm5vKSSVyR0Dpbi9CUrxcMQPU6ybl4vXPlvER36/4Jv84NBOnlAPTup3FjkItHZghZAmEqL9nDgVYp+iKNZRDspx++1H3oMgwPzkAKbYOQChhEKgZLI5XuKGdZ8u5K8v7SX51q9WAkSwTXvfBLe1wL1koSVj0aOpDhfjHCqdBCpNevnYeWKH6/Utzx4gRQshWD5TnHL67BwInCii8CFYACAIRR3870lvV/9aHoT1JyXBgW0JcIOua8AhJGoA2/QcFIX6nuq29qyGcsl/338YggLzN5yIWUBRQsILuG7Evu5RDQU5zaWSlc06vhVAce4zQSgBXddBYQyymTQQwByAYcA96/ogyO/oW8O/fOMr2NozGFjeYF6zwOC+7xwtkQAMwngGAiE6tZVdPoIkX9Is4NwRqkdQaHCQx+6LWwHcuTwuPMA5DW7/IlHVPT4v3P7oda4ZuPu2e4KbBusRFBocrNoPcPLoh7y5KVrS2AsTKZg175GiIRmf1w6RGAMWtu2qZtzX6ySR6HGNoXh88ZTlgJ/2vsUvbZ/h6zdjp87AjXetIYVywA1dl0G0JQThqL0q7Tp5dWXT4HQCWh7JN7XaO8Pqn/rUhkD3x3dbFlj/0B5f3vLr4M/w74wWX3/vnzPnIUgwz9VgCYQXdM0zrwH3owRcQ2Bp7Qde6w6/YH6mQUkeCe8/cFS0JXnZD7Cn5D+u4fsFn4TwN06QXntD5Ujv5OdfNzxGAp0GF5iE8ewkX8hDvIAbLLrPI+g3UdTvD9DybkCllKoEfMlSzhEkmNdqcHt8sSVjfCM5VEIh6+cqwTsfSKv6Qf54vyEU2DS43/QEqYhzp7SCSkC5mCICUUA5e3KVTIPrTTLSzfMVIZWBR+e1nTAwPFB0qhz97SScbSmtCpQ4ez6V01YrDAlW7g+dRGRY5GN0ZBw+evnHml5NMr91QCH4LYBqdj+gEKZ6P+CdtQ/wb36wvzFyw6JbOuDpjbtJXSmg2qDQ4CDVXA7XAlg9LYfLAYUGB4UGBwuiDqgbDxjYlphEfujQLi4P2XZey79hoev596glMK8Bn2+2V4tIQLaljOc585eQQn1Sdt5j2ikgMXrakpEItiUplCVJeb3v2BiA2ffqqueF7LzHtKsDNqx8yZLPpbLQGg1Bx1WXCKIo43cC8SvbxHUkOj6RhoubIqLv4NBfQna+Pn+/d4hMqzog8UduThgz+2a1NYnvBvEled/QGFwUC4OO3wtw/J6QQ2LktCVXuGSfUjCvAcV2XJCUYVnjewFB1PyAUhAXyjBktw8oal8BvPDDI2E8iEPmxfprWQFpjzqg2I6LQQ6AmGc8hCeY21aYG6Rcu/TB+73AnMvtd3fnUhlojYYFubPJtOHiSBJsS3OHB0i5lsG8BuSkANPSmPhs2UFUeIF5mAnR7K6Pf5nRpZULyLYCbKtPCw/o9ngv8MrDz1myEesciGl9i6huvOXhLmNqFcyrDnCGAM9xe1uWSVCOl27vlOsiBLjD7fNly9LF5BoFhQYHhQYH8xrwyaHhmlq8BA0KDQ4KDQ5a7QeoNv4Dl+xhSpYcxTYAAAAASUVORK5CYII="
+    }
+  ]
+}

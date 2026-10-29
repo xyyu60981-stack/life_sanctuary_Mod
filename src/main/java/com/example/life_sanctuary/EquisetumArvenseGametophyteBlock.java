@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 /** A placed gametophyte advances only while its chunk is loaded. */
 public class EquisetumArvenseGametophyteBlock extends SupportedHorsetailBlock implements EnvironmentSensitivePlant {
+    static final net.minecraft.world.phys.shapes.VoxelShape OUTLINE = Block.box(3.8, 0, 4.2, 11.8, 2.8, 12.2);
     public static final BooleanProperty WITHERING = BooleanProperty.create("withering");
 
     public EquisetumArvenseGametophyteBlock(Properties properties) {
@@ -18,6 +19,11 @@ public class EquisetumArvenseGametophyteBlock extends SupportedHorsetailBlock im
 
     @Override
     protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) { builder.add(WITHERING); }
+
+    @Override
+    protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
+            net.minecraft.world.level.BlockGetter level, BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) { return OUTLINE; }
 
     @Override
     public boolean canSurvive(BlockState state, net.minecraft.world.level.LevelReader level, BlockPos pos) {

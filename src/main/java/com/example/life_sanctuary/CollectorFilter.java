@@ -29,7 +29,11 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
                 throw new IllegalArgumentException("Invalid collector filter entry");
         }
         public boolean matches(ResourceLocation incoming, String incomingSpecies) {
-            return item.equals(incoming) && (species.isEmpty() || species.equals(incomingSpecies));
+            return item.equals(incoming) && (species.isEmpty() || sameSpecies(species, incomingSpecies));
+        }
+        private boolean equivalent(Rule other) {
+            return item.equals(other.item) && (species.isEmpty() && other.species.isEmpty()
+                    || !species.isEmpty() && !other.species.isEmpty() && sameSpecies(species, other.species));
         }
         public ItemStack display() {
             var registered = BuiltInRegistries.ITEM.getOptional(item).filter(value -> value != Items.AIR);
@@ -53,6 +57,10 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
             throw new IllegalArgumentException("Invalid collector filter slots");
     }
     public static CollectorFilter empty() { return new CollectorFilter(Mode.OFF, java.util.Collections.nCopies(SIZE, Optional.empty())); }
+    private static boolean sameSpecies(String first, String second) {
+        var species = PlantSporeTraits.species(first).orElse(null);
+        return species != null && PlantSporeTraits.species(second).filter(species::equals).isPresent();
+    }
     private static CollectorFilter broken() { return new CollectorFilter(Mode.BROKEN, empty().entries()); }
     public boolean allows(ResourceLocation item, String species) {
         if (mode == Mode.OFF) return true;
@@ -70,7 +78,8 @@ public record CollectorFilter(Mode mode, List<Optional<CollectorFilter.Rule>> en
     public CollectorFilter set(int index, Optional<Rule> rule) {
         if (mode == Mode.BROKEN || index < 0 || index >= SIZE) return this;
         var next = new ArrayList<>(entries);
-        if (rule.isPresent()) for (int i = 0; i < SIZE; i++) if (next.get(i).equals(rule)) next.set(i, Optional.empty());
+        if (rule.isPresent()) for (int i = 0; i < SIZE; i++)
+            if (next.get(i).filter(rule.get()::equivalent).isPresent()) next.set(i, Optional.empty());
         next.set(index, rule); return new CollectorFilter(mode, next);
     }
     public CollectorFilter move(int from, int to) {

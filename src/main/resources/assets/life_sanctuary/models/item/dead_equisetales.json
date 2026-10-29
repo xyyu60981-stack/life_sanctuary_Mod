@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "life_sanctuary:item/dead_equisetales"
-  }
+  },
+  "parent": "minecraft:item/generated"
 }

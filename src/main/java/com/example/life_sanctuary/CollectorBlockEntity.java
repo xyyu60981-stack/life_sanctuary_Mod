@@ -31,6 +31,19 @@ public final class CollectorBlockEntity extends BaseContainerBlockEntity {
     }
     @Override protected NonNullList<ItemStack> getItems() { return items; }
     @Override protected void setItems(NonNullList<ItemStack> items) { this.items = items; }
+    /** Bounded inspection of the real slots; no container item or preview inventory is created. */
+    public CollectorInventory.Summary summarizeContents() {
+        int occupied = 0, spores = 0, pollen = 0;
+        for (var item : items) {
+            if (item.isEmpty()) continue;
+            occupied++;
+            if (ReproductiveBagKind.SPORE.isEmptyBag(item))
+                spores = (int) Math.min(Integer.MAX_VALUE, (long) spores + item.getCount());
+            if (ReproductiveBagKind.POLLEN.isEmptyBag(item))
+                pollen = (int) Math.min(Integer.MAX_VALUE, (long) pollen + item.getCount());
+        }
+        return new CollectorInventory.Summary(occupied, getContainerSize(), spores, pollen);
+    }
     @Override public boolean canPlaceItem(int slot, ItemStack stack) { return CollectorInventory.accepts(stack) && filter().allows(stack); }
     public CollectorFilter filter() {
         return CollectorFilter.read(components().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,

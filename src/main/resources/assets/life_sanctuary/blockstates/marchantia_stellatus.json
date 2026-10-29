@@ -1,0 +1,120 @@
+{
+  "variants": {
+    "receptacle_count=2,reproductive=false": {
+      "model": "life_sanctuary:block/star_moss/body"
+    },
+    "receptacle_count=2,reproductive=true": [
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_0"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_1"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_2"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_3"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_4"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_5"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_6"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_2_7"
+      }
+    ],
+    "receptacle_count=3,reproductive=false": {
+      "model": "life_sanctuary:block/star_moss/body"
+    },
+    "receptacle_count=3,reproductive=true": [
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_0"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_1"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_2"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_3"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_4"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_5"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_6"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_3_7"
+      }
+    ],
+    "receptacle_count=4,reproductive=false": {
+      "model": "life_sanctuary:block/star_moss/body"
+    },
+    "receptacle_count=4,reproductive=true": [
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_0"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_1"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_2"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_3"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_4"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_5"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_6"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_4_7"
+      }
+    ],
+    "receptacle_count=5,reproductive=false": {
+      "model": "life_sanctuary:block/star_moss/body"
+    },
+    "receptacle_count=5,reproductive=true": [
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_0"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_1"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_2"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_3"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_4"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_5"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_6"
+      },
+      {
+        "model": "life_sanctuary:block/star_moss/reproductive_5_7"
+      }
+    ]
+  }
+}

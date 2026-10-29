@@ -31,4 +31,9 @@ public record CultivatedStageData(ResourceLocation species, String phase) {
         if (species == null || data.getString("Phase").isBlank() || data.getString("Phase").length() > 128) return Optional.empty();
         return Optional.of(new CultivatedStageData(species, data.getString("Phase")));
     }
+
+    /** Presence includes malformed/unknown versions, so block items cannot silently fall back to fresh planting. */
+    public static boolean hasStoredStage(ItemStack stack) {
+        return !stack.isEmpty() && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY);
+    }
 }

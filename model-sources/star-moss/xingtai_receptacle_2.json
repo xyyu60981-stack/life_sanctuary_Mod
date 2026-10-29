@@ -1,0 +1,148 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "atlas": "life_sanctuary:block/xingtai_atlas",
+    "particle": "#atlas"
+  },
+  "elements": [
+    {
+      "name": "plate",
+      "from": [
+        5.7,
+        1.2,
+        5.7
+      ],
+      "to": [
+        10.3,
+        1.38,
+        10.3
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            9.1429,
+            10,
+            12.5714,
+            15.7143
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            9.1429,
+            10,
+            12.5714,
+            15.7143
+          ],
+          "texture": "#atlas"
+        }
+      }
+    },
+    {
+      "name": "stalk",
+      "from": [
+        7.8,
+        0.2,
+        7.8
+      ],
+      "to": [
+        8.2,
+        1.35,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        }
+      }
+    }
+  ]
+}

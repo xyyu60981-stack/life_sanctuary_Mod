@@ -24,6 +24,12 @@ public final class SharedGametophyteBlock extends Block implements WaterDependen
     @Override public MapCodec<SharedGametophyteBlock> codec() { return CODEC; }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(WITHERING); }
     @Override protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) { return List.of(); }
+    @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
+            net.minecraft.world.level.BlockGetter level, BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) {
+        return state.is(LifeSanctuaryMod.SPHENOPHYTE_GAMETOPHYTE.get())
+                ? EquisetumArvenseGametophyteBlock.OUTLINE : super.getShape(state, level, pos, context);
+    }
     @Override public java.util.Optional<WaterDependentPlant.Requirement> waterRequirement(ServerLevel level, BlockPos pos, BlockState state) {
         return SharedGametophyteWater.requirement(level, pos);
     }

@@ -33,8 +33,9 @@ public final class SporeBagItem extends Item {
     }
     @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
         var form = SporeBagContents.form(stack).orElse(SporeBagContents.Form.NORMAL);
-        return form == SporeBagContents.Form.NORMAL ? super.getName(stack)
+        var base = form == SporeBagContents.Form.NORMAL ? super.getName(stack)
                 : net.minecraft.network.chat.Component.translatable("item.life_sanctuary.spore_bag." + form.name().toLowerCase(java.util.Locale.ROOT));
+        return PlantSpeciesNames.bag(species(stack), base);
     }
 
     @Override
@@ -52,6 +53,12 @@ public final class SporeBagItem extends Item {
         var player = context.getPlayer();
         if (player != null && (!level.mayInteract(player, context.getClickedPos())
                 || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)))
+            return InteractionResult.FAIL;
+        // Moss establishes above the clicked support, which is a different permission position.
+        if (player != null && PlantSporeTraits.species(speciesId).filter(species -> species.equals(LuminousMossRules.SPECIES)
+                    || species.equals(MarchantiaRules.SPECIES) || species.equals(StarMossRules.SPECIES)).isPresent()
+                && (!level.mayInteract(player, context.getClickedPos().above())
+                    || !player.mayUseItemAt(context.getClickedPos().above(), context.getClickedFace(), stack)))
             return InteractionResult.FAIL;
         ReproductiveBagUseResult result = ReproductiveBagUseHandler.useSporeBag(
                 level, context.getClickedPos(), stack, effect);

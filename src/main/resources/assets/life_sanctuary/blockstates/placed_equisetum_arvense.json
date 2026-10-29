@@ -2,18 +2,18 @@
   "multipart": [
     {
       "when": {
-        "nutritional_stems": "1|2|3"
+        "nutritional_stems": "1"
       },
       "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_0"
+        "model": "life_sanctuary:block/horsetail_placed_c1"
       }
     },
     {
       "when": {
-        "nutritional_stems": "2|3"
+        "nutritional_stems": "2"
       },
       "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_1"
+        "model": "life_sanctuary:block/horsetail_placed_c2"
       }
     },
     {
@@ -21,16 +21,72 @@
         "nutritional_stems": "3"
       },
       "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_2"
+        "model": "life_sanctuary:block/horsetail_placed_c3"
       }
     },
     {
       "when": {
-        "spore_stem": "true"
+        "spore_stem": "true",
+        "nutritional_stems": "0"
       },
-      "apply": {
-        "model": "life_sanctuary:block/horsetail_stem_3"
-      }
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c0_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c0_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "1"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c1_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c1_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "2"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c2_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c2_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "3"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c3_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c3_rust",
+          "weight": 1
+        }
+      ]
     }
   ]
 }

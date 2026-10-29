@@ -1,0 +1,96 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/attached_moss_side_1",
+          "y": 0
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_2",
+          "y": 0
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_3",
+          "y": 0
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_4",
+          "y": 0
+        }
+      ]
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/attached_moss_side_1",
+          "y": 90
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_2",
+          "y": 90
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_3",
+          "y": 90
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_4",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/attached_moss_side_1",
+          "y": 180
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_2",
+          "y": 180
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_3",
+          "y": 180
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_4",
+          "y": 180
+        }
+      ]
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/attached_moss_side_1",
+          "y": 270
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_2",
+          "y": 270
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_3",
+          "y": 270
+        },
+        {
+          "model": "life_sanctuary:block/attached_moss_side_4",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}

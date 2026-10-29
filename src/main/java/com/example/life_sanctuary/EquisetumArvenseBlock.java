@@ -37,6 +37,20 @@ public class EquisetumArvenseBlock extends SupportedHorsetailBlock implements En
         return state.getValue(PART) == DoubleBlockHalf.UPPER ? pos.below() : pos;
     }
 
+    /** Read-only interaction gate: both halves must agree before any harvest or retrieval. */
+    public static boolean hasMatchingHalves(LevelReader level, BlockPos base, BlockState lower) {
+        return lower.getBlock() instanceof EquisetumArvenseBlock
+                && lower.getValue(PART) == DoubleBlockHalf.LOWER
+                && level.getBlockState(base.above()).equals(lower.setValue(PART, DoubleBlockHalf.UPPER));
+    }
+
+    /** Both model halves must choose the same weighted height variant. */
+    @Override
+    @SuppressWarnings("deprecation") // Vanilla model seed algorithm; intentionally shared by both halves.
+    protected long getSeed(BlockState state, BlockPos pos) {
+        return net.minecraft.util.Mth.getSeed(base(state, pos));
+    }
+
     public static boolean canFitAdult(LevelReader level, BlockPos pos) {
         BlockPos upperPos = pos.above();
         if (level.isOutsideBuildHeight(upperPos)) return false;
@@ -48,7 +62,9 @@ public class EquisetumArvenseBlock extends SupportedHorsetailBlock implements En
 
     /** Sprouts remain one block. Convert only when the second adult block can actually fit. */
     public static boolean growFromSprouts(ServerLevel level, BlockPos pos, boolean growing) {
-        if (!level.getBlockState(pos).is(LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get())) return false;
+        BlockState sprouts = level.getBlockState(pos);
+        if (!sprouts.is(LifeSanctuaryMod.EQUISETUM_ARVENSE_SPROUTS.get())
+                || !sprouts.canSurvive(level, pos)) return false;
         BlockPos upperPos = pos.above();
         if (!canFitAdult(level, pos)) return false;
         BlockState previousUpper = level.getBlockState(upperPos);
@@ -57,12 +73,19 @@ public class EquisetumArvenseBlock extends SupportedHorsetailBlock implements En
         BlockState upper = lower.setValue(PART, DoubleBlockHalf.UPPER);
         int quiet = Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_SUPPRESS_DROPS;
         if (!level.setBlock(upperPos, upper, quiet)) return false;
+        // Placement callbacks may have changed the seedling or its support. Never overwrite that change.
+        if (!level.getBlockState(pos).equals(sprouts) || !sprouts.canSurvive(level, pos)
+                || !level.getBlockState(upperPos).equals(upper)) {
+            if (level.getBlockState(upperPos).equals(upper)) level.setBlock(upperPos, previousUpper, quiet);
+            return false;
+        }
         if (!level.setBlock(pos, lower, Block.UPDATE_ALL)) {
             if (level.getBlockState(upperPos).equals(upper)) level.setBlock(upperPos, previousUpper, quiet);
             return false;
         }
         level.updateNeighborsAt(upperPos, adult);
-        return true;
+        // Do not advance the saved stage if a neighbor callback removed either half.
+        return level.getBlockState(pos).equals(lower) && level.getBlockState(upperPos).equals(upper);
     }
 
     /** Reproductive generation is a one-shot opportunity after harvest. */
@@ -72,8 +95,13 @@ public class EquisetumArvenseBlock extends SupportedHorsetailBlock implements En
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         BlockPos base = base(state, pos);
         BlockState lower = level.getBlockState(base);
-        if (!lower.is(this) || lower.getValue(PART) != DoubleBlockHalf.LOWER
+        if (!lower.is(this) || !hasMatchingHalves(level, base, lower)
                 || !lower.getValue(SPORE_STEM) || !CollectorSporeHarvestAccess.canInteract(player, hand))
+            return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (player.isSpectator() || !level.mayInteract(player, base)
+                || !level.mayInteract(player, base.above())
+                || !player.mayUseItemAt(base, hit.getDirection(), stack)
+                || !player.mayUseItemAt(base.above(), hit.getDirection(), stack))
             return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level instanceof ServerLevel server && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
             return HorsetailPopulations.get(server).tryHarvestSporeStem(base, new CollectorSporeHarvestAccess(serverPlayer, hand))

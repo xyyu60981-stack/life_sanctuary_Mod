@@ -17,6 +17,12 @@ public final class SharedGametophyteWater {
     }
     private record Rule(WaterDependentPlant.Requirement requirement, Decline decline) {}
     private static final Map<Key, Rule> RULES = new ConcurrentHashMap<>();
+    static boolean requiresWater(PlantIndividualState plant) {
+        return !plant.source().isStatic() && RULES.containsKey(new Key(plant.species(), plant.stage()));
+    }
+    static boolean monitoringUnavailable(ServerLevel level, PlantIndividualState plant) {
+        return requiresWater(plant) && PlantWaterMonitoring.get(level).isReadOnly();
+    }
     /** Standard gametophyte decline: no drops, exact original water state, retire only after full commit. */
     public static void registerDisappearing(ResourceLocation species, String stage, WaterDependentPlant.Requirement requirement) {
         register(species, stage, requirement, SharedGametophyteWater::disappear);
@@ -75,8 +81,16 @@ public final class SharedGametophyteWater {
         } catch (RuntimeException failure) {
             LifeSanctuaryMod.LOGGER.error("Gametophyte water decline failed for " + plant.id(), failure);
         }
-        HeterosporeWorldData.get(level).freezeForRecovery(plant);
-        PlantLifecycle.setPauseReason(PlantIndividuals.get(level), plant.id(), "gametophyte_water_error", true);
+        try {
+            HeterosporeWorldData.get(level).freezeForRecovery(plant);
+        } catch (RuntimeException failure) {
+            LifeSanctuaryMod.LOGGER.error("Cannot freeze failed water decline for " + plant.id(), failure);
+        }
+        try {
+            PlantLifecycle.setPauseReason(PlantIndividuals.get(level), plant.id(), "gametophyte_water_error", true);
+        } catch (RuntimeException failure) {
+            LifeSanctuaryMod.LOGGER.error("Cannot mark failed water decline for " + plant.id(), failure);
+        }
         return false;
     }
 }

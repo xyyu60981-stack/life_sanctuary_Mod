@@ -27,6 +27,10 @@ sourceSets.main.resources {
 }
 
 repositories {
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
     // Add here additional repositories if required by some of the dependencies below.
 }
 
@@ -116,6 +120,11 @@ configurations {
 }
 
 dependencies {
+    if (providers.gradleProperty('jadeApiJar').isPresent()) {
+        compileOnly files(providers.gradleProperty('jadeApiJar').get())
+    } else {
+        compileOnly('maven.modrinth:jade:15.10.5+neoforge') { transitive = false }
+    }
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -179,6 +188,12 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    // Source encoding does not control javac's localized diagnostic messages.
+    // Use an isolated compiler JVM so Windows console code pages cannot garble them.
+    options.fork = true
+    options.forkOptions.jvmArgs.addAll([
+            '-Duser.language=en', '-Duser.country=US', '-Dfile.encoding=UTF-8'
+    ])
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.

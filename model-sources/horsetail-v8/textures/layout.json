@@ -1,0 +1,92 @@
+{
+  "size": [
+    64,
+    64
+  ],
+  "blocks": {
+    "stem_green_veg": {
+      "x": 2,
+      "y": 2,
+      "w": 4,
+      "h": 60,
+      "src": "vegetative"
+    },
+    "stem_straw": {
+      "x": 10,
+      "y": 2,
+      "w": 8,
+      "h": 16,
+      "src": "fertile_stem"
+    },
+    "whorl": {
+      "x": 22,
+      "y": 2,
+      "w": 16,
+      "h": 16,
+      "src": "vegetative"
+    },
+    "juv_leaf": {
+      "x": 42,
+      "y": 2,
+      "w": 8,
+      "h": 16,
+      "src": "juvenile"
+    },
+    "gameto": {
+      "x": 10,
+      "y": 22,
+      "w": 16,
+      "h": 16,
+      "src": "gametophyte"
+    },
+    "scale": {
+      "x": 30,
+      "y": 22,
+      "w": 16,
+      "h": 16,
+      "src": "fertile_stem"
+    },
+    "sheath": {
+      "x": 10,
+      "y": 42,
+      "w": 16,
+      "h": 16,
+      "src": "fertile_stem"
+    },
+    "cut_straw": {
+      "x": 54,
+      "y": 2,
+      "w": 8,
+      "h": 8,
+      "src": "fertile_stem"
+    },
+    "cut_green_veg": {
+      "x": 54,
+      "y": 14,
+      "w": 4,
+      "h": 4,
+      "src": "vegetative"
+    },
+    "cut_green_juv": {
+      "x": 50,
+      "y": 22,
+      "w": 4,
+      "h": 4,
+      "src": "juvenile"
+    },
+    "scale_cap": {
+      "x": 58,
+      "y": 22,
+      "w": 4,
+      "h": 4,
+      "src": "fertile_stem"
+    },
+    "sheath_dark": {
+      "x": 50,
+      "y": 30,
+      "w": 4,
+      "h": 4,
+      "src": "fertile_stem"
+    }
+  }
+}

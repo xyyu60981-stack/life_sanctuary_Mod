@@ -1,0 +1,84 @@
+{
+  "version": "V8 final",
+  "units": "16 model pixels = 1 block",
+  "atlas": {
+    "file": "textures/horsetail_atlas.png",
+    "size": [
+      64,
+      64
+    ],
+    "blocks": 12
+  },
+  "atlas_rust": {
+    "file": "textures/horsetail_atlas_rust.png",
+    "size": [
+      64,
+      64
+    ],
+    "note": "同布局，仅孢子茎配色不同"
+  },
+  "models": [
+    {
+      "name": "vegetative",
+      "block": "life_sanctuary:equisetum_arvense",
+      "elements": 73,
+      "height_blocks": 1.45
+    },
+    {
+      "name": "vegetative_short",
+      "block": "life_sanctuary:equisetum_arvense",
+      "elements": 73,
+      "height_blocks": 1.305,
+      "note": "形态差分：整株沿 y 压缩 0.9"
+    },
+    {
+      "name": "juvenile",
+      "block": "life_sanctuary:equisetum_arvense_sprouts",
+      "elements": 49,
+      "height_blocks": 0.72
+    },
+    {
+      "name": "gametophyte",
+      "block": "life_sanctuary:equisetum_arvense_gametophyte",
+      "elements": 8,
+      "height_blocks": 0.173
+    },
+    {
+      "name": "fertile_stem",
+      "block": "life_sanctuary:equisetum_arvense_spore_stem",
+      "elements": 32,
+      "height_blocks": 0.99
+    },
+    {
+      "name": "fertile_stem_rust",
+      "block": "life_sanctuary:equisetum_arvense_spore_stem",
+      "elements": 32,
+      "height_blocks": 0.99,
+      "note": "材质差分"
+    }
+  ],
+  "coplanar": {
+    "vegetative": 0,
+    "vegetative_short": 0,
+    "juvenile": 4,
+    "gametophyte": 0,
+    "fertile_stem": 0,
+    "fertile_stem_rust": 0
+  },
+  "notes": [
+    "12 个区块；juvenile 主干并入 vegetative 条",
+    "叶片 4 相位法线错开（最大 0.15px）消除环间共面",
+    "juvenile 的 4 处共面为顶叶 0/4 号同面，重叠区在主轴内部"
+  ],
+  "two_block": {
+    "note": "营养茎超过一格的两种形态拆成 lower/upper，用于玫瑰丛式双格方块",
+    "files": [
+      "two_block/vegetative_lower.json",
+      "two_block/vegetative_upper.json",
+      "two_block/vegetative_short_lower.json",
+      "two_block/vegetative_short_upper.json"
+    ],
+    "split_tool": "tools/split_two_block.py",
+    "verify": "lower+upper 复原与原模型差 12/129600 像素（切开处边缘）"
+  }
+}

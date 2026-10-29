@@ -20,6 +20,8 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @EventBusSubscriber(modid = LifeSanctuaryMod.MODID, value = Dist.CLIENT)
 public class LifeSanctuaryModClient {
     public LifeSanctuaryModClient(ModContainer container, IEventBus modEventBus) {
+        modEventBus.addListener(LuminousMossOverlayModel::register);
+        modEventBus.addListener(LuminousMossOverlayModel::bake);
         modEventBus.addListener(LifeSanctuaryModClient::registerCollectorTooltip);
         modEventBus.addListener(LifeSanctuaryModClient::registerCollectorScreen);
         modEventBus.addListener(LifeSanctuaryModClient::registerDisplayRenderer);

@@ -18,19 +18,36 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-/** Geometry matches the four simple stem models; shapes are cached, never rebuilt per frame. */
+/** V8 stem centers and cached selection shapes; no geometry is allocated during rendering. */
 public final class HorsetailStemInteraction {
-    private static final VoxelShape[] STEMS = {
-            Block.box(3, 0, 3, 5, 14, 5), Block.box(11, 0, 3, 13, 14, 5),
-            Block.box(3, 0, 11, 5, 14, 13), Block.box(11, 0, 11, 13, 12, 13)
+    private static final double[][][] CENTERS = {
+            {}, {{8, 8}}, {{5.4, 5.4}, {10.6, 10.6}},
+            {{4.9, 4.9}, {11.2, 5.3}, {7.7, 11.3}}
     };
-    private static final VoxelShape[] SHAPES = new VoxelShape[16];
+    private static final double[][] SPORE_CENTERS = {{8, 8}, {12.2, 12.2}, {10.9, 5.1}, {11.3, 10.9}};
+    private static final VoxelShape[][][] SHAPES = new VoxelShape[3][4][2];
+    private static final VoxelShape[][][] STEM_SHAPES = new VoxelShape[3][4][4];
     static {
-        for (int mask = 0; mask < SHAPES.length; mask++) {
-            VoxelShape shape = Shapes.empty();
-            for (int i = 0; i < STEMS.length; i++)
-                if ((mask & (1 << i)) != 0) shape = Shapes.or(shape, STEMS[i]);
-            SHAPES[mask] = shape;
+        for (int form = 0; form < 3; form++) {
+            for (int count = 0; count <= 3; count++) {
+                VoxelShape foliage = Shapes.empty();
+                for (int stem = 0; stem < count; stem++) {
+                    double[] center = CENTERS[count][stem];
+                    // Broad foliage target around each distinct stem, clipped to the occupied half.
+                    double height = form == 0 ? 15.5 : form == 1 ? 16 : 7.3;
+                    VoxelShape shape = Block.box(center[0] - 2, 0, center[1] - 2,
+                            center[0] + 2, height, center[1] + 2);
+                    STEM_SHAPES[form][count][stem] = shape;
+                    foliage = Shapes.or(foliage, shape);
+                }
+                double[] spore = SPORE_CENTERS[count];
+                VoxelShape sporeShape = form == 2 ? Shapes.empty()
+                        : Block.box(spore[0] - 1, 0, spore[1] - 1,
+                                spore[0] + 1, 15.9, spore[1] + 1);
+                STEM_SHAPES[form][count][3] = sporeShape;
+                SHAPES[form][count][0] = foliage;
+                SHAPES[form][count][1] = Shapes.or(foliage, sporeShape);
+            }
         }
     }
 
@@ -44,19 +61,34 @@ public final class HorsetailStemInteraction {
         return (1 << count(state)) - 1 | (state.getValue(EquisetumArvenseBlock.SPORE_STEM) ? 8 : 0);
     }
 
-    public static VoxelShape shape(BlockState state) {
-        return SHAPES[mask(state)];
+    private static int form(BlockState state) {
+        if (state.getBlock() instanceof PlacedHorsetailBlock) return 0;
+        return state.getValue(EquisetumArvenseBlock.PART)
+                == net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER ? 2 : 1;
     }
 
-    /** Shared by manual retrieval and creative pick-block, including mixed placed stems. */
+    public static VoxelShape shape(BlockState state) {
+        return SHAPES[form(state)][count(state)][state.getValue(EquisetumArvenseBlock.SPORE_STEM) ? 1 : 0];
+    }
+
+    /** Upper foliage never selects the reproductive stem, which only exists below. */
     private static int targetedStem(BlockState state, BlockPos pos, Vec3 location) {
         Vec3 local = location.subtract(pos.getX(), pos.getY(), pos.getZ());
         int visible = mask(state);
-        for (int i = 0; i < STEMS.length; i++)
-            if ((visible & (1 << i)) != 0 && STEMS[i].bounds().inflate(0.001).contains(local)) return i;
-        return -1;
+        int form = form(state);
+        int count = count(state);
+        int selected = -1;
+        double closest = Double.MAX_VALUE;
+        for (int i = 0; i < 4; i++) {
+            VoxelShape shape = STEM_SHAPES[form][count][i];
+            if ((visible & (1 << i)) == 0 || shape == null || shape.isEmpty()
+                    || !shape.bounds().inflate(0.001).contains(local)) continue;
+            double[] center = i == 3 ? SPORE_CENTERS[count] : CENTERS[count][i];
+            double distance = Math.pow(local.x * 16 - center[0], 2) + Math.pow(local.z * 16 - center[1], 2);
+            if (distance < closest) { closest = distance; selected = i; }
+        }
+        return selected;
     }
-
     public static ItemStack pickStack(BlockState state, BlockPos pos, net.minecraft.world.phys.HitResult target) {
         if (!(target instanceof net.minecraft.world.phys.BlockHitResult hit)
                 || !hit.getBlockPos().equals(pos)) return ItemStack.EMPTY;
@@ -88,7 +120,13 @@ public final class HorsetailStemInteraction {
         BlockState baseState = level.getBlockState(base);
         if (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
                 && (!baseState.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
-                    || baseState.getValue(EquisetumArvenseBlock.PART) != net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER)) return;
+                    || !EquisetumArvenseBlock.hasMatchingHalves(level, base, baseState))) return;
+        // An upper-half hit still changes the base and can remove the entire pair.
+        if (!level.mayInteract(player, base)
+                || !player.mayUseItemAt(base, event.getHitVec().getDirection(), event.getItemStack())
+                || (state.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get())
+                    && (!level.mayInteract(player, base.above())
+                        || !player.mayUseItemAt(base.above(), event.getHitVec().getDirection(), event.getItemStack())))) return;
         // A half awaiting neighbor synchronization must not return a stem absent from the shared base state.
         if ((mask(baseState) & (1 << selected)) == 0) return;
         event.setCanceled(true);
@@ -110,6 +148,10 @@ public final class HorsetailStemInteraction {
                     : next.setValue(EquisetumArvenseBlock.NUTRITIONAL_STEMS, remaining);
         }
         if (!server.setBlock(base, next, Block.UPDATE_ALL)) return;
+        if (!server.getBlockState(base).equals(next)) {
+            LifeSanctuaryMod.LOGGER.error("Horsetail retrieval changed during callback at {}; no item issued", base);
+            return;
+        }
         if (spore && baseState.is(LifeSanctuaryMod.EQUISETUM_ARVENSE.get()) && remaining > 0) {
             // Keep an exhausted marker: removing the structure must never mint a new quota.
             HorsetailPopulations.get(server).setSporeHarvestCount(base, 0);

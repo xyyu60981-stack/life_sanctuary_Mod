@@ -1,0 +1,184 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "nutritional_stems": "1",
+        "growing": "false",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c1_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "1",
+        "growing": "false",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c1_a_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "growing": "false",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "growing": "false",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c2_a_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "growing": "true",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_j_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_j_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c2_j_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "2",
+        "growing": "true",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c2_j_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "growing": "false",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_a_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "growing": "false",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c3_a_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "growing": "true",
+        "withering": "false",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_j_v1_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_j_v2_upper",
+          "weight": 1
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_nv_c3_j_v3_upper",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "nutritional_stems": "3",
+        "growing": "true",
+        "withering": "true",
+        "part": "upper"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_nv_w_c3_j_upper",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

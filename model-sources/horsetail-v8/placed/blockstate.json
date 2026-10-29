@@ -1,0 +1,92 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "nutritional_stems": "1"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_placed_c1"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "2"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_placed_c2"
+      }
+    },
+    {
+      "when": {
+        "nutritional_stems": "3"
+      },
+      "apply": {
+        "model": "life_sanctuary:block/horsetail_placed_c3"
+      }
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "0"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c0_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c0_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "1"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c1_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c1_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "2"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c2_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c2_rust",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+        "spore_stem": "true",
+        "nutritional_stems": "3"
+      },
+      "apply": [
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c3_straw",
+          "weight": 3
+        },
+        {
+          "model": "life_sanctuary:block/horsetail_placed_spore_c3_rust",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

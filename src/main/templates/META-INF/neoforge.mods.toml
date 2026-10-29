@@ -79,6 +79,13 @@ config="life_sanctuary.create.mixins.json"
 
 # Here's another dependency
 [[dependencies.${mod_id}]]
+    modId="jade"
+    type="optional"
+    versionRange="[15.10.5,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="minecraft"
     type="required"
     # This version range declares a minimum of the current minecraft version up to but not including the next major version

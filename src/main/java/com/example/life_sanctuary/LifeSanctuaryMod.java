@@ -71,6 +71,14 @@ public class LifeSanctuaryMod {
             FEATURES.register("coal_core", CoalCoreFeature::new);
     public static final DeferredHolder<net.minecraft.world.level.levelgen.feature.Feature<?>, LargeLeafMossFeature> LARGE_LEAF_MOSS_PATCH =
             FEATURES.register("large_leaf_moss_patch", LargeLeafMossFeature::new);
+    public static final DeferredHolder<net.minecraft.world.level.levelgen.feature.Feature<?>, LuminousMossFeature> LUMINOUS_MOSS_PATCH =
+            FEATURES.register("luminous_moss_patch", LuminousMossFeature::new);
+    public static final DeferredHolder<net.minecraft.world.level.levelgen.feature.Feature<?>, MarchantiaFeature> MARCHANTIA_PATCH =
+            FEATURES.register("marchantia_patch", MarchantiaFeature::new);
+    public static final DeferredHolder<net.minecraft.world.level.levelgen.feature.Feature<?>, AttachedMossFeature> ATTACHED_MOSS_PATCH =
+            FEATURES.register("attached_moss_patch", AttachedMossFeature::new);
+    public static final DeferredHolder<net.minecraft.world.level.levelgen.feature.Feature<?>, StarMossFeature> STAR_MOSS_PATCH =
+            FEATURES.register("star_moss_patch", StarMossFeature::new);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MODID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MODID);
@@ -168,6 +176,26 @@ public class LifeSanctuaryMod {
             properties -> new LargeLeafMossBlock(properties.noCollission().instabreak().sound(SoundType.MOSS)
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
     public static final DeferredItem<BlockItem> LARGE_LEAF_MOSS_ITEM = ITEMS.registerSimpleBlockItem("large_leaf_moss", LARGE_LEAF_MOSS);
+    public static final DeferredBlock<LuminousMossBlock> LUMINOUS_MOSS = BLOCKS.registerBlock("lichen_photobiont",
+            properties -> new LuminousMossBlock(properties.noCollission().noOcclusion().instabreak().sound(SoundType.MOSS)
+                    .lightLevel(state -> state.getValue(LuminousMossBlock.AGE) == 2 ? 14 : 7)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+    public static final DeferredItem<LuminousMossItem> LUMINOUS_MOSS_ITEM = ITEMS.register("lichen_photobiont",
+            () -> new LuminousMossItem(LUMINOUS_MOSS.get(), new Item.Properties()));
+    public static final DeferredBlock<MarchantiaBlock> MARCHANTIA = BLOCKS.registerBlock("marchantia_polymorpha",
+            properties -> new MarchantiaBlock(properties.noOcclusion().instabreak().sound(SoundType.MOSS)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+    public static final DeferredItem<MarchantiaItem> MARCHANTIA_ITEM = ITEMS.register("marchantia_polymorpha",
+            () -> new MarchantiaItem(MARCHANTIA.get(), new Item.Properties()));
+    public static final DeferredBlock<StarMossBlock> STAR_MOSS = BLOCKS.registerBlock("marchantia_stellatus",
+            properties -> new StarMossBlock(properties.noOcclusion().instabreak().sound(SoundType.MOSS)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+    public static final DeferredItem<StarMossItem> STAR_MOSS_ITEM = ITEMS.register("marchantia_stellatus",
+            () -> new StarMossItem(STAR_MOSS.get(), new Item.Properties()));
+    public static final DeferredBlock<AttachedMossBlock> ATTACHED_MOSS = BLOCKS.registerBlock("attached_moss",
+            properties -> new AttachedMossBlock(properties.noCollission().noOcclusion().instabreak().sound(SoundType.MOSS)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+    public static final DeferredItem<BlockItem> ATTACHED_MOSS_ITEM = ITEMS.registerSimpleBlockItem("attached_moss", ATTACHED_MOSS);
     public static final DeferredItem<HandheldItem> GAME_START = ITEMS.register("game_start", () -> new HandheldItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<ShelterCompassItem> SHELTER_COMPASS = ITEMS.register("shelter_compass",
             () -> new ShelterCompassItem(new Item.Properties().stacksTo(1), false));
@@ -260,6 +288,8 @@ public class LifeSanctuaryMod {
         NeoForge.EVENT_BUS.register(new HorsetailStemInteraction());
         NeoForge.EVENT_BUS.addListener(CultivationCabinetCommands::register);
         NeoForge.EVENT_BUS.addListener(GametophyteCommands::register);
+        NeoForge.EVENT_BUS.addListener(LuminousMossCommands::register);
+        NeoForge.EVENT_BUS.addListener(MarchantiaCommands::register);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -297,6 +327,10 @@ public class LifeSanctuaryMod {
             SharedGametophyteBlocks.register(GametophyteAppearance.MIXED_LYCOPOD, MIXED_LYCOPOD_GAMETOPHYTE.get());
         });
         event.enqueueWork(LargeLeafMossRules::setup);
+        event.enqueueWork(LuminousMossRules::setup);
+        event.enqueueWork(MarchantiaRules::setup);
+        event.enqueueWork(StarMossRules::setup);
+        event.enqueueWork(AttachedMossRules::setup);
         event.enqueueWork(CycadGrowthProfile.COMMON::registerDefinition);
         event.enqueueWork(TansachanaCycad.PROFILE::registerDefinition);
         event.enqueueWork(() -> PlantSporeTraits.register(PlantSpeciesRegistry.HORSETAIL.id(),
@@ -309,6 +343,10 @@ public class LifeSanctuaryMod {
     // Add Life Sanctuary items to the building blocks tab.
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(LUMINOUS_MOSS_ITEM);
+            event.accept(MARCHANTIA_ITEM);
+            event.accept(STAR_MOSS_ITEM);
+            event.accept(ATTACHED_MOSS_ITEM);
             event.accept(PEAT_ITEM);
             event.accept(PEAT_FARMLAND_ITEM);
             event.accept(EQUISETUM_ARVENSE_ITEM);

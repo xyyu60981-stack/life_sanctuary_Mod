@@ -59,7 +59,7 @@ public final class SharedGametophyteItem extends Item {
         var completed = CultivatedStageData.read(stack).orElse(null);
         if (completed == null || GametophyteAppearance.forSpecies(completed.species(), form()).filter(appearance::equals).isEmpty()) return;
         var species = completed.species();
-        var name = Component.translatableWithFallback("species." + species.getNamespace() + "." + species.getPath(), species.toString());
+        var name = PlantSpeciesNames.name(species);
         tooltip.add(Component.translatable("tooltip.life_sanctuary.gametophyte.species", name).withStyle(ChatFormatting.GRAY));
     }
 }

@@ -1,0 +1,43 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "atlas": "life_sanctuary:block/attached_moss_atlas",
+    "particle": "#atlas"
+  },
+  "elements": [
+    {
+      "name": "moss",
+      "from": [
+        0,
+        0,
+        0.05
+      ],
+      "to": [
+        16,
+        16,
+        0.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#atlas"
+        }
+      }
+    }
+  ]
+}

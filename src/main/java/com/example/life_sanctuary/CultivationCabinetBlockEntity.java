@@ -228,9 +228,8 @@ public final class CultivationCabinetBlockEntity extends BlockEntity {
     }
 
     public CultivationStatus.Snapshot status(boolean currentPower) {
-        var control = controller();
         var view = localSlots().orElse(null);
-        if (view == null) return new CultivationStatus.Snapshot(0, currentPower, true, outputApplying || control.isApplying(),
+        if (view == null) return new CultivationStatus.Snapshot(0, currentPower, true, outputApplying || controller != null && controller.isApplying(),
                 0, java.util.List.of(), java.util.Optional.of("Cultivation cabinet data or transaction unavailable"));
         var base = CultivationStatus.inspect(new CultivationSlotsCodec.Loaded(view), currentPower, false);
         var slots = new java.util.ArrayList<CultivationStatus.Slot>();

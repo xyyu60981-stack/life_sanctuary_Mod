@@ -1,0 +1,355 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "atlas": "life_sanctuary:block/star_moss_atlas",
+    "particle": "#atlas"
+  },
+  "elements": [
+    {
+      "name": "thallus",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        1,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            9.1429,
+            0.9107
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8.8571,
+            0.9107
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            8.8571,
+            0.9107
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8.8571,
+            0.9107
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            9.1429,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            4.6429,
+            6.6607
+          ],
+          "texture": "#atlas"
+        }
+      }
+    },
+    {
+      "name": "receptacle_0/stalk",
+      "from": [
+        3.94209,
+        0.2,
+        4.13617
+      ],
+      "to": [
+        4.34209,
+        1.35,
+        4.53617
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        }
+      }
+    },
+    {
+      "name": "receptacle_0/plate",
+      "from": [
+        1.84209,
+        1.2,
+        2.03617
+      ],
+      "to": [
+        6.44209,
+        1.38,
+        6.63617
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            9.1429,
+            0.2857,
+            12.5714,
+            6
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            9.1429,
+            0.2857,
+            12.5714,
+            6
+          ],
+          "texture": "#atlas"
+        }
+      }
+    },
+    {
+      "name": "receptacle_1/stalk",
+      "from": [
+        3.53884,
+        0.2,
+        11.92934
+      ],
+      "to": [
+        3.93884,
+        1.35,
+        12.32934
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            6,
+            13.5,
+            6.125,
+            16
+          ],
+          "texture": "#atlas"
+        }
+      }
+    },
+    {
+      "name": "receptacle_1/plate",
+      "from": [
+        1.43884,
+        1.2,
+        9.82934
+      ],
+      "to": [
+        6.03884,
+        1.38,
+        14.42934
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "east": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "south": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "west": {
+          "uv": [
+            12,
+            6.75,
+            13.4286,
+            8.4643
+          ],
+          "texture": "#atlas"
+        },
+        "up": {
+          "uv": [
+            12.5714,
+            10,
+            16,
+            15.7143
+          ],
+          "texture": "#atlas"
+        },
+        "down": {
+          "uv": [
+            12.5714,
+            10,
+            16,
+            15.7143
+          ],
+          "texture": "#atlas"
+        }
+      }
+    }
+  ]
+}

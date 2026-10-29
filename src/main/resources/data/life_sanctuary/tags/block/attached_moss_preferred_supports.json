@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:logs",
+    "#c:stones",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone"
+  ]
+}

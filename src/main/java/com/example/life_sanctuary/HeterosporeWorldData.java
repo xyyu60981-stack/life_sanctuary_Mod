@@ -195,6 +195,7 @@ public final class HeterosporeWorldData extends SavedData {
         var entry = cycles.get(id); if (entry == null || entry.frozen()) return null;
         var owner = PlantIndividuals.get(level).find(id).orElse(null);
         if (owner == null || !entry.identity().matches(owner) || !entry.stage().equals(owner.stage()) || !runnable(owner)
+                || SharedGametophyteWater.monitoringUnavailable(level, owner)
                 || !level.getChunkSource().isPositionTicking(net.minecraft.world.level.ChunkPos.asLong(owner.base().getX() >> 4, owner.base().getZ() >> 4))) return null;
         var cycle = current(id, entry);
         var population = HeterosporePopulation.at(owner.species(), owner.base()).orElse(null);
@@ -207,6 +208,10 @@ public final class HeterosporeWorldData extends SavedData {
         var owner = store.find(id).orElse(null);
         if (owner == null || !entry.identity().matches(owner) || !entry.stage().equals(owner.stage())) { removeCycle(id); return; }
         if (!runnable(owner)) { reconcile(level, id, false); return; }
+        if (SharedGametophyteWater.monitoringUnavailable(level, owner)) {
+            PlantLifecycle.setPauseReason(store, owner.id(), "water_monitoring_error", true);
+            return;
+        }
         var cycle = current(id, entry);
         cycles.put(id, new Entry(entry.identity(), entry.stage(), cycle, 100, 0, false)); scheduler.cancel(id);
         try {
